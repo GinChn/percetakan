@@ -2,9 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Produk;
+use App\Models\Bahan;
+use App\Models\Mesin;
+use App\Models\Barang;
 use App\Models\Satuan;
-use App\Models\Kategori;
 use Illuminate\Database\Seeder;
 use Illuminate\Foundation\Auth\User;
 
@@ -19,16 +20,20 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
         
-        Kategori::create([
+        Mesin::create([
             'jenis_mesin' => 'Indoor'
         ]);
 
-        Kategori::create([
+        Mesin::create([
             'jenis_mesin' => 'Outdoor'
         ]);
 
-        Kategori::create([
+        Mesin::create([
             'jenis_mesin' => 'Digital Offset'
+        ]);
+
+        Bahan::create([
+            'nama_bahan' => 'Backlite'
         ]);
 
         Satuan::create([
@@ -47,10 +52,10 @@ class DatabaseSeeder extends Seeder
             'nama_satuan' => 'Lembar'
         ]);
 
-        Produk::create([
-            'nama_produk' => 'Sapnduk',
+        Barang::create([
+            'nama_barang' => 'Sapnduk',
             'jenis_bahan' => 'Fl180',
-            'id_kategori_mesin' => '1',
+            'id_mesin' => '1',
             'id_satuan' => '1',
             'harga' => '20000'
         ]);
