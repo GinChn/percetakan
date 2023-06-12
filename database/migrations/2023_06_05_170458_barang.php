@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Produk extends Migration
+class Barang extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class Produk extends Migration
      */
     public function up()
     {
-        Schema::create('produk', function (Blueprint $table) {
-            $table->increments('id_produk');
-            $table->string('nama_produk');
+        Schema::create('barang', function (Blueprint $table) {
+            $table->increments('id_barang');
+            $table->string('nama_barang');
             $table->string('jenis_bahan');
-            $table->integer('id_kategori_mesin');
+            $table->integer('id_mesin');
             $table->integer('id_satuan');
             $table->integer('harga');
             $table->timestamps();
