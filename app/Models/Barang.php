@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use App\Models\Satuan;
+use App\Models\Bahan;
 use App\Models\Mesin;
+use App\Models\Satuan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -15,6 +16,11 @@ class Barang extends Model
     protected $table = 'barang';
     protected $primaryKey = 'id_barang';
     protected $guarded = [];
+
+    public function bahan()
+    {
+        return $this->belongsTo(Bahan::class, 'id_bahan');
+    }
 
     public function mesin()
     {

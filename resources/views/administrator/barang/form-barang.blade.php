@@ -17,8 +17,13 @@
                             <input type="text" class="form-control" name="nama_barang" id="nama_barang" placeholder="Masukkan Nama Barang" required>
                         </div>
                         <div class="form-group">
-                            <label for="jenis_bahan">Jenis Bahan</label>
-                            <input type="text" class="form-control" name="jenis_bahan" placeholder="Masukkan Jenis Bahan" required>
+                            <label for="id_bahan">Jenis Bahan</label>
+                            <select class="form-control" name="id_bahan" id="id_bahan">
+                                <option value="">Pilih Jenis Bahan</option>
+                                @foreach ($bahan as $key => $item)
+                                <option value="{{ $key }}">{{ $item }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="id_mesin">Jenis Mesin</label>

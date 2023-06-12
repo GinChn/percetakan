@@ -54,7 +54,7 @@ class DatabaseSeeder extends Seeder
 
         Barang::create([
             'nama_barang' => 'Sapnduk',
-            'jenis_bahan' => 'Fl180',
+            'id_bahan' => '1',
             'id_mesin' => '1',
             'id_satuan' => '1',
             'harga' => '20000'

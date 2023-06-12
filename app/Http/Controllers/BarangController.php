@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bahan;
+use App\Models\Mesin;
 use App\Models\Barang;
 use App\Models\Satuan;
-use App\Models\Mesin;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
@@ -19,6 +20,7 @@ class BarangController extends Controller
     {
         return view('administrator.barang.index', [
             'barang' => Barang::all(),
+            'bahan' => Bahan::all()->pluck('nama_bahan', 'id_bahan'),
             'mesin' => Mesin::all()->pluck('jenis_mesin', 'id_mesin'),
             'satuan' => Satuan::all()->pluck('nama_satuan', 'id_satuan')
         ]);
@@ -44,13 +46,13 @@ class BarangController extends Controller
     {
         Barang::create([
             'nama_barang' => $request->nama_barang,
-            'jenis_bahan' => $request->jenis_bahan,
+            'id_bahan' => $request->id_bahan,
             'id_mesin' => $request->id_mesin,
             'id_satuan' => $request->id_satuan,
             'harga' => $request->harga
         ]);
 
-        return redirect('/barang')->with('sukses-tambah', 'Data Barang Berhasil Ditambahkan');
+        return redirect('/barang')->with('sukses-tambah-barang', 'Data Barang Berhasil Ditambahkan');
     }
 
     /**
@@ -74,12 +76,7 @@ class BarangController extends Controller
      */
     public function edit($id)
     {
-        // $barang = Barang::find($id);
-        // return view('administrator.barang.edit', [
-        //     'barang' => $barang,
-        //     'mesin' => Mesin::all(),
-        //     'satuan' => Satuan::all()
-        // ]);
+        //
     }
 
     /**
@@ -93,7 +90,7 @@ class BarangController extends Controller
     {
         Barang::find($id)->update([
             'nama_barang' => $request->nama_barang,
-            'jenis_bahan' => $request->jenis_bahan,
+            'id_bahan' => $request->id_bahan,
             'id_mesin' => $request->id_mesin,
             'id_satuan' => $request->id_satuan,
             'harga' => $request->harga

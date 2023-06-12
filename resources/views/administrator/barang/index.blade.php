@@ -39,7 +39,7 @@
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $item->nama_barang }}</td>
-                                <td>{{ $item->jenis_bahan }}</td>
+                                <td>{{ $item->bahan->nama_bahan }}</td>
                                 <td>{{ $item->mesin->jenis_mesin }}</td>
                                 <td>{{ $item->satuan->nama_satuan }}</td>
                                 <td>{{ format_uang($item->harga) }}</td>
@@ -92,7 +92,7 @@
         $.get(url)
             .done((response) => {
                 $('#modal-barang [name=nama_barang]').val(response.nama_barang);
-                $('#modal-barang [name=jenis_bahan]').val(response.jenis_bahan);
+                $('#modal-barang [name=id_bahan]').val(response.id_bahan);
                 $('#modal-barang [name=id_mesin]').val(response.id_mesin);
                 $('#modal-barang [name=id_satuan]').val(response.id_satuan);
                 $('#modal-barang [name=harga]').val(response.harga);
