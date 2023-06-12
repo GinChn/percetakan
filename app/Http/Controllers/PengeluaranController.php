@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pengeluaran;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 
 class PengeluaranController extends Controller
 {
@@ -13,7 +15,9 @@ class PengeluaranController extends Controller
      */
     public function index()
     {
-        return view('administrator.pengeluaran.index');
+        return view('administrator.pengeluaran.index', [
+            'pengeluaran' => Pengeluaran::all()
+        ]);
     }
 
     /**
@@ -34,7 +38,14 @@ class PengeluaranController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Pengeluaran::create([
+            'keterangan' => $request->keterangan,
+            'harga' => $request->harga,
+            'jumlah' => $request->jumlah,
+            'total' => $request->total
+        ]);
+
+        return redirect('/pengeluaran')->with('sukses-tambah-pengeluaran', 'Data Pengeluaran Berhasil Ditambahkan');
     }
 
     /**
@@ -45,7 +56,9 @@ class PengeluaranController extends Controller
      */
     public function show($id)
     {
-        //
+        $pengeluaran = Pengeluaran::find($id);
+
+        return response()->json($pengeluaran);
     }
 
     /**
@@ -68,7 +81,14 @@ class PengeluaranController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        Pengeluaran::find($id)->update([
+            'keterangan' => $request->keterangan,
+            'harga' => $request->harga,
+            'jumlah' => $request->jumlah,
+            'total' => $request->total
+        ]);
+
+        return redirect('/pengeluaran')->with('sukses-edit-pengeluaran', 'Data Pengeluaran Berhasil Diubah');
     }
 
     /**
@@ -79,6 +99,8 @@ class PengeluaranController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Pengeluaran::find($id)->delete();
+
+        return back();
     }
 }
