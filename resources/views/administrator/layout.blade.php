@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome-free/css/all.min.css') }}">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('assets/dist/css/adminlte.min.css') }}">
     <!-- DataTables -->
@@ -76,39 +78,90 @@
                                 </p>
                             </a>
                         </li>
-                        <li class="nav-header">DATA MASTER</li>
+                        <li class="nav-header">MASTER</li>
                         <li class="nav-item">
-                            <a href="/karyawan" class="nav-link {{ Request::is('karyawan*') ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-users"></i>
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
-                                    Data Karyawan
+                                    Data Master
+                                <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="/mesin" class="nav-link {{ Request::is('mesin*') ? 'active' : '' }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Mesin</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/bahan" class="nav-link {{ Request::is('bahan*') ? 'active' : '' }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Bahan</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/barang" class="nav-link {{ Request::is('barang*') ? 'active' : '' }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Barang</p>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                         <li class="nav-item">
-                            <a href="/produk" class="nav-link {{ Request::is('produk*') ? 'active' : '' }}">
-                                <i class="nav-icon fa fa-list"></i>
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
-                                    Data Produk
+                                    Data User
+                                <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="/karyawan" class="nav-link {{ Request::is('karyawan*') ? 'active' : '' }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Karyawan</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Pelanggan</p>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                         <li class="nav-header">TRANSAKSI</li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-business-time"></i>
                                 <p>
-                                    Pekerjaan
+                                    Pesanan
                                 </p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-file-import"></i>
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
-                                    Pemasukan
+                                    Pembayaran
+                                <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Belum Lunas</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Lunas</p>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                         <li class="nav-item">
                             <a href="/pengeluaran" class="nav-link {{ Request::is('pengeluaran*') ? 'active' : '' }}">
@@ -158,10 +211,15 @@
     <!-- Script -->
     <!-- jQuery -->
     <script src="{{ asset('assets/plugins/jquery/jquery.min.js') }}"></script>
+    <!-- jquery-validation -->
+    <script src="{{ asset('assets/plugins/jquery-validation/jquery.validate.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/jquery-validation/additional-methods.min.js') }}"></script>
     <!-- Bootstrap 4 -->
     <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <!-- AdminLTE App -->
     <script src="{{ asset('assets/dist/js/adminlte.min.js') }}"></script>
+    <!-- ChartJS -->
+    <script src="{{ asset('assets/plugins/chart.js/Chart.min.js') }}"></script>
     <!-- DataTables  & Plugins -->
     <script src="{{ asset('assets/plugins/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
@@ -188,6 +246,7 @@
             });
         });
     </script>
+    
     @yield('script')
     <!-- Script End -->
 </body>

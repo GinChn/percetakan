@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Produk;
-use App\Models\Satuan;
-use App\Models\Kategori;
+use App\Models\Bahan;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
-class ProdukController extends Controller
+class BahanController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,10 +15,8 @@ class ProdukController extends Controller
      */
     public function index()
     {
-        return view('administrator.produk.index', [
-            'produk' => Produk::all(),
-            'kategori' => Kategori::all(),
-            'satuan' => Satuan::all()
+        return view('administrator.bahan.index', [
+            "bahan" => Bahan::all()
         ]);
     }
 
@@ -42,15 +38,11 @@ class ProdukController extends Controller
      */
     public function store(Request $request)
     {
-        Produk::create([
-            'nama_produk' => $request->nama_produk,
-            'jenis_bahan' => $request->jenis_bahan,
-            'id_kategori_mesin' => $request->jenis_mesin,
-            'id_satuan' => $request->nama_satuan,
-            'harga' => $request->harga
+        Bahan::create([
+            'nama_bahan' => $request->nama_bahan
         ]);
 
-        return redirect('/produk')->with('sukses-tambah', 'Data Berhasil Ditambahkan');
+        return redirect('/bahan')->with('sukses-tambah-bahan', 'Data Bahan Berhasil Ditambahkan');
     }
 
     /**
@@ -61,7 +53,9 @@ class ProdukController extends Controller
      */
     public function show($id)
     {
-        //
+        $bahan = Bahan::find($id);
+
+        return response()->json($bahan);
     }
 
     /**
@@ -72,12 +66,7 @@ class ProdukController extends Controller
      */
     public function edit($id)
     {
-        $produk = Produk::find($id);
-        return view('administrator.produk.edit', [
-            'produk' => $produk,
-            'kategori' => Kategori::all(),
-            'satuan' => Satuan::all()
-        ]);
+        //
     }
 
     /**
@@ -89,15 +78,11 @@ class ProdukController extends Controller
      */
     public function update(Request $request, $id)
     {
-        Produk::find($id)->update([
-            'nama_produk' => $request->nama_produk,
-            'jenis_bahan' => $request->jenis_bahan,
-            'id_kategori_mesin' => $request->jenis_mesin,
-            'id_satuan' => $request->nama_satuan,
-            'harga' => $request->harga
+        Bahan::find($id)->update([
+            'nama_bahan' => $request->nama_bahan
         ]);
 
-        return redirect('/produk')->with('sukses-ubah', 'Data Berhasil Diubah');
+        return redirect('/bahan')->with('sukses-ubah-bahan', 'Data Bahan Berhasil Diubah');
     }
 
     /**
@@ -108,7 +93,7 @@ class ProdukController extends Controller
      */
     public function destroy($id)
     {
-        Produk::find($id)->delete();
+        Bahan::find($id)->delete();
 
         return back();
     }
