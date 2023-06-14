@@ -1,4 +1,4 @@
-@extends('administrator.layout')
+@extends('layout')
 
 @section('content')
 
@@ -65,7 +65,7 @@
     </div>
 </div>
 
-@includeIf('administrator.barang.form-barang')
+@includeIf('barang.form-barang')
 @endsection
 
 @section('script')

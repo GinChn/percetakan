@@ -15,9 +15,8 @@ class BahanController extends Controller
      */
     public function index()
     {
-        $bahan = Bahan::orderBy('nama_bahan', 'asc')->get();
-        return view('administrator.bahan.index', [
-            "bahan" => $bahan
+        return view('bahan.index', [
+            "bahan" => Bahan::orderBy('nama_bahan', 'asc')->get()
         ]);
     }
 

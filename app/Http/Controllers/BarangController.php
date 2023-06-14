@@ -18,7 +18,7 @@ class BarangController extends Controller
      */
     public function index()
     {
-        return view('administrator.barang.index', [
+        return view('barang.index', [
             'barang' => Barang::all(),
             'bahan' => Bahan::all()->pluck('nama_bahan', 'id_bahan'),
             'mesin' => Mesin::all()->pluck('jenis_mesin', 'id_mesin'),

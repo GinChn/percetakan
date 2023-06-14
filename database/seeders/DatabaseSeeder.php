@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Bahan;
+use App\Models\Level;
 use App\Models\Mesin;
 use App\Models\Barang;
 use App\Models\Satuan;
@@ -18,8 +19,32 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
-        
+        // Level
+        Level::create([
+            'nama_level' => 'Administrator'
+        ]);
+
+        Level::create([
+            'nama_level' => 'Manajer'
+        ]);
+
+        Level::create([
+            'nama_level' => 'Desainer'
+        ]);
+
+        Level::create([
+            'nama_level' => 'Kasir'
+        ]);
+
+        Level::create([
+            'nama_level' => 'Operator'
+        ]);
+
+        Level::create([
+            'nama_level' => 'Pelanggan'
+        ]);
+
+        // Mesin
         Mesin::create([
             'jenis_mesin' => 'Indoor'
         ]);
@@ -32,26 +57,29 @@ class DatabaseSeeder extends Seeder
             'jenis_mesin' => 'Digital Offset'
         ]);
 
+        // Satuan
+        Satuan::create([
+            'nama_satuan' => 'Meter'
+        ]);
+        
+        Satuan::create([
+            'nama_satuan' => 'Pcs'
+        ]);
+        
+        Satuan::create([
+            'nama_satuan' => 'Box'
+        ]);
+        
+        Satuan::create([
+            'nama_satuan' => 'Lembar'
+        ]);
+        
+        // Bahan
         Bahan::create([
             'nama_bahan' => 'Backlite'
         ]);
 
-        Satuan::create([
-            'nama_satuan' => 'Meter'
-        ]);
-
-        Satuan::create([
-            'nama_satuan' => 'Pcs'
-        ]);
-
-        Satuan::create([
-            'nama_satuan' => 'Box'
-        ]);
-
-        Satuan::create([
-            'nama_satuan' => 'Lembar'
-        ]);
-
+        // Barang
         Barang::create([
             'nama_barang' => 'Sapnduk',
             'id_bahan' => '1',

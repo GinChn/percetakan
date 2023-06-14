@@ -1,4 +1,4 @@
-@extends('administrator.layout')
+@extends('layout')
 
 @section('content')
 
@@ -57,7 +57,7 @@
     </div>
 </div>
 
-@includeIf('administrator.master.form-mesin')
+@includeIf('mesin.form-mesin')
 @endsection
 
 @section('script')

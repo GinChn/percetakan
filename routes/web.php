@@ -2,10 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BahanController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MesinController;
 use App\Http\Controllers\BarangController;
-use App\Http\Controllers\MasterController;
 use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\PesananController;
+use App\Http\Controllers\PesananDetailController;
 use App\Http\Controllers\KaryawanController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PengeluaranController;
@@ -38,6 +40,10 @@ use App\Http\Controllers\PengeluaranController;
 // Route::put('/master/{id_mesin}', [MasterController::class, 'update_mesin'])->name('mesin.update');
 // // Route::get('/hapus-bahan/{id_bahan}', 'MasterController@hapus_bmi');
 
+Route::get('/login', [LoginController::class, 'index']);
+Route::post('/login', [LoginController::class, 'login']);
+Route::post('/logout', [LoginController::class, 'logout']);
+
 Route::resource('/', DashboardController::class);
 
 Route::resource('/mesin', MesinController::class);
@@ -47,6 +53,14 @@ Route::resource('/bahan', BahanController::class);
 Route::resource('/barang', BarangController::class);
 
 Route::resource('/karyawan', KaryawanController::class);
+
+Route::get('/pesanan/create', [PesananController::class, 'create'])->name('pesanan.create');
+Route::resource('/pesanan', PesananController::class)
+    ->except('create');
+    
+Route::get('/pesanan_detail/loadform/{total}', [PesananDetailController::class, 'loadForm'])->name('pesanan_detail.load_form');
+Route::resource('/pesanan_detail', PesananDetailController::class)
+    ->except('create', 'show', 'edit');
 
 Route::resource('/pengeluaran', PengeluaranController::class);
 

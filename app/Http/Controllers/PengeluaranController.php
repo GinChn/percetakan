@@ -15,7 +15,7 @@ class PengeluaranController extends Controller
      */
     public function index()
     {
-        return view('administrator.pengeluaran.index', [
+        return view('pengeluaran.index', [
             'pengeluaran' => Pengeluaran::all()
         ]);
     }

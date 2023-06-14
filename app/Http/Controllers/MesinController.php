@@ -15,7 +15,7 @@ class MesinController extends Controller
      */
     public function index()
     {
-        return view('administrator.mesin.index', [
+        return view('mesin.index', [
             "mesin" => Mesin::all()
         ]);
     }

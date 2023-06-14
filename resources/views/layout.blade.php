@@ -110,7 +110,7 @@
                         </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <i class="nav-icon fas fa-address-card"></i>
                                 <p>
                                     Data User
                                 <i class="right fas fa-angle-left"></i>
@@ -131,10 +131,18 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-header">TRANSAKSI</li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-business-time"></i>
+                                <p>
+                                    Registrasi User
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-header">TRANSAKSI</li>
+                        <li class="nav-item">
+                            <a href="/pesanan" class="nav-link">
+                                <i class="nav-icon fas fa-file-invoice"></i>
                                 <p>
                                     Pesanan
                                 </p>
@@ -142,7 +150,7 @@
                         </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <i class="nav-icon fas fa-money-bill-wave"></i>
                                 <p>
                                     Pembayaran
                                 <i class="right fas fa-angle-left"></i>
@@ -152,13 +160,36 @@
                                 <li class="nav-item">
                                     <a href="#" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Belum Lunas</p>
+                                        <p>Lunas</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="#" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Lunas</p>
+                                        <p>Belum Lunas</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-business-time"></i>
+                                <p>
+                                    Pekerjaan
+                                <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Selesai</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Belum Selesai</p>
                                     </a>
                                 </li>
                             </ul>

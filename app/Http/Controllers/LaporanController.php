@@ -13,7 +13,7 @@ class LaporanController extends Controller
      */
     public function index()
     {
-        return view('administrator.laporan.index');
+        return view('laporan.index');
     }
 
     /**
