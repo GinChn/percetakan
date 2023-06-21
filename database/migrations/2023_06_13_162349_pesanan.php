@@ -15,10 +15,15 @@ class Pesanan extends Migration
     {
         Schema::create('pesanan', function (Blueprint $table) {
             $table->increments('id_pesanan');
+            $table->timestamp('tanggal');
             $table->string('no_nota');
-            $table->integer('total_item');
-            $table->integer('total_harga');
+            $table->integer('nama_pelanggan')->nullable();
+            $table->integer('no_telp')->nullable();
+            $table->integer('total');
             $table->integer('bayar')->default(0);
+            $table->integer('diterima')->default(0);
+            $table->integer('status_desain')->nullable();
+            $table->integer('status_pesanan')->nullable();
             $table->timestamps();
         });
     }
