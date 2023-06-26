@@ -48,7 +48,7 @@ class BarangController extends Controller
             'nama_barang' => $request->nama_barang,
             'id_bahan' => $request->id_bahan,
             'id_mesin' => $request->id_mesin,
-            'id_satuan' => $request->id_satuan,
+            'satuan' => $request->satuan,
             'harga' => $request->harga
         ]);
 
@@ -92,7 +92,7 @@ class BarangController extends Controller
             'nama_barang' => $request->nama_barang,
             'id_bahan' => $request->id_bahan,
             'id_mesin' => $request->id_mesin,
-            'id_satuan' => $request->id_satuan,
+            'satuan' => $request->satuan,
             'harga' => $request->harga
         ]);
 

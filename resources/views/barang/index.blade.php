@@ -41,7 +41,7 @@
                                 <td>{{ $item->nama_barang }}</td>
                                 <td>{{ $item->bahan->nama_bahan }}</td>
                                 <td>{{ $item->mesin->jenis_mesin }}</td>
-                                <td>{{ $item->satuan->nama_satuan }}</td>
+                                <td>{{ $item->satuan }}</td>
                                 <td>{{ format_uang($item->harga) }}</td>
                                 <td>
                                     <button onclick="editBarang('{{ route('barang.update', $item->id_barang) }}')" class="btn btn-sm btn-primary">
@@ -94,7 +94,7 @@
                 $('#modal-barang [name=nama_barang]').val(response.nama_barang);
                 $('#modal-barang [name=id_bahan]').val(response.id_bahan);
                 $('#modal-barang [name=id_mesin]').val(response.id_mesin);
-                $('#modal-barang [name=id_satuan]').val(response.id_satuan);
+                $('#modal-barang [name=satuan]').val(response.satuan);
                 $('#modal-barang [name=harga]').val(response.harga);
             })
     }

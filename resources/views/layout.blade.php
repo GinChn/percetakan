@@ -19,6 +19,8 @@
     <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
     <!-- Sweet Alert -->
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.min.css">
+    <!-- Select2 -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 </head>
 <body class="hold-transition sidebar-mini">
     <div class="wrapper">
@@ -141,7 +143,7 @@
                         </li>
                         <li class="nav-header">TRANSAKSI</li>
                         <li class="nav-item">
-                            <a href="/pesanan" class="nav-link">
+                            <a href="/pesanan" class="nav-link {{ Request::is('pesanan*') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-file-invoice"></i>
                                 <p>
                                     Pesanan
@@ -249,6 +251,8 @@
     <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <!-- AdminLTE App -->
     <script src="{{ asset('assets/dist/js/adminlte.min.js') }}"></script>
+    <!-- Select2 -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <!-- ChartJS -->
     <script src="{{ asset('assets/plugins/chart.js/Chart.min.js') }}"></script>
     <!-- DataTables  & Plugins -->

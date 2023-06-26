@@ -7,6 +7,7 @@ use App\Models\Level;
 use App\Models\Mesin;
 use App\Models\Barang;
 use App\Models\Satuan;
+use App\Models\Status;
 use Illuminate\Database\Seeder;
 use Illuminate\Foundation\Auth\User;
 
@@ -73,6 +74,15 @@ class DatabaseSeeder extends Seeder
         Satuan::create([
             'nama_satuan' => 'Lembar'
         ]);
+
+        // Status Pesanan
+        Status::create([
+            'status' => 'Belum Selesai'
+        ]);
+
+        Status::create([
+            'status' => 'Selesai'
+        ]);
         
         // Bahan
         Bahan::create([
@@ -80,12 +90,12 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // Barang
-        Barang::create([
-            'nama_barang' => 'Sapnduk',
-            'id_bahan' => '1',
-            'id_mesin' => '1',
-            'id_satuan' => '1',
-            'harga' => '20000'
-        ]);
+        // Barang::create([
+        //     'nama_barang' => 'Spanduk',
+        //     'id_bahan' => '1',
+        //     'id_mesin' => '1',
+        //     'id_satuan' => '1',
+        //     'harga' => '20000'
+        // ]);
     }
 }

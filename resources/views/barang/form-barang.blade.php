@@ -35,12 +35,16 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="id_satuan">Satuan</label>
-                            <select class="form-control" name="id_satuan" id="id_satuan">
+                            <label for="satuan">Satuan</label>
+                            <select class="form-control" name="satuan" id="satuan">
                                 <option value="">Pilih Satuan</option>
-                                @foreach ($satuan as $key => $item)
+                                <option value="Meter">Meter</option>
+                                <option value="Lembar">Lembar</option>
+                                <option value="Pcs">Pcs</option>
+                                <option value="Box">Box</option>
+                                {{-- @foreach ($satuan as $key => $item)
                                 <option value="{{ $key }}">{{ $item }}</option>
-                                @endforeach
+                                @endforeach --}}
                             </select>
                         </div>
                         <div class="form-group">

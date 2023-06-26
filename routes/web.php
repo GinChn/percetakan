@@ -27,19 +27,6 @@ use App\Http\Controllers\PengeluaranController;
 //     return view('administrator.dashboard');
 // });
 
-// Route::get('/produk', function () {
-//     return view('administrator.produk');
-// });
-// Route::get('/master', [MasterController::class, 'index']);
-// Route::post('/master/tambah-bahan', [MasterController::class, 'store_bahan'])->name('bahan.store');
-// Route::get('/master/{id_bahan}/edit-bahan', [MasterController::class, 'show_bahan'])->name('bahan.show');
-// Route::put('/master/{id_bahan}', [MasterController::class, 'update_bahan'])->name('bahan.update');
-
-// Route::post('/master/tambah-mesin', [MasterController::class, 'store_mesin'])->name('mesin.store');
-// Route::get('/master/{id_mesin}/edit-mesin', [MasterController::class, 'show_mesin'])->name('mesin.show');
-// Route::put('/master/{id_mesin}', [MasterController::class, 'update_mesin'])->name('mesin.update');
-// // Route::get('/hapus-bahan/{id_bahan}', 'MasterController@hapus_bmi');
-
 Route::get('/login', [LoginController::class, 'index']);
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/logout', [LoginController::class, 'logout']);
@@ -54,13 +41,12 @@ Route::resource('/barang', BarangController::class);
 
 Route::resource('/karyawan', KaryawanController::class);
 
-Route::get('/pesanan/create', [PesananController::class, 'create'])->name('pesanan.create');
-Route::resource('/pesanan', PesananController::class)
-    ->except('create');
+Route::resource('/pesanan', PesananController::class);
     
-Route::get('/pesanan_detail/loadform/{total}', [PesananDetailController::class, 'loadForm'])->name('pesanan_detail.load_form');
+Route::get('/pesanan_detail/loadbarang', [PesananDetailController::class, 'loadBarang'])->name('pesanan_detail.barang');
+Route::delete('/pesanan_detail/{id}/batal_pesanan', [PesananDetailController::class, 'batalPesanan'])->name('batal.pesanan');
 Route::resource('/pesanan_detail', PesananDetailController::class)
-    ->except('create', 'show', 'edit');
+    ->except('create');
 
 Route::resource('/pengeluaran', PengeluaranController::class);
 

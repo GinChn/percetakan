@@ -17,13 +17,13 @@ class Pesanan extends Migration
             $table->increments('id_pesanan');
             $table->timestamp('tanggal');
             $table->string('no_nota');
-            $table->integer('nama_pelanggan')->nullable();
-            $table->integer('no_telp')->nullable();
+            $table->string('nama_pelanggan')->nullable();
+            $table->char('no_telp', 13)->nullable();
             $table->integer('total');
             $table->integer('bayar')->default(0);
             $table->integer('diterima')->default(0);
-            $table->integer('status_desain')->nullable();
-            $table->integer('status_pesanan')->nullable();
+            $table->string('status_desain')->nullable();
+            $table->string('status_pesanan')->nullable();
             $table->timestamps();
         });
     }

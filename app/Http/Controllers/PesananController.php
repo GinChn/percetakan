@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pesanan;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 
 class PesananController extends Controller
 {
@@ -13,7 +15,9 @@ class PesananController extends Controller
      */
     public function index()
     {
-        return view('administrator.pesanan.index');
+        return view('pesanan.index', [
+            'pesanan' => Pesanan::all()
+        ]);
     }
 
     /**
@@ -23,7 +27,24 @@ class PesananController extends Controller
      */
     public function create()
     {
-        //
+        // $cek = Pesanan::count();
+        // if ($cek == 0) {
+        //     $urut = 0001;
+        //     $no_nota = 'NT' . $urut;
+        // } else {
+        //     $ambil = Pesanan::all()->last();
+        //     $urut = (int)substr($ambil->no_nota, -4) + 1;
+        //     $no_nota = 'NT' . $urut;
+        // }
+        // dd($no_nota);
+
+        $pesanan = Pesanan::create([
+            'total' => 0
+        ]);
+        // dd($pesanan);
+        session(['id_pesanan' => $pesanan->id_pesanan]);
+
+        return redirect()->route('pesanan_detail.index');
     }
 
     /**
@@ -34,7 +55,15 @@ class PesananController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Pesanan::FindorFail($request->id_pesanan)->update([
+            'nama_pelanggan' => $request->nama_pelanggan,
+            'no_telp' => $request->no_telp,
+            'total' => $request->total,
+            'status_desain' => $request->status_desain,
+            'status_pesanan' => $request->status_pesanan,
+        ]);
+
+        return redirect('/pesanan');
     }
 
     /**
@@ -79,6 +108,8 @@ class PesananController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Pesanan::find($id)->delete();
+
+        return back();
     }
 }

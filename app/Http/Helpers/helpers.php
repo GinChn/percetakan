@@ -1,7 +1,7 @@
 <?php 
 
 function format_uang ($angka) {
-    return "Rp. " . number_format($angka, 0, ',', '.');
+    return "Rp " . number_format($angka, 0, ',', '.');
 }
 
 function tanggal_indonesia($tgl, $tampil_hari = true)
