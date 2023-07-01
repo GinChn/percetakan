@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pesanan;
+use App\Models\Pengeluaran;
 use Illuminate\Http\Request;
 
 class LaporanController extends Controller
@@ -14,6 +16,24 @@ class LaporanController extends Controller
     public function index()
     {
         return view('laporan.index');
+    }
+
+    // tangkap tanggal
+    public function handleForm(Request $request)
+    {
+        $tanggal_laporan = $request->input('tanggal_laporan');
+        // Lakukan operasi lainnya dengan nilai tanggal...
+        $data_pemasukan = Pesanan::whereDate('tanggal', $tanggal_laporan)
+            ->where('status_pesanan', 'Selesai')
+            ->get();
+        $data_pengeluaran = Pengeluaran::whereDate('created_at', $tanggal_laporan)->get();
+
+        $data_laporan = [
+            'data_masuk' => $data_pemasukan,
+            'data_keluar' => $data_pengeluaran
+        ];
+
+        return view('laporan.index', $data_laporan);
     }
 
     /**

@@ -42,7 +42,7 @@ Route::resource('/barang', BarangController::class);
 Route::resource('/karyawan', KaryawanController::class);
 
 Route::resource('/pesanan', PesananController::class);
-    
+
 Route::get('/pesanan_detail/loadbarang', [PesananDetailController::class, 'loadBarang'])->name('pesanan_detail.barang');
 Route::delete('/pesanan_detail/{id}/batal_pesanan', [PesananDetailController::class, 'batalPesanan'])->name('batal.pesanan');
 Route::resource('/pesanan_detail', PesananDetailController::class)
@@ -51,3 +51,5 @@ Route::resource('/pesanan_detail', PesananDetailController::class)
 Route::resource('/pengeluaran', PengeluaranController::class);
 
 Route::resource('/laporan', LaporanController::class);
+
+Route::post('/laporan', [LaporanController::class, 'handleForm'])->name('submit_tanggal');
