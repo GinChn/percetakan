@@ -28,30 +28,42 @@
                                             </div>
                                             <select class="custom-select" id="pilihLaporan" name="jenis_laporan">
                                                 <option value="">--Pilih Jenis Laporan--</option>
-                                                <option value="harian">Harian</option>
-                                                <option value="bulanan">Bulanan</option>
+                                                <option value="harian"
+                                                    {{ isset($data_input['jenis_laporan']) && $data_input['jenis_laporan'] == 'harian' ? 'selected' : '' }}>
+                                                    Harian
+                                                </option>
+                                                <option value="bulanan"
+                                                    {{ isset($data_input['jenis_laporan']) && $data_input['jenis_laporan'] == 'bulanan' ? 'selected' : '' }}>
+                                                    Bulanan</option>
                                             </select>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-5 pick_harian" style="display: none">
+                                <div class="col-md-5 pick_harian" {!! isset($data_input['jenis_laporan']) && $data_input['jenis_laporan'] == 'harian'
+                                    ? ''
+                                    : 'style="display: none;"' !!}>
                                     <div class="form-group d-flex align-items-center" style="height:100%">
                                         <input type="date" class="form-control" id="dateInput" placeholder="Select date"
-                                            name="tanggal_laporan">
+                                            name="tanggal_laporan"
+                                            value="{{ isset($data_input['tanggal_laporan']) ? $data_input['tanggal_laporan'] : '' }}">
                                     </div>
                                 </div>
-                                <div class="col-md-5 pick_bulanan" style="display: none">
+                                <div class="col-md-5 pick_bulanan" {!! isset($data_input['jenis_laporan']) && $data_input['jenis_laporan'] == 'bulanan'
+                                    ? ''
+                                    : 'style="display: none;"' !!}>
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group d-flex align-items-center" style="height:100%">
                                                 <input type="date" class="form-control" id="dateInput"
-                                                    placeholder="Select date" name="tanggal_laporan_awal">
+                                                    placeholder="Select date" name="tanggal_laporan_awal"
+                                                    value="{{ isset($data_input['tanggal_laporan_awal']) ? $data_input['tanggal_laporan_awal'] : '' }}">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group d-flex align-items-center" style="height:100%">
                                                 <input type="date" class="form-control" id="dateInput"
-                                                    placeholder="Select date" name="tanggal_laporan_akhir">
+                                                    placeholder="Select date" name="tanggal_laporan_akhir"
+                                                    value="{{ isset($data_input['tanggal_laporan_akhir']) ? $data_input['tanggal_laporan_akhir'] : '' }}">
                                             </div>
                                         </div>
                                     </div>
@@ -259,7 +271,7 @@
                     </div>
                 </div>
             </div>
-            
+
         </div>
 
     @endif
@@ -274,18 +286,17 @@
 
         // menampilkan inputan tanggal harian atau range bulanan
         $(document).ready(function() {
-            // $('.pick_harian, .pick_bulanan, .tombol_cek').hide();
 
             $('#pilihLaporan').change(function() {
-                var pilihLaporan = $(this).val();
+                let pilihLaporan = $(this).val();
 
-                // $('.pick_harian, .pick_bulanan').hide(); // Sembunyikan semua div dengan class satu atau dua
-                $('.pick_harian, .pick_bulanan, .tombol_cek').hide();
+                $('.pick_harian, .pick_bulanan').hide();
+                $('.tombol_cek').hide();
 
                 if (pilihLaporan === 'harian') {
-                    $('.pick_harian, .tombol_cek').show(); // Tampilkan div dengan class satu
+                    $('.pick_harian, .tombol_cek').show();
                 } else if (pilihLaporan === 'bulanan') {
-                    $('.pick_bulanan, .tombol_cek').show(); // Tampilkan div dengan class dua
+                    $('.pick_bulanan, .tombol_cek').show();
                 }
             });
         });
