@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use App\Models\Pesanan;
 use App\Models\Pengeluaran;
 use Illuminate\Http\Request;
@@ -21,19 +22,47 @@ class LaporanController extends Controller
     // tangkap tanggal
     public function handleForm(Request $request)
     {
-        $tanggal_laporan = $request->input('tanggal_laporan');
-        // Lakukan operasi lainnya dengan nilai tanggal...
-        $data_pemasukan = Pesanan::whereDate('tanggal', $tanggal_laporan)
-            ->where('status_pesanan', 'Selesai')
-            ->get();
-        $data_pengeluaran = Pengeluaran::whereDate('created_at', $tanggal_laporan)->get();
+        // ambil semua inputan
+        $data_input_laporan = $request->all();
+        $jenis_laporan = $data_input_laporan['jenis_laporan'];
+
+        // cek milih laporan harian atau bulanan
+        if ($jenis_laporan == "harian") {
+            $tanggal_laporan = $data_input_laporan['tanggal_laporan'];
+
+            $data_pemasukan = Pesanan::whereDate('created_at', $tanggal_laporan)
+                ->where('status_pesanan', 'Selesai')
+                ->get();
+            $data_pengeluaran = Pengeluaran::whereDate('created_at', $tanggal_laporan)->get();
+        } else if ($jenis_laporan == "bulanan") {
+            $tanggal_laporan_awal = $data_input_laporan['tanggal_laporan_awal'];
+            $tanggal_laporan_akhir = $data_input_laporan['tanggal_laporan_akhir'];
+
+            $data_pemasukan = Pesanan::select(
+                DB::raw('DATE(created_at) as tanggal'),
+                DB::raw('SUM(total) as total_tagihan')
+            )
+                ->whereRaw('DATE(created_at) BETWEEN ? AND ?', [$tanggal_laporan_awal, $tanggal_laporan_akhir])
+                ->where('status_pesanan', 'Selesai')
+                ->groupBy(DB::raw('DATE(created_at)'))
+                ->get();
+
+            $data_pengeluaran = Pengeluaran::select(
+                DB::raw('DATE(created_at) as tanggal'),
+                DB::raw('SUM(total) as total_pengeluaran')
+            )
+                ->whereRaw('DATE(created_at) BETWEEN ? AND ?', [$tanggal_laporan_awal, $tanggal_laporan_akhir])
+                ->groupBy(DB::raw('DATE(created_at)'))
+                ->get();
+        }
 
         $data_laporan = [
             'data_masuk' => $data_pemasukan,
             'data_keluar' => $data_pengeluaran
         ];
 
-        return view('laporan.index', $data_laporan);
+        // kirim ke view data laporan yg sudah didapat beserta data inputan
+        return view('laporan.index', ['data_laporan' => $data_laporan, 'data_input' => $data_input_laporan]);
     }
 
     /**
