@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pesanan;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
@@ -27,24 +28,31 @@ class PesananController extends Controller
      */
     public function create()
     {
-        // $cek = Pesanan::count();
-        // if ($cek == 0) {
-        //     $urut = 0001;
-        //     $no_nota = 'NT' . $urut;
-        // } else {
-        //     $ambil = Pesanan::all()->last();
-        //     $urut = (int)substr($ambil->no_nota, -4) + 1;
-        //     $no_nota = 'NT' . $urut;
-        // }
-        // dd($no_nota);
+        // Variabelkan tanggal saat ini
+        $now = Carbon::now();
 
+        // Ambil tanggal dan bulan saat ini
+        $thnBulan = $now->year . $now->month;
+
+        // cek data di tabel pesanan untuk autonumbering nomor nota
+        $cek = Pesanan::count();
+        if ($cek == 0) {
+            $urut = 10001;
+            $no_nota = 'NT' . $thnBulan . $urut;
+        } else {
+            $ambil = Pesanan::all()->last();
+            $urut = (int)substr($ambil->no_nota, -5) + 1;
+            $no_nota = 'NT' . $thnBulan . $urut;
+        }
+
+        // kirim no nota ke tabel pesanna
         $pesanan = Pesanan::create([
-            'total' => 0
+            'no_nota' => $no_nota
         ]);
-        // dd($pesanan);
+
         session(['id_pesanan' => $pesanan->id_pesanan]);
 
-        return redirect()->route('pesanan_detail.index');
+        return redirect('/pesanan_detail');
     }
 
     /**
@@ -59,8 +67,7 @@ class PesananController extends Controller
             'nama_pelanggan' => $request->nama_pelanggan,
             'no_telp' => $request->no_telp,
             'total' => $request->total,
-            'status_desain' => $request->status_desain,
-            'status_pesanan' => $request->status_pesanan,
+            'status_pembayaran' => 'Belum Lunas'
         ]);
 
         return redirect('/pesanan');

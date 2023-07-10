@@ -8,6 +8,7 @@ use App\Models\Mesin;
 use App\Models\Barang;
 use App\Models\Satuan;
 use App\Models\Status;
+use App\Models\Finishing;
 use Illuminate\Database\Seeder;
 use Illuminate\Foundation\Auth\User;
 
@@ -39,10 +40,6 @@ class DatabaseSeeder extends Seeder
 
         Level::create([
             'nama_level' => 'Operator'
-        ]);
-
-        Level::create([
-            'nama_level' => 'Pelanggan'
         ]);
 
         // Mesin
@@ -89,13 +86,54 @@ class DatabaseSeeder extends Seeder
             'nama_bahan' => 'Backlite'
         ]);
 
+        Bahan::create([
+            'nama_bahan' => 'Ap260'
+        ]);
+
+        Bahan::create([
+            'nama_bahan' => 'Bontax'
+        ]);
+
+        // Finishing
+        Finishing::create([
+            'nama_finishing' => 'Lem Keliling'
+        ]);
+
+        Finishing::create([
+            'nama_finishing' => 'Lem Ujung'
+        ]);
+
+        Finishing::create([
+            'nama_finishing' => 'Lebih'
+        ]);
+
+        Finishing::create([
+            'nama_finishing' => 'Selongsong'
+        ]);
+
         // Barang
-        // Barang::create([
-        //     'nama_barang' => 'Spanduk',
-        //     'id_bahan' => '1',
-        //     'id_mesin' => '1',
-        //     'id_satuan' => '1',
-        //     'harga' => '20000'
-        // ]);
+        Barang::create([
+            'nama_barang' => 'Spanduk',
+            'id_bahan' => '1',
+            'id_mesin' => '2',
+            'satuan' => 'Meter',
+            'harga' => '20000'
+        ]);
+
+        Barang::create([
+            'nama_barang' => 'Ap260',
+            'id_bahan' => '2',
+            'id_mesin' => '3',
+            'satuan' => 'Lembar',
+            'harga' => '10000'
+        ]);
+
+        Barang::create([
+            'nama_barang' => 'Stiker Bontax',
+            'id_bahan' => '3',
+            'id_mesin' => '3',
+            'satuan' => 'Lembar',
+            'harga' => '80000'
+        ]);
     }
 }

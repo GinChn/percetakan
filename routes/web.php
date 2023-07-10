@@ -7,10 +7,12 @@ use App\Http\Controllers\MesinController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\PesananController;
-use App\Http\Controllers\PesananDetailController;
 use App\Http\Controllers\KaryawanController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PekerjaanController;
+use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\PengeluaranController;
+use App\Http\Controllers\PesananDetailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,6 +49,10 @@ Route::get('/pesanan_detail/loadbarang', [PesananDetailController::class, 'loadB
 Route::delete('/pesanan_detail/{id}/batal_pesanan', [PesananDetailController::class, 'batalPesanan'])->name('batal.pesanan');
 Route::resource('/pesanan_detail', PesananDetailController::class)
     ->except('create');
+
+Route::resource('/pembayaran', PembayaranController::class);
+
+Route::resource('/pekerjaan', PekerjaanController::class);
 
 Route::resource('/pengeluaran', PengeluaranController::class);
 

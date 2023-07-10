@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Barang;
 use App\Models\Status;
 use App\Models\Pesanan;
+use App\Models\Finishing;
 use Illuminate\Http\Request;
 use App\Models\PesananDetail;
 use Illuminate\Routing\Controller;
@@ -22,6 +23,7 @@ class PesananDetailController extends Controller
         return view('pesanan_detail.index', [
             'data' => Pesanan::find(session('id_pesanan')),
             'barang' => Barang::all(),
+            'finishing' => Finishing::all(),
             'status' => Status::all()->pluck('status', 'id_status'),
             'detail' => DB::table('pesanan_detail')
                         ->join('barang', 'pesanan_detail.id_barang', '=', 'barang.id_barang')
@@ -55,10 +57,12 @@ class PesananDetailController extends Controller
             'id_bahan' => $request->id_bahan,
             'harga' => $request->harga,
             'jumlah' => $request->jumlah,
-            'subtotal' => $request->subtotal
+            'subtotal' => $request->subtotal,
+            'id_finishing' => $request->id_finishing,
+            'status_detail' => $request->status_detail
         ]);
 
-        return back();
+        return back()->with('sukses-input-pesanan', 'Pesanan Berhasil Ditambahkan');
     }
 
     /**
@@ -100,10 +104,12 @@ class PesananDetailController extends Controller
             'id_bahan' => $request->id_bahan,
             'harga' => $request->harga,
             'jumlah' => $request->jumlah,
-            'subtotal' => $request->subtotal
+            'subtotal' => $request->subtotal,
+            'id_finishing' => $request->id_finishing,
+            'status_detail' => $request->status_detail
         ]);
 
-        return back();
+        return back()->with('sukses-edit-pesanan', 'Pesanan Berhasil Diubah');
     }
 
     /**
@@ -122,6 +128,7 @@ class PesananDetailController extends Controller
     public function batalPesanan($id)
     {
         Pesanan::where('id_pesanan', $id)->delete();
+        PesananDetail::where('id_pesanan', $id)->delete();
         return redirect('/pesanan');
     }
 

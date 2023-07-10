@@ -20,7 +20,8 @@
     <!-- Sweet Alert -->
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.min.css">
     <!-- Select2 -->
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ asset('assets/plugins/select2/css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
 </head>
 <body class="hold-transition sidebar-mini">
     <div class="wrapper">
@@ -150,8 +151,8 @@
                                 </p>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
+                        <li class="nav-item {{ Request::is('pembayaran*') ? 'menu-open' : '' }}">
+                            <a href="#" class="nav-link {{ Request::is('pembayaran*') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-money-bill-wave"></i>
                                 <p>
                                     Pembayaran
@@ -160,13 +161,13 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="/pembayaran" class="nav-link {{ Request::is('pembayaran') ? 'active' : '' }}">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Lunas</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="/pembayaran/belum-lunas" class="nav-link {{ Request::is('pembayaran/belum-lunas') ? 'active' : '' }}">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Belum Lunas</p>
                                     </a>
@@ -183,7 +184,7 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="/pekerjaan" class="nav-link {{ Request::is('pekerjaan*') ? 'active' : '' }}">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Selesai</p>
                                     </a>
@@ -252,7 +253,7 @@
     <!-- AdminLTE App -->
     <script src="{{ asset('assets/dist/js/adminlte.min.js') }}"></script>
     <!-- Select2 -->
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="{{ asset('assets/plugins/select2/js/select2.full.min.js') }}"></script>
     <!-- ChartJS -->
     <script src="{{ asset('assets/plugins/chart.js/Chart.min.js') }}"></script>
     <!-- DataTables  & Plugins -->
@@ -268,6 +269,9 @@
     <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
+    {{-- Sweet Alert2 --}}
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    {{-- Data Table --}}
     <script>
         $(function() {
             $('#table2').DataTable({
