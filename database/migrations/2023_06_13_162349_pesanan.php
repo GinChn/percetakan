@@ -15,15 +15,14 @@ class Pesanan extends Migration
     {
         Schema::create('pesanan', function (Blueprint $table) {
             $table->increments('id_pesanan');
-            $table->timestamp('tanggal');
             $table->string('no_nota');
-            $table->string('nama_pelanggan')->nullable();
-            $table->char('no_telp', 13)->nullable();
-            $table->integer('total');
+            $table->string('nama_pelanggan')->default(0);
+            $table->char('no_telp', 13)->default(0);
+            $table->integer('total')->default(0);
             $table->integer('bayar')->default(0);
-            $table->integer('diterima')->default(0);
-            $table->string('status_desain')->nullable();
+            $table->integer('kembali')->default(0);
             $table->string('status_pesanan')->nullable();
+            $table->string('status_pembayaran')->nullable();
             $table->timestamps();
         });
     }

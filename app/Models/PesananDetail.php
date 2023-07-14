@@ -26,20 +26,8 @@ class PesananDetail extends Model
         return $this->belongsTo(Bahan::class, 'id_bahan');
     }
 
-    // public static function simpan_pesanan($req)
-    // {
-    //     Pesanan::find(session('id_pesaanan'))->update([
-    //         'nama_pelanggan' => $req->nama_pelanggan,
-    //         'no_telp' => $req->no_telp,
-    //         'total' => $req->total,
-    //         'status_desain' => $req->status_desain,
-    //         'status_pesanan' => $req->status_pesanan,
-    //     ]);
-
-    //     Pelanggan::create([
-    //         'nama_pelanggan' => $req->nama_pelanggan,
-    //         'no_telp' => $req->no_telp,
-    //         'paassword' => 123
-    //     ]);
-    // }
+    public function pesanan()
+    {
+        return $this->belongsTo(Pesanan::class, 'id_pesanan');
+    }
 }

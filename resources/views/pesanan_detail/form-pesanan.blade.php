@@ -19,7 +19,7 @@
                         </div>
                         <div class="form-group">
                             <label>Barang</label>
-                            <select class="form-control" name="id_barang" id="id_barang">
+                            <select class="form-control" name="id_barang" id="barang">
                                 <option>Pilih Barang</option>
                                 @foreach ($barang as $item)
                                 <option value="{{ $item->id_barang }}">{{ $item->nama_barang }}</option>
@@ -28,16 +28,38 @@
                         </div>
                         <input type="hidden" class="form-control" name="id_bahan" id="bahan">
                         <div class="form-group">
+                            <label for="ukuran">Ukuran</label>
+                            <input type="number" class="form-control" name="panjang" id="panjang" placeholder="panjang" >
+                            <input type="number" class="form-control" name="lebar" id="lebar" placeholder="lebar" >
+                        </div>
+                        <div class="form-group">
                             <label for="harga">Harga</label>
-                            <input type="number" class="form-control" name="harga" id="harga" placeholder="Harga" readonly required>
+                            <input type="number" class="form-control" name="harga" id="harga_detail" placeholder="Harga" readonly required>
                         </div>
                         <div class="form-group">
                             <label for="jumlah">Qty</label>
-                            <input type="number" class="form-control" name="jumlah" id="jumlah" placeholder="Masukkan Jumlah" required>
+                            <input type="number" class="form-control" name="jumlah" id="jumlah_detail" placeholder="Masukkan Jumlah" required>
                         </div>
                         <div class="form-group">
                             <label for="subtotal">Subtotal</label>
-                            <input type="number" class="form-control" name="subtotal" id="subtotal" placeholder="Subtotal" readonly required>
+                            <input type="number" class="form-control" name="subtotal" id="subtotal_detail" placeholder="Subtotal" readonly required>
+                        </div>
+                        <div class="form-group">
+                            <label for="finishing">Finishing</label>
+                            <select class="form-control form-control-sm" id="id_finishing" name="id_finishing">
+                                @foreach ($finishing as $item)
+                                <option value="{{ $item->id_finishing }}">{{ $item->nama_finishing }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="status_detail">Status</label>
+                            <select class="form-control form-control-sm" name="status_detail" id="status_detail">
+                                <option value="Belum Ada Desain">Belum Ada Desain</option>
+                                <option value="Sudah Ada Desain">Sudah Ada Desain</option>
+                                <option value="Dikerjakan">Dikerjakan</option>
+                                <option value="Selesai">Selesai</option>
+                            </select>
                         </div>
                     </div>
                     <div class="modal-footer justify-content-between">

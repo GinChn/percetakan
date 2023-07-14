@@ -2,30 +2,20 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\PesananDetail;
 use Illuminate\Database\Eloquent\Model;
-use Alfa6661\AutoNumber\AutoNumberTrait;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Pesanan extends Model
 {
     use HasFactory;
-    use AutoNumberTrait;
 
     protected $table = 'pesanan';
     protected $primaryKey = 'id_pesanan';
     protected $guarded = [];
 
-    /**
-     * Return the autonumber configuration array for this model.
-     *
-     * @return array
-     */
-    public function getAutoNumberOptions()
+    public function pesanan_detail()
     {
-        return [
-            'no_nota' => [
-                'length' => 5 // Jumlah digit yang akan digunakan sebagai nomor urut
-            ]
-        ];
+        return $this->belongsTo(PesananDetail::class, 'id_pesanan_detail');
     }
 }
