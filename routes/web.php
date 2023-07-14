@@ -51,5 +51,8 @@ Route::resource('/pesanan_detail', PesananDetailController::class)
 Route::resource('/pengeluaran', PengeluaranController::class);
 
 Route::resource('/laporan', LaporanController::class);
-
 Route::post('/laporan', [LaporanController::class, 'handleForm'])->name('submit_tanggal');
+
+//export excel
+// Route::get('/exportexcel', [LaporanController::class, 'exportexcel'])->name('exportexcel');
+Route::get('/export-excel', [LaporanController::class, 'exportExcel'])->name('export.excel');

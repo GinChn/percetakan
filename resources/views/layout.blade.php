@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>AAL Printing |</title>
-    
+
     <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome-free/css/all.min.css') }}">
+    <!-- daterange picker -->
+    <link rel="stylesheet" href="{{ asset('assets/plugins/daterangepicker/daterangepicker.css') }}">
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Theme style -->
@@ -22,6 +26,7 @@
     <!-- Select2 -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 </head>
+
 <body class="hold-transition sidebar-mini">
     <div class="wrapper">
         <!-- Navbar -->
@@ -44,8 +49,8 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                         <li class="user-header bg-success">
-                            <img src="{{ asset('assets/dist/img/user2-160x160.jpg') }}"
-                                class="img-circle elevation-2" alt="User Image">
+                            <img src="{{ asset('assets/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2"
+                                alt="User Image">
                             <p>
                                 User
                             </p>
@@ -59,18 +64,20 @@
             </ul>
         </nav>
         <!-- /.navbar -->
-        
+
         <aside class="main-sidebar sidebar-dark-olive elevation-4">
             <!-- Brand Logo -->
             <a href="/" class="brand-link bg-light">
-                <img src="{{ asset('assets/dist/img/logo.png') }}" alt="AdminLTE Logo" class="brand-image" style="opacity: .8">
+                <img src="{{ asset('assets/dist/img/logo.png') }}" alt="AdminLTE Logo" class="brand-image"
+                    style="opacity: .8">
                 <span class="brand-text font-weight-light">AAL Printing</span>
             </a>
-            
+
             <!-- Sidebar -->
             <div class="sidebar">
                 <nav class="mt-2">
-                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                        data-accordion="false">
                         <li class="nav-header">DASHBOARD</li>
                         <li class="nav-item">
                             <a href="/" class="nav-link {{ Request::is('/*') ? 'active' : '' }}">
@@ -86,7 +93,7 @@
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
                                     Data Master
-                                <i class="right fas fa-angle-left"></i>
+                                    <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
@@ -115,12 +122,13 @@
                                 <i class="nav-icon fas fa-address-card"></i>
                                 <p>
                                     Data User
-                                <i class="right fas fa-angle-left"></i>
+                                    <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="/karyawan" class="nav-link {{ Request::is('karyawan*') ? 'active' : '' }}">
+                                    <a href="/karyawan"
+                                        class="nav-link {{ Request::is('karyawan*') ? 'active' : '' }}">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Karyawan</p>
                                     </a>
@@ -155,7 +163,7 @@
                                 <i class="nav-icon fas fa-money-bill-wave"></i>
                                 <p>
                                     Pembayaran
-                                <i class="right fas fa-angle-left"></i>
+                                    <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
@@ -178,7 +186,7 @@
                                 <i class="nav-icon fas fa-business-time"></i>
                                 <p>
                                     Pekerjaan
-                                <i class="right fas fa-angle-left"></i>
+                                    <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
@@ -197,7 +205,8 @@
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a href="/pengeluaran" class="nav-link {{ Request::is('pengeluaran*') ? 'active' : '' }}">
+                            <a href="/pengeluaran"
+                                class="nav-link {{ Request::is('pengeluaran*') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-file-export"></i>
                                 <p>
                                     Pengeluaran
@@ -218,35 +227,38 @@
             </div>
             <!-- /.sidebar -->
         </aside>
-        
+
         <!-- Content -->
-        <div class="content-wrapper">            
+        <div class="content-wrapper">
             <section class="content">
                 @yield('content')
             </section>
         </div>
         <!-- /.content -->
-        
+
         <footer class="main-footer">
             <div class="float-right d-none d-sm-block">
                 <b>Version</b> 3.2.0
             </div>
-            <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
+            <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights
+            reserved.
         </footer>
-        
+
         <!-- Control Sidebar -->
         <aside class="control-sidebar control-sidebar-dark">
         </aside>
         <!-- /.control-sidebar -->
     </div>
     <!-- wrapper end -->
-    
+
     <!-- Script -->
     <!-- jQuery -->
     <script src="{{ asset('assets/plugins/jquery/jquery.min.js') }}"></script>
     <!-- jquery-validation -->
     <script src="{{ asset('assets/plugins/jquery-validation/jquery.validate.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/jquery-validation/additional-methods.min.js') }}"></script>
+    <!-- date-range-picker -->
+    <script src="{{ asset('assets/plugins/daterangepicker/daterangepicker.js') }}"></script>
     <!-- Bootstrap 4 -->
     <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <!-- AdminLTE App -->
@@ -270,19 +282,26 @@
     <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
     <script>
         $(function() {
-            $('#table2').DataTable({
-                "paging": true,
-                "lengthChange": false,
-                "searching": true,
-                "ordering": true,
-                "info": true,
-                "autoWidth": false,
-                "responsive": true,
+
+
+            var tableIds = ['#table2', '#table2_pemasukan', '#table2_pengeluaran'];
+
+            $(tableIds.join(', ')).each(function() {
+                $(this).DataTable({
+                    "paging": true,
+                    "lengthChange": false,
+                    "searching": true,
+                    "ordering": true,
+                    "info": true,
+                    "autoWidth": false,
+                    "responsive": true,
+                });
             });
         });
     </script>
-    
+
     @yield('script')
     <!-- Script End -->
 </body>
+
 </html>

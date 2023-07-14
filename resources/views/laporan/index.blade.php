@@ -71,22 +71,24 @@
                                 <div class="col-md-1">
                                     <div class="button-tgl d-flex align-items-center justify-content-end"
                                         style="height:100%;">
-                                        <button type="submit" class="btn-sm btn-primary tombol_cek"
-                                            style="width:100%; text-align:center; display:none">Cek</button>
+                                        <button type="submit" class="btn btn-primary tombol_cek shadow-none btn-sm"
+                                            style="width:100%; text-align:center; {!! isset($data_input['jenis_laporan']) ? '' : 'display: none;"' !!}">Cek</button>
                                     </div>
                                 </div>
                                 <div class="col-md-1">
                                     <div class="d-flex align-items-center justify-content-end" style="height:100%;">
-                                        <button type="submit" class="btn-sm btn-success "
-                                            style="width:100%; text-align:center; "><i class="fa fa-download"
-                                                aria-hidden="true"></i><span class="ml-1">Excel</span></button>
+                                        <a href="/exportexcel" class="btn-sm btn-success export-pdf"
+                                            style="width:100%; text-align:center; {!! isset($data_input['jenis_laporan']) ? '' : 'display: none;"' !!}"><i
+                                                class="fa fa-download sm" aria-hidden="true"></i><span
+                                                class="ml-1">XLS</span></a>
                                     </div>
                                 </div>
                                 <div class="col-md-1">
                                     <div class="d-flex align-items-center justify-content-end" style="height:100%;">
-                                        <button type="submit" class="btn-sm btn-secondary "
-                                            style="width:100%; text-align:center; "><i class="fa fa-download"
-                                                aria-hidden="true"></i><span class="ml-1">PDF</span></button>
+                                        <a href="/exportpdf" class="btn-sm btn-secondary export-excel"
+                                            style="width:100%; text-align:center; {!! isset($data_input['jenis_laporan']) ? '' : 'display: none;"' !!}"><i
+                                                class="fa fa-download sm" aria-hidden="true"></i><span
+                                                class="ml-1">PDF</span></a>
                                     </div>
                                 </div>
                             </div>
@@ -107,7 +109,7 @@
                     <div class="card-body">
 
                         @if ($data_input['jenis_laporan'] == 'harian')
-                            <table class="table">
+                            <table id="table2_pemasukan" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
                                         <th>No</th>
@@ -134,7 +136,7 @@
                                 </tbody>
                             </table>
                         @elseif($data_input['jenis_laporan'] == 'bulanan')
-                            <table class="table">
+                            <table id="table2_pemasukan" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
                                         <th>No</th>
@@ -166,6 +168,16 @@
                                 <div class="col d-flex justify-content-center">
                                     <p id="total-angka-masuk" class="text-bold d-flex align-items-center"
                                         style="height:100%;">
+                                        @if ($data_input['jenis_laporan'] == 'harian')
+                                            @if ($data_laporan['total_masuk'])
+                                                {{ $data_laporan['total_masuk']->total_pemasukan_harian }}
+                                            @endif
+                                        @elseif($data_input['jenis_laporan'] == 'bulanan')
+                                            @if ($data_laporan['total_masuk'])
+                                                {{ $data_laporan['total_masuk'] }}
+                                            @endif
+                                        @endif
+
                                     </p>
                                 </div>
                             </div>
@@ -182,7 +194,7 @@
                     </div>
                     <div class="card-body">
                         @if ($data_input['jenis_laporan'] == 'harian')
-                            <table class="table">
+                            <table id="table2_pengeluaran" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
                                         <th>No</th>
@@ -208,7 +220,7 @@
                                 </tbody>
                             </table>
                         @elseif($data_input['jenis_laporan'] == 'bulanan')
-                            <table class="table">
+                            <table id="table2_pengeluaran" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
                                         <th>No</th>
@@ -240,6 +252,15 @@
                                 <div class="col d-flex justify-content-center">
                                     <p id="total-angka-keluar" class="text-bold d-flex align-items-center"
                                         style="height:100%;">
+                                        @if ($data_input['jenis_laporan'] == 'harian')
+                                            @if ($data_laporan['total_keluar'])
+                                                {{ $data_laporan['total_keluar']->total_pengeluaran_harian }}
+                                            @endif
+                                        @elseif($data_input['jenis_laporan'] == 'bulanan')
+                                            @if ($data_laporan['total_keluar'])
+                                                {{ $data_laporan['total_keluar'] }}
+                                            @endif
+                                        @endif
                                     </p>
                                 </div>
                             </div>
@@ -264,6 +285,9 @@
                                 <div class="col d-flex justify-content-center">
                                     <p id="total-bersih" class="text-bold d-flex align-items-center"
                                         style="height:100%;">
+                                        @if (isset($data_laporan['total_bersih']))
+                                            {{ $data_laporan['total_bersih'] }}
+                                        @endif
                                     </p>
                                 </div>
                             </div>
@@ -278,7 +302,7 @@
 @endsection
 
 @section('script')
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
     <script>
         let totalJumlahMasuk = 0;
         let totalJumlahKeluar = 0;
@@ -293,40 +317,18 @@
                 $('.pick_harian, .pick_bulanan').hide();
                 $('.tombol_cek').hide();
 
+                // if (pilihLaporan === 'harian' || pilihLaporan === 'bulanan') {
+                //     $('.pick_harian, .tombol_cek, .export-pdf, .export-excel').show();
+                // }
+
                 if (pilihLaporan === 'harian') {
-                    $('.pick_harian, .tombol_cek').show();
+                    $('.pick_harian, .tombol_cek, .export-pdf, .export-excel').show();
                 } else if (pilihLaporan === 'bulanan') {
-                    $('.pick_bulanan, .tombol_cek').show();
+                    $('.pick_bulanan, .tombol_cek, .export-pdf, .export-excel').show();
                 }
+
             });
         });
         // menampilkan jumlah pemasukan dan pengeluaran
-        $(document).ready(function() {
-            // totalJumlahMasuk = 0;
-
-            $('.total-masuk').each(function() {
-                let angkaMasuk = parseInt($(this).text());
-                totalJumlahMasuk += angkaMasuk;
-            });
-
-            $('#total-angka-masuk').text(totalJumlahMasuk);
-        });
-
-        $(document).ready(function() {
-            // totalJumlahKeluar = 0;
-
-            $('.total-keluar').each(function() {
-                let angkaKeluar = parseInt($(this).text());
-                totalJumlahKeluar += angkaKeluar;
-            });
-
-            $('#total-angka-keluar').text(totalJumlahKeluar);
-        });
-
-        $(document).ready(function() {
-            totalBersih = totalJumlahMasuk - totalJumlahKeluar;
-
-            $('#total-bersih').text(totalBersih);
-        });
     </script>
 @endsection
