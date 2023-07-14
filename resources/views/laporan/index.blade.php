@@ -77,12 +77,14 @@
                                 </div>
                                 <div class="col-md-1">
                                     <div class="d-flex align-items-center justify-content-end" style="height:100%;">
+                                        @if (isset($data_input['jenis_laporan']))
+                                            <a href="{{ route('export.excel', ['jenis_laporan' => $data_input['jenis_laporan'], 'tanggal_laporan' => $data_input['tanggal_laporan'], 'tanggal_laporan_awal' => $data_input['tanggal_laporan_awal'], 'tanggal_laporan_akhir' => $data_input['tanggal_laporan_akhir']]) }}"
+                                                class="btn-sm btn-success export-pdf"
+                                                style="width:100%; text-align:center; {!! isset($data_input['jenis_laporan']) ? '' : 'display: none;"' !!}"><i
+                                                    class="fa fa-download sm" aria-hidden="true"></i><span
+                                                    class="ml-1">XLS</span></a>
+                                        @endif
 
-                                        <a href="{{ route('export.excel', ['jenis_laporan' => isset($data_input_laporan['jenis_laporan']), 'tanggal_laporan' => isset($data_input_laporan['tanggal_laporan'])]) }}"
-                                            class="btn-sm btn-success export-pdf"
-                                            style="width:100%; text-align:center; {!! isset($data_input['jenis_laporan']) ? '' : 'display: none;"' !!}"><i
-                                                class="fa fa-download sm" aria-hidden="true"></i><span
-                                                class="ml-1">XLS</span></a>
 
                                     </div>
                                 </div>
