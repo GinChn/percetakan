@@ -19,7 +19,7 @@ class LaporanExportView implements FromView
 
     public function view(): View
     {
-        return view('laporan.export', [
+        return view('laporan.tabel', [
             'data_laporan' => $this->data_laporan,
             'data_input' => $this->data_input,
         ]);

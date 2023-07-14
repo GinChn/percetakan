@@ -34,7 +34,7 @@
                                                 </option>
                                                 <option value="bulanan"
                                                     {{ isset($data_input['jenis_laporan']) && $data_input['jenis_laporan'] == 'bulanan' ? 'selected' : '' }}>
-                                                    Bulanan</option>
+                                                    Periode</option>
                                             </select>
                                         </div>
                                     </div>
@@ -77,10 +77,13 @@
                                 </div>
                                 <div class="col-md-1">
                                     <div class="d-flex align-items-center justify-content-end" style="height:100%;">
-                                        <a href="/exportexcel" class="btn-sm btn-success export-pdf"
+
+                                        <a href="{{ route('export.excel', ['jenis_laporan' => isset($data_input_laporan['jenis_laporan']), 'tanggal_laporan' => isset($data_input_laporan['tanggal_laporan'])]) }}"
+                                            class="btn-sm btn-success export-pdf"
                                             style="width:100%; text-align:center; {!! isset($data_input['jenis_laporan']) ? '' : 'display: none;"' !!}"><i
                                                 class="fa fa-download sm" aria-hidden="true"></i><span
                                                 class="ml-1">XLS</span></a>
+
                                     </div>
                                 </div>
                                 <div class="col-md-1">
