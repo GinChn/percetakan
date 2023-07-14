@@ -13,7 +13,7 @@
                 <th>No Nota</th>
                 <th>Nama Pelanggan</th>
                 <th>No HP</th>
-                <th>Total Tagihan</th>
+                <th>Total Bayar</th>
             </tr>
         </thead>
 

@@ -62,3 +62,4 @@ Route::post('/laporan', [LaporanController::class, 'handleForm'])->name('submit_
 //export excel
 // Route::get('/exportexcel', [LaporanController::class, 'exportexcel'])->name('exportexcel');
 Route::get('/export-excel', [LaporanController::class, 'exportExcel'])->name('export.excel');
+Route::get('/export-pdf', [LaporanController::class, 'exportPdf'])->name('export.pdf');
