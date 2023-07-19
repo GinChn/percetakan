@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Pengeluaran;
+use App\Models\Pesanan;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
-class PengeluaranController extends Controller
+class PekerjaanController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +15,8 @@ class PengeluaranController extends Controller
      */
     public function index()
     {
-        return view('pengeluaran.index', [
-            'pengeluaran' => Pengeluaran::orderBy('created_at', 'desc')->get()
+        return view('pekerjaan.index', [
+            'pekerjaan' => Pesanan::all()
         ]);
     }
 
@@ -38,14 +38,7 @@ class PengeluaranController extends Controller
      */
     public function store(Request $request)
     {
-        Pengeluaran::create([
-            'keterangan' => $request->keterangan,
-            'nominal' => $request->nominal,
-            'jumlah' => $request->jumlah,
-            'total' => $request->total
-        ]);
-
-        return redirect('/pengeluaran')->with('sukses-tambah-pengeluaran', 'Pengeluaran Berhasil Ditambahkan');
+        //
     }
 
     /**
@@ -56,9 +49,7 @@ class PengeluaranController extends Controller
      */
     public function show($id)
     {
-        $pengeluaran = Pengeluaran::find($id);
-
-        return response()->json($pengeluaran);
+        //
     }
 
     /**
@@ -81,26 +72,17 @@ class PengeluaranController extends Controller
      */
     public function update(Request $request, $id)
     {
-        Pengeluaran::find($id)->update([
-            'keterangan' => $request->keterangan,
-            'nominal' => $request->nominal,
-            'jumlah' => $request->jumlah,
-            'total' => $request->total
-        ]);
-
-        return redirect('/pengeluaran')->with('sukses-ubah-pengeluaran', 'Pengeluaran Berhasil Diubah');
+        //
     }
 
     /**
      * Remove the specified resource from storage.
-     *S
+     *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        Pengeluaran::find($id)->delete();
-
-        return back();
+        //
     }
 }

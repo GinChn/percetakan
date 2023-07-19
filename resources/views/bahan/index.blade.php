@@ -17,7 +17,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <button onclick="addBahan('{{ route('bahan.store') }}')" class="btn btn-success">
+                    <button onclick="addBahan('{{ route('bahan.store') }}')" class="btn btn-sm btn-success">
                         Tambah Bahan
                     </button>
                 </div>
@@ -61,8 +61,6 @@
 @endsection
 
 @section('script')
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
 <script>
     function addBahan(url) {
         $('#modal-bahan').modal('show');
@@ -86,9 +84,7 @@
                 $('#modal-bahan [name=nama_bahan]').val(response.nama_bahan);
             })
     }
-</script>
 
-<script>
     function deleteBahan(id) {
         event.preventDefault();
         Swal.fire({
@@ -111,9 +107,7 @@
             }
         })
     }
-</script>
 
-<script>
     $(function(){
         var Toast = Swal.mixin({
         toast: true,

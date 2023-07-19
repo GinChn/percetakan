@@ -16,7 +16,7 @@ class MesinController extends Controller
     public function index()
     {
         return view('mesin.index', [
-            "mesin" => Mesin::all()
+            "mesin" => Mesin::orderBy('jenis_mesin', 'asc')->get()
         ]);
     }
 

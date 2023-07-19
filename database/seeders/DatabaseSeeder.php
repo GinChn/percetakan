@@ -96,6 +96,10 @@ class DatabaseSeeder extends Seeder
 
         // Finishing
         Finishing::create([
+            'nama_finishing' => 'Tanpa Finishing'
+        ]);
+
+        Finishing::create([
             'nama_finishing' => 'Lem Keliling'
         ]);
 

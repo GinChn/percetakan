@@ -26,31 +26,27 @@
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Data 1</th>
-                                <th>Data 1</th>
-                                <th>Data 1</th>
-                                <th>Data 1</th>
+                                <th>Tanggal</th>
+                                <th>Nama Pelanggan</th>
+                                <th>Status Desain</th>
+                                <th>Status Pekerjaan</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach ($pekerjaan as $item)
                             <tr>
-                                <td>#</td>
-                                <td>#</td>
-                                <td>#</td>
-                                <td>#</td>
-                                <td>#</td>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ tanggal_indonesia($item->created_at) }}</td>
+                                <td>{{ $item->nama_pelanggan }}</td>
+                                <td>{{ $item->status_desain }}</td>
+                                <td>{{ $item->status_pesanan }}</td>
                                 <td>
                                     <a href="#" class="btn-sm btn-primary"><i class="fas fa-pen"></i></a>
-                                    <form id="#" action="#" method="post" class="d-inline">
-                                        @csrf
-                                        @method('delete')
-                                        <button type="submit" class="btn-sm btn-danger border-0 delete-btn">
-                                            <i class="fa fa-trash"></i>
-                                        </button>
-                                    </form>
+                                    <a href="#" class="btn-sm btn-primary"><i class="fas fa-pen"></i></a>
                                 </td>
                             </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

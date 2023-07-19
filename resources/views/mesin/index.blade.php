@@ -17,7 +17,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <button onclick="addMesin('{{ route('mesin.store') }}')" class="btn btn-success">
+                    <button onclick="addMesin('{{ route('mesin.store') }}')" class="btn btn-sm btn-success">
                         Tambah Mesin
                     </button>
                 </div>
@@ -61,8 +61,6 @@
 @endsection
 
 @section('script')
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
 <script>
     function addMesin(url) {
         $('#modal-mesin').modal('show');
@@ -86,9 +84,7 @@
                 $('#modal-mesin [name=jenis_mesin]').val(response.jenis_mesin);
             })
     }
-</script>
 
-<script>
     function deleteMesin(id) {
         event.preventDefault();
         Swal.fire({
@@ -111,9 +107,7 @@
             }
         })
     }
-</script>
 
-<script>
     $(function(){
         var Toast = Swal.mixin({
         toast: true,
@@ -123,14 +117,14 @@
     });
     @if(Session::has('sukses-tambah-mesin'))
     Toast.fire({
-            icon: 'success',
-            title: '{{ Session::get('sukses-tambah-mesin') }}'
+        icon: 'success',
+        title: '{{ Session::get('sukses-tambah-mesin') }}'
         })
     @endif
     @if(Session::has('sukses-ubah-mesin'))
     Toast.fire({
-            icon: 'success',
-            title: '{{ Session::get('sukses-ubah-mesin') }}'
+        icon: 'success',
+        title: '{{ Session::get('sukses-ubah-mesin') }}'
         })
     @endif
 });

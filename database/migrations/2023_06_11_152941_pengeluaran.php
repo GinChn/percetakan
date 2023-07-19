@@ -16,7 +16,7 @@ class Pengeluaran extends Migration
         Schema::create('pengeluaran', function (Blueprint $table) {
             $table->increments('id_pengeluaran');
             $table->string('keterangan');
-            $table->integer('harga');
+            $table->integer('nominal');
             $table->integer('jumlah');
             $table->integer('total');
             $table->timestamps();

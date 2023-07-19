@@ -17,8 +17,8 @@
                             <input type="text" class="form-control" name="keterangan" id="keterangan" placeholder="Masukkan Keterangan" required>
                         </div>
                         <div class="form-group">
-                            <label for="harga">Harga</label>
-                            <input type="number" class="form-control" name="harga" id="harga" placeholder="Masukkan Harga" required>
+                            <label for="nominal">Nominal</label>
+                            <input type="number" class="form-control" name="nominal" id="nominal" placeholder="Masukkan Nominal" required>
                         </div>
                         <div class="form-group">
                             <label for="jumlah">Jumlah</label>
@@ -30,8 +30,8 @@
                         </div>
                     </div>
                     <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-success">Simpan</button>
+                        <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-sm btn-success">Simpan</button>
                     </div>
                 </div>
             </div>
