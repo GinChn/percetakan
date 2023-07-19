@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 // use Illuminate\Foundation\Auth\User;
+use Illuminate\Support\Facades\Hash;
 
 class RegistrasiController extends Controller
 {
@@ -46,7 +47,7 @@ class RegistrasiController extends Controller
         $token = md5($request->input('username') . microtime());
         User::create([
             'username' => $request->username,
-            'password' => $request->password,
+            'password' => Hash::make($request->password),
             'nama' => $request->nama,
             'tanggal_lahir' => $request->tanggal_lahir,
             'alamat' => $request->alamat,
