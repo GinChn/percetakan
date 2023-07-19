@@ -10,103 +10,102 @@
             </div>
         </div>
     </div>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-body">
-                        <form action="{{ route('submit_tanggal') }}" method="POST">
-                            @csrf
-                            <div class="row">
-                                <div class="col-md-4">
+    {{-- <div class="container-fluid"> --}}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <form action="{{ route('submit_tanggal') }}" method="POST">
+                        @csrf
+                        <div class="row">
+                            <div class="col-md-4">
 
-                                    <div class="form-group d-flex align-items-center" style="height:100%">
-                                        {{-- <label for="dropdownInput">Jenis Laporan</label> --}}
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <label class="input-group-text" for="pilihLaporan">Laporan</label>
-                                            </div>
-                                            <select class="custom-select" id="pilihLaporan" name="jenis_laporan">
-                                                <option value="">--Pilih Jenis Laporan--</option>
-                                                <option value="harian"
-                                                    {{ isset($data_input['jenis_laporan']) && $data_input['jenis_laporan'] == 'harian' ? 'selected' : '' }}>
-                                                    Harian
-                                                </option>
-                                                <option value="bulanan"
-                                                    {{ isset($data_input['jenis_laporan']) && $data_input['jenis_laporan'] == 'bulanan' ? 'selected' : '' }}>
-                                                    Periode</option>
-                                            </select>
+                                <div class="form-group d-flex align-items-center" style="height:100%">
+                                    {{-- <label for="dropdownInput">Jenis Laporan</label> --}}
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <label class="input-group-text" for="pilihLaporan">Laporan</label>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-5 pick_harian" {!! isset($data_input['jenis_laporan']) && $data_input['jenis_laporan'] == 'harian'
-                                    ? ''
-                                    : 'style="display: none;"' !!}>
-                                    <div class="form-group d-flex align-items-center" style="height:100%">
-                                        <input type="date" class="form-control" id="dateInput" placeholder="Select date"
-                                            name="tanggal_laporan"
-                                            value="{{ isset($data_input['tanggal_laporan']) ? $data_input['tanggal_laporan'] : '' }}">
-                                    </div>
-                                </div>
-                                <div class="col-md-5 pick_bulanan" {!! isset($data_input['jenis_laporan']) && $data_input['jenis_laporan'] == 'bulanan'
-                                    ? ''
-                                    : 'style="display: none;"' !!}>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group d-flex align-items-center" style="height:100%">
-                                                <input type="date" class="form-control" id="dateInput"
-                                                    placeholder="Select date" name="tanggal_laporan_awal"
-                                                    value="{{ isset($data_input['tanggal_laporan_awal']) ? $data_input['tanggal_laporan_awal'] : '' }}">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group d-flex align-items-center" style="height:100%">
-                                                <input type="date" class="form-control" id="dateInput"
-                                                    placeholder="Select date" name="tanggal_laporan_akhir"
-                                                    value="{{ isset($data_input['tanggal_laporan_akhir']) ? $data_input['tanggal_laporan_akhir'] : '' }}">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-1">
-                                    <div class="button-tgl d-flex align-items-center justify-content-end"
-                                        style="height:100%;">
-                                        <button type="submit" class="btn btn-primary tombol_cek shadow-none btn-sm"
-                                            style="width:100%; text-align:center; {!! isset($data_input['jenis_laporan']) ? '' : 'display: none;"' !!}">Cek</button>
-                                    </div>
-                                </div>
-                                <div class="col-md-1">
-                                    <div class="d-flex align-items-center justify-content-end" style="height:100%;">
-                                        @if (isset($data_input['jenis_laporan']))
-                                            <a href="{{ route('export.excel', ['jenis_laporan' => $data_input['jenis_laporan'], 'tanggal_laporan' => $data_input['tanggal_laporan'], 'tanggal_laporan_awal' => $data_input['tanggal_laporan_awal'], 'tanggal_laporan_akhir' => $data_input['tanggal_laporan_akhir']]) }}"
-                                                class="btn-sm btn-success export-excel"
-                                                style="width:100%; text-align:center; {!! isset($data_input['jenis_laporan']) ? '' : 'display: none;"' !!}"><i
-                                                    class="fa fa-download sm" aria-hidden="true"></i><span
-                                                    class="ml-1">XLS</span></a>
-                                        @endif
-
-
-                                    </div>
-                                </div>
-                                <div class="col-md-1">
-                                    <div class="d-flex align-items-center justify-content-end" style="height:100%;">
-                                        @if (isset($data_input['jenis_laporan']))
-                                            <a href="{{ route('export.pdf', ['jenis_laporan' => $data_input['jenis_laporan'], 'tanggal_laporan' => $data_input['tanggal_laporan'], 'tanggal_laporan_awal' => $data_input['tanggal_laporan_awal'], 'tanggal_laporan_akhir' => $data_input['tanggal_laporan_akhir']]) }}"
-                                                class="btn-sm btn-secondary export-pdf"
-                                                style="width:100%; text-align:center; {!! isset($data_input['jenis_laporan']) ? '' : 'display: none;"' !!}"><i
-                                                    class="fa fa-download sm" aria-hidden="true"></i><span
-                                                    class="ml-1">PDF</span></a>
-                                        @endif
-
+                                        <select class="custom-select" id="pilihLaporan" name="jenis_laporan">
+                                            <option value="">--Pilih Jenis Laporan--</option>
+                                            <option value="harian"
+                                                {{ isset($data_input['jenis_laporan']) && $data_input['jenis_laporan'] == 'harian' ? 'selected' : '' }}>
+                                                Harian
+                                            </option>
+                                            <option value="bulanan"
+                                                {{ isset($data_input['jenis_laporan']) && $data_input['jenis_laporan'] == 'bulanan' ? 'selected' : '' }}>
+                                                Periode</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
-                        </form>
-                    </div>
+                            <div class="col-md-5 pick_harian" {!! isset($data_input['jenis_laporan']) && $data_input['jenis_laporan'] == 'harian'
+                                ? ''
+                                : 'style="display: none;"' !!}>
+                                <div class="form-group d-flex align-items-center" style="height:100%">
+                                    <input type="date" class="form-control" id="dateInput" placeholder="Select date"
+                                        name="tanggal_laporan"
+                                        value="{{ isset($data_input['tanggal_laporan']) ? $data_input['tanggal_laporan'] : '' }}">
+                                </div>
+                            </div>
+                            <div class="col-md-5 pick_bulanan" {!! isset($data_input['jenis_laporan']) && $data_input['jenis_laporan'] == 'bulanan'
+                                ? ''
+                                : 'style="display: none;"' !!}>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group d-flex align-items-center" style="height:100%">
+                                            <input type="date" class="form-control" id="dateInput"
+                                                placeholder="Select date" name="tanggal_laporan_awal"
+                                                value="{{ isset($data_input['tanggal_laporan_awal']) ? $data_input['tanggal_laporan_awal'] : '' }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group d-flex align-items-center" style="height:100%">
+                                            <input type="date" class="form-control" id="dateInput"
+                                                placeholder="Select date" name="tanggal_laporan_akhir"
+                                                value="{{ isset($data_input['tanggal_laporan_akhir']) ? $data_input['tanggal_laporan_akhir'] : '' }}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="button-tgl d-flex align-items-center justify-content-end" style="height:100%;">
+                                    <button type="submit" class="btn btn-primary tombol_cek shadow-none btn-sm"
+                                        style="width:100%; text-align:center; {!! isset($data_input['jenis_laporan']) ? '' : 'display: none;"' !!}">Cek</button>
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="d-flex align-items-center justify-content-end" style="height:100%;">
+                                    @if (isset($data_input['jenis_laporan']))
+                                        <a href="{{ route('export.excel', ['jenis_laporan' => $data_input['jenis_laporan'], 'tanggal_laporan' => $data_input['tanggal_laporan'], 'tanggal_laporan_awal' => $data_input['tanggal_laporan_awal'], 'tanggal_laporan_akhir' => $data_input['tanggal_laporan_akhir']]) }}"
+                                            class="btn-sm btn-success export-excel"
+                                            style="width:100%; text-align:center; {!! isset($data_input['jenis_laporan']) ? '' : 'display: none;"' !!}"><i
+                                                class="fa fa-download sm" aria-hidden="true"></i><span
+                                                class="ml-1">XLS</span></a>
+                                    @endif
+
+
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="d-flex align-items-center justify-content-end" style="height:100%;">
+                                    @if (isset($data_input['jenis_laporan']))
+                                        <a href="{{ route('export.pdf', ['jenis_laporan' => $data_input['jenis_laporan'], 'tanggal_laporan' => $data_input['tanggal_laporan'], 'tanggal_laporan_awal' => $data_input['tanggal_laporan_awal'], 'tanggal_laporan_akhir' => $data_input['tanggal_laporan_akhir']]) }}"
+                                            class="btn-sm btn-secondary export-pdf"
+                                            style="width:100%; text-align:center; {!! isset($data_input['jenis_laporan']) ? '' : 'display: none;"' !!}"><i
+                                                class="fa fa-download sm" aria-hidden="true"></i><span
+                                                class="ml-1">PDF</span></a>
+                                    @endif
+
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
+    {{-- </div> --}}
 
     @if (isset($data_input))
         <div class="row">

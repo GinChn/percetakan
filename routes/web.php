@@ -13,6 +13,7 @@ use App\Http\Controllers\PekerjaanController;
 use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\PengeluaranController;
 use App\Http\Controllers\PesananDetailController;
+use App\Http\Controllers\StatusController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,9 +32,11 @@ use App\Http\Controllers\PesananDetailController;
 
 Route::get('/login', [LoginController::class, 'index']);
 Route::post('/login', [LoginController::class, 'login']);
+Route::get('/reset-password', [LoginController::class, 'resetPassword']);
 Route::post('/logout', [LoginController::class, 'logout']);
 
 Route::resource('/', DashboardController::class);
+Route::resource('/cek-pesanan', StatusController::class);
 
 Route::resource('/mesin', MesinController::class);
 
@@ -60,6 +63,5 @@ Route::resource('/laporan', LaporanController::class);
 Route::post('/laporan', [LaporanController::class, 'handleForm'])->name('submit_tanggal');
 
 //export excel
-// Route::get('/exportexcel', [LaporanController::class, 'exportexcel'])->name('exportexcel');
 Route::get('/export-excel', [LaporanController::class, 'exportExcel'])->name('export.excel');
 Route::get('/export-pdf', [LaporanController::class, 'exportPdf'])->name('export.pdf');

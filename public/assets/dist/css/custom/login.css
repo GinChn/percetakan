@@ -1,0 +1,149 @@
+/* #4b79a1 */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap');
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Sora', sans-serif;
+    color: #000;
+    text-decoration: none;
+    list-style: none;
+}
+
+.background-wrapper {
+    background: #f6f6f6;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    min-height: 100vh;
+}
+
+.login-container {
+    background: orange;
+    width: 80%;
+    display: flex;
+}
+
+.login-wrapper {
+    flex: 1;
+    background: #74bde6;
+    padding: 20px;
+}
+
+.image-wrapper {
+    height: 450px;
+}
+
+.brand-logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.brand-logo img {
+    height: 50px;
+    margin-right: 5px;
+}
+
+.brand-logo h3 {
+    margin-left: 5px;
+    font-size: 25px;
+    color: #14263d;
+}
+
+.admin-icon {
+    margin: auto;
+    padding: 10px;
+    background: white;
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    -ms-border-radius: 50px;
+    -o-border-radius: 50px;
+}
+
+.admin-icon img {
+    width: 50px;
+    margin: auto;
+}
+
+.login-wrapper h4 {
+    text-align: center;
+    color: #24446d;
+}
+
+.form-login {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-field {
+    padding: 10px 0;
+    width: 60%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-field input {
+    padding: 10px 10px;
+    font-size: 16px;
+    background: #74bde6;
+    outline: none;
+    border: none;
+    border-bottom: 2px solid #24446d;
+    color: #24446d;
+}
+
+.login-field input::placeholder {
+    color: #24446d;
+}
+
+.login-icon {
+    padding: 5px;
+    color: #14263d;
+}
+
+.button-wrapper {
+    width: 60%;
+    padding: 20px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.button-wrapper button {
+    padding: 7px 15px;
+    background: #46a9e0;
+    outline: none;
+    border: 1px solid #24446d;
+    /* margin-left: 30px; */
+    border-radius: 30px;
+    -webkit-border-radius: 30px;
+    -moz-border-radius: 30px;
+    -ms-border-radius: 30px;
+    -o-border-radius: 30px;
+}
+
+.button-wrapper button:hover {
+    background: #287bc9;
+}
+
+.button-wrapper a {
+    font-size: 13px
+}
+
+@media only screen and (max-width: 768px) {
+    /* For mobile phones: */
+    .image-wrapper {
+        display: none;
+    }
+    .button-wrapper {
+        width: 80%;
+    }
+}

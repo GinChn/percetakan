@@ -1,10 +1,5 @@
 @if ($data_input['jenis_laporan'] == 'harian')
-    @php
-        $tanggal = date_create($data_input['tanggal_laporan']);
-        $bulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
-        $tanggal_hasil = date_format($tanggal, 'j') . ' ' . $bulan[intval(date_format($tanggal, 'm')) - 1] . ' ' . date_format($tanggal, 'Y');
-    @endphp
-    <h3>Laporan Harian ({{ $tanggal_hasil }})</h3>
+    <h3>Laporan Harian ({{ tanggal_indonesia($data_input['tanggal_laporan'], false) }})</h3>
     <h3>Pemasukan</h3>
     <table class="table-pemasukan">
         <thead>
@@ -92,15 +87,8 @@
         </tr>
     </table>
 @elseif($data_input['jenis_laporan'] == 'bulanan')
-    @php
-        $tanggal_awal = date_create($data_input['tanggal_laporan_awal']);
-        $tanggal_akhir = date_create($data_input['tanggal_laporan_akhir']);
-        $bulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
-        $tanggal_hasil_awal = date_format($tanggal_awal, 'j') . ' ' . $bulan[intval(date_format($tanggal_awal, 'm')) - 1] . ' ' . date_format($tanggal_awal, 'Y');
-        $tanggal_hasil_akhir = date_format($tanggal_akhir, 'j') . ' ' . $bulan[intval(date_format($tanggal_akhir, 'm')) - 1] . ' ' . date_format($tanggal_akhir, 'Y');
-    @endphp
-
-    <h3>Laporan Periode {{ $tanggal_hasil_awal }} sampai {{ $tanggal_hasil_akhir }}</h3>
+    <h3>Laporan Periode {{ tanggal_indonesia($data_input['tanggal_laporan_awal'], false) }} sampai
+        {{ tanggal_indonesia($data_input['tanggal_laporan_akhir'], false) }}</h3>
     <h3>Pemasukan</h3>
     <table class="table-pemasukan">
         <thead>
