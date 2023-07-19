@@ -11,6 +11,8 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                    <input type="hidden" class="form-control form-control-sm" id="totalharga_detail" name="totalharga">
+                    <input type="hidden" class="form-control form-control-sm" id="satuan_detail" name="satuan">
                     <div class="card-body">
                             <input type="hidden" class="form-control" name="id_pesanan" id="id_pesanan" value="{{ $data->id_pesanan }}">
                         <div class="form-group">
@@ -27,10 +29,10 @@
                             </select>
                         </div>
                         <input type="hidden" class="form-control" name="id_bahan" id="bahan">
-                        <div class="form-group">
+                        <div class="form-group" id="detail-ukuran">
                             <label for="ukuran">Ukuran</label>
-                            <input type="number" class="form-control" name="panjang" id="panjang" placeholder="panjang" >
-                            <input type="number" class="form-control" name="lebar" id="lebar" placeholder="lebar" >
+                            <input type="number" class="form-control" name="panjang" id="panjang_detail" placeholder="panjang" >
+                            <input type="number" class="form-control" name="lebar" id="lebar_detail" placeholder="lebar" >
                         </div>
                         <div class="form-group">
                             <label for="harga">Harga</label>

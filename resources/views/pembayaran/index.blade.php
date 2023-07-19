@@ -1,234 +1,116 @@
 @extends('layout')
 
 @section('content')
+
 <div class="content-header">
-  <div class="container-fluid">
-      <div class="row mb-2">
-          <div class="col-sm-6">
-              <h1 class="m-0">Buat Pesanan</h1>
-          </div>
-      </div>
-  </div>
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Pembayaran</h1>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="container-fluid">
-    <div class="invoice p-3 mb-3">
-        <!-- title row -->
-        <div class="row">
-          <div class="col-12">
-            <h4>
-              Nota No: {{ $data->no_nota }}
-              <small class="float-right">{{ tanggal_indonesia($data->created_at) }}</small>
-            </h4>
-          </div>
-          <!-- /.col -->
-        </div>
-        <!-- info row -->
-        <div class="row invoice-info" style="margin-bottom: 10px">
-          <button onclick="addPesanan('{{ route('pesanan.store') }}')" class="btn btn-success" style="margin-left: 10px">
-            Tambah Pesanan
-        </button>
-          <!-- /.col -->
-        </div>
-        <!-- /.row -->
-
-        <!-- Table row -->
-        <div class="row">
-          <div class="col-12 table-responsive">
-            <table class="table table-striped">
-              <thead>
-              <tr>
-                <th width="5%">No</th>
-                <th>Nama Pesanan</th>
-                <th>Barang</th>
-                <th>Bahan</th>
-                <th>Harga</th>
-                <th>Ukuran</th>
-                <th>Qty</th>
-                <th>Subtotal</th>
-                <th><i class="fa fa-cog"></th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr>
-                <td>1</td>
-                <td>
-                  <input type="text" class="form-control form-control-sm" name="nama_barang" id="nama_barang">
-                </td>
-                <td>455-981-221</td>
-                <td>El snort testosterone trophy driving gloves handsome</td>
-                <td>$64.50</td>
-                <td>$64.50</td>
-                <td>$64.50</td>
-                <td>$64.50</td>
-                <td>$64.50</td>
-              </tr>
-              </tbody>
-            </table>
-          </div>
-          <!-- /.col -->
-        </div>
-        <!-- /.row -->
-
-        <div class="row">
-          <!-- accepted payments column -->
-          <div class="col-6">
-            <div class="table-responsive">
-              <table class="table">
-                <tr>
-                  <th style="width:30%">Subtotal:</th>
-                  <td>
-                    <input type="text" class="form-control form-control-sm" name="" id="" required>
-                  </td>
-                </tr>
-                <tr>
-                  <th>Tax (9.3%)</th>
-                  <td>
-                    <input type="text" class="form-control form-control-sm" name="" id="" required>
-                  </td>
-                </tr>
-                <th>Tax (9.3%)</th>
-                  <td>
-                    <input type="text" class="form-control form-control-sm" name="" id="" required>
-                  </td>
-                </tr>
-                <th>Tax (9.3%)</th>
-                  <td>
-                    <input type="text" class="form-control form-control-sm" name="" id="" required>
-                  </td>
-                </tr>
-              </table>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <table id="table2" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th width="5%">No</th>
+                                <th>No Nota</th>
+                                <th>Nama Pelanggan</th>
+                                <th>Tanggal</th>
+                                <th>Total Pembayaran</th>
+                                <th>Bayar</th>
+                                <th>Kembali</th>
+                                <th>Status</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($pembayaran as $item)
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $item->no_nota }}</td>
+                                <td>{{ $item->nama_pelanggan }}</td>
+                                <td>{{ tanggal_indonesia($item->created_at) }}</td>
+                                <td>{{ format_uang($item->total) }}</td>
+                                <td>{{ format_uang($item->bayar) }}</td>
+                                <td>{{ format_uang($item->kembali) }}</td>
+                                <td>
+                                    @if ($item->status_pembayaran == 'Lunas')
+                                    <span class="badge badge-success">
+                                        {{ $item->status_pembayaran }}
+                                    </span>
+                                    @else
+                                    <span class="badge badge-danger">
+                                        {{ $item->status_pembayaran }}
+                                    </span>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if ($item->status_pembayaran == 'Lunas')
+                                    <div class="btn-group">
+                                        <a href="/pembayaran/{{ $item->id_pesanan }}" class="btn btn-default btn-sm"><i class="fas fa-list"></i> Detail</a>
+                                        <button type="button" class="btn btn-default btn-sm dropdown-toggle dropdown-icon" data-toggle="dropdown">
+                                            <span class="sr-only">Toggle Dropdown</span>
+                                        </button>
+                                        <div class="dropdown-menu" role="menu">
+                                            <button class="dropdown-item" onclick="nota('{{ route('pembayaran.nota', $item->id_pesanan) }}', 'Nota')"><i class="fas fa-barcode"></i> Struk</button>
+                                            <a class="dropdown-item" href="/pembayaran/{{ $item->id_pesanan }}/edit"><i class="fas fa-edit"></i> Edit</a>
+                                        </div>
+                                    @else
+                                    <a href="{{ route('bayar.pesanan', $item->id_pesanan) }}" class="btn btn-sm btn-default">
+                                        Pembayaran
+                                    </a>
+                                    @endif
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
-          </div>
-          <!-- /.col -->
-          <div class="col-6">
-            <div class="table-responsive">
-              <table class="table">
-                <tr>
-                  <th style="width:30%">Total</th>
-                  <td>
-                    <input type="text" class="form-control form-control-sm" name="" id="" required readonly>
-                  </td>
-                </tr>
-                <tr>
-                  <th>Bayar</th>
-                  <td>
-                    <input type="text" class="form-control form-control-sm" name="" id="" required>
-                  </td>
-                </tr>
-                <tr>
-                  <th>Kembali</th>
-                  <td>
-                    <input type="text" class="form-control form-control-sm" name="" id="" required readonly>
-                  </td>
-                </tr>
-                <tr>
-                  <th>Status Desain</th>
-                  <td>
-                    <input type="text" class="form-control form-control-sm" name="" id="" required>
-                  </td>
-                </tr>
-              </table>
-            </div>
-          </div>
-          <!-- /.col -->
         </div>
-        <!-- /.row -->
-
-        <!-- this row will not appear when printing -->
-        <div class="row">
-          <div class="col-12">
-            <form id="batal-pesanan{{ $data->id_pesanan }}" action="{{ route('pesanan_detail.destroy', $data->id_pesanan) }}" method="post" class="d-inline">
-              @csrf
-              @method('delete')
-              <button type="submit" class="btn btn-danger border-0 delete-btn" onclick="deletePesanan({{ $data->id_pesanan }})">
-                  Batal
-              </button>
-          </form>
-            {{-- <a href="/pesanan" class="btn btn-danger">Batal</a> --}}
-            <button type="button" class="btn btn-success float-right"> 
-              Simpan Pesanan
-            </button>
-          </div>
-        </div>
-      </div>
+    </div>
 </div>
 
-@includeIf('pesanan_detail.form-pesanan')
 @endsection
 
 @section('script')
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
 <script>
-    function addPesanan(url) {
-        $('#modal-pesanan').modal('show');
-        $('#modal-pesanan .modal-title').text('Tambah pesanan');
-
-        $('#modal-pesanan form')[0].reset();
-        $('#modal-pesanan form').attr('action', url);
-        $('#modal-pesanan [name=_method]').val('post');
+    // tambahkan untuk delete cookie innerHeight terlebih dahulu
+    document.cookie = "innerHeight=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    
+    function nota(url, title) {
+        popupCenter(url, title, 625, 500);
     }
 
-    function editpesanan(url) {
-        $('#modal-pesanan').modal('show');
-        $('#modal-pesanan .modal-title').text('Edit pesanan');
+    function popupCenter(url, title, w, h) {
+        const dualScreenLeft = window.screenLeft !==  undefined ? window.screenLeft : window.screenX;
+        const dualScreenTop  = window.screenTop  !==  undefined ? window.screenTop  : window.screenY;
 
-        $('#modal-pesanan form')[0].reset();
-        $('#modal-pesanan form').attr('action', url);
-        $('#modal-pesanan [name=_method]').val('put');
+        const width  = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
+        const height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
 
-        $.get(url)
-            .done((response) => {
-                $('#modal-pesanan [name=nama_pesanan]').val(response.nama_pesanan);
-                $('#modal-pesanan [name=id_bahan]').val(response.id_bahan);
-                $('#modal-pesanan [name=id_mesin]').val(response.id_mesin);
-                $('#modal-pesanan [name=id_satuan]').val(response.id_satuan);
-                $('#modal-pesanan [name=harga]').val(response.harga);
-            })
+        const systemZoom = width / window.screen.availWidth;
+        const left       = (width - w) / 2 / systemZoom + dualScreenLeft
+        const top        = (height - h) / 2 / systemZoom + dualScreenTop
+        const newWindow  = window.open(url, title, 
+        `
+            scrollbars=yes,
+            width  = ${w / systemZoom}, 
+            height = ${h / systemZoom}, 
+            top    = ${top}, 
+            left   = ${left}
+        `
+        );
+
+        if (window.focus) newWindow.focus();
     }
 </script>
-
-<script>
-    function deletePesanan(id) {
-        event.preventDefault();
-        Swal.fire({
-            title: 'Yakin?',
-            text: "Untuk Membatalkan Pesanan",
-            icon: 'warning',
-            showCancelButton: true,
-            showConfirmButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya, hapus!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                document.getElementById('batal-pesanan' + id).submit();
-            }
-        })
-    }
-</script>
-
-{{-- <script>
-    $(function(){
-        var Toast = Swal.mixin({
-        toast: true,
-        position: 'top-end',
-        showConfirmButton: false,
-        timer: 3000
-    });
-    @if(Session::has('sukses-tambah-barang'))
-    Toast.fire({
-            icon: 'success',
-            title: '{{ Session::get('sukses-tambah-barang') }}'
-        })
-    @endif
-    @if(Session::has('sukses-ubah-barang'))
-    Toast.fire({
-            icon: 'success',
-            title: '{{ Session::get('sukses-ubah-barang') }}'
-        })
-    @endif
-});
-</script> --}}
 @endsection

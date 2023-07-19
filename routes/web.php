@@ -50,6 +50,8 @@ Route::delete('/pesanan_detail/{id}/batal_pesanan', [PesananDetailController::cl
 Route::resource('/pesanan_detail', PesananDetailController::class)
     ->except('create');
 
+Route::get('/pembayaran/{id}/bayar', [PembayaranController::class, 'pembayaran'])->name('bayar.pesanan');
+Route::get('/pembayaran/{id}/nota', [PembayaranController::class, 'nota'])->name('pembayaran.nota');
 Route::resource('/pembayaran', PembayaranController::class);
 
 Route::resource('/pekerjaan', PekerjaanController::class);

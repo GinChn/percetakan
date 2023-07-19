@@ -24,6 +24,8 @@
           <div class="card-body">
             <div class="row">
               <input type="hidden" class="form-control" name="id_pesanan" id="id_pesanan" value="{{ $data->id_pesanan }}">
+              <input type="hidden" class="form-control form-control-sm" id="totalharga" name="totalharga">
+              <input type="hidden" class="form-control form-control-sm" id="satuan" name="satuan">
               <input type="hidden" class="form-control" name="id_bahan" id="bahan">
               <div class="col-6" style="padding: 5px 40px">
                 <div class="form-group row">
@@ -58,12 +60,12 @@
               </div>
               
               <div class="col-6" style="padding: 5px 40px">
-                <div class="form-group row">
-                  <label for="ukuran" class="col-sm-3 col-form-label" style="font-size: 11pt">Ukuran</label>
-                  <div class="col-sm-4">
+                <div class="form-group row ukuran" id="ukuran">
+                  <label for="ukuran" class="col-sm-3 col-form-label ukuran" style="font-size: 11pt" id="ukuran">Ukuran</label>
+                  <div class="col-sm-4 panjang">
                     <input type="number" class="form-control form-control-sm" id="panjang" name="panjang" placeholder="Panjang">
                   </div>
-                  <div class="col-sm-4">
+                  <div class="col-sm-4 lebar">
                     <input type="number" class="form-control form-control-sm" id="lebar" name="lebar" placeholder="Lebar">
                   </div>
                 </div>
@@ -138,6 +140,7 @@
                 <th>Harga</th>
                 <th>Qty</th>
                 <th>Subtotal</th>
+                <th>Status</th>
                 <th width="10%"><i class="fa fa-cog"></th>
               </tr>
             </thead>
@@ -151,6 +154,25 @@
               <td>{{ format_uang($item->harga) }}</td>
               <td>{{ $item->jumlah }}</td>
               <td>{{ format_uang($item->subtotal) }}</td>
+              <td>
+                @if ($item->status_detail == 'Belum Ada Desain')
+                <span class="badge badge-danger">
+                  {{ $item->status_detail }}
+                </span>
+                @elseif ($item->status_detail == 'Sudah Ada Desain')
+                <span class="badge badge-warning">
+                  {{ $item->status_detail }}
+                </span>
+                @elseif ($item->status_detail == 'Dikerjakan')
+                <span class="badge badge-info">
+                  {{ $item->status_detail }}
+                </span>
+                @else 
+                <span class="badge badge-success">
+                  {{ $item->status_detail }}
+                </span>
+                @endif
+              </td>
               <td>
                 <button onclick="editDetailPesanan('{{ route('pesanan_detail.update', $item->id_pesanan_detail) }}')" class="btn btn-sm btn-primary">
                   <i class="fas fa-pen"></i>
@@ -186,16 +208,16 @@
                     </td>
                   </tr>
                   <tr>
-                    <th style="width:30%">Nama Pelanggan</th>
+                    <th style="width:30%">Pelanggan</th>
                     <td>
                       <input type="text" class="form-control form-control-sm" name="nama_pelanggan" id="nama_pelanggan" required>
                     </td>
                   </tr>
                   <tr>
                     <th style="width:30%">No. Telp</th>
-                    <td>
-                      <input type="text" class="form-control form-control-sm" name="no_telp" id="no_telp" required>
-                    </td>
+                      <td>
+                        <input type="text" class="form-control form-control-sm" name="no_telp" id="no_telp" required>
+                      </td>
                   </tr>
                 </table>
               </div>
@@ -214,9 +236,9 @@
 @endsection
 
 @section('script')
-
 {{-- script input pesanan --}}
 <script>
+
   // Menggunakan Select2 untuk pilih barang
   $(function () {
     $('#id_barang').select2({
@@ -224,184 +246,217 @@
     })
   })
 
+  $(function () {
+    $('#ukuran').hide()
+  });
+
   // Ketika barang dipilih otomatis mengisi field harga yang diambil dari database
   $(document).on('change', '#id_barang', function(){
-          var id_barang = $(this).val()
-          $.ajax({
-            url : "{{ route('pesanan_detail.barang') }}",
-            type : 'get',
-            data: { 
-              id_barang : id_barang,
-              _token : "{{ csrf_token() }}" 
-            },
-            success: function (res) {
-              console.log(res);
-              $('#bahan').val(res.id_bahan)
-              $('#harga').val(res.harga)
-            }
-          })
-        });
+    var id_barang = $(this).val()
+    $.ajax({
+      url : "{{ route('pesanan_detail.barang') }}",
+      type : 'get',
+      data: { 
+        id_barang : id_barang,
+        _token : "{{ csrf_token() }}" 
+      },
+      success: function (res) {
+        console.log(res);
+        $('#bahan').val(res.id_bahan)
+        $('#harga').val(res.harga)
+        $('#satuan').val(res.satuan)
+      }
+    })
+  });
 
-        // Ketika field jumlah diisi, otomatis melakukan perhitungan untuk isi otomatis field subtotal
-        $(document).on('mouseout', '#jumlah', function() {
-          var harga = parseInt($('#harga').val())
-          var jumlah = parseInt($(this).val())
-          $('#subtotal').val(jumlah * harga)
-        });
-        
-        // Fungsi untuk menyimpan input pesanan saat klik tombol tambahkan
-        $(function () {
-          $('.btn-inputPesanan').on('click', function () {
-            $('.form-inputPesanan').submit();
-          });
-        });
-        
-        // Alert berhasil input pesanan
-        $(function(){
-          var Toast = Swal.mixin({
-          toast: true,
-          position: 'top-end',
-          showConfirmButton: false,
-          timer: 3000
-        });
-        @if(Session::has('sukses-input-pesanan'))
-        Toast.fire({
-          icon: 'success',
-          title: '{{ Session::get('sukses-input-pesanan') }}'
-        })
-        @endif
-      });
-
-        // Fungsi untuk membatalkan pesanan ketika klik tombol batal
-        function deletePesanan(id) {
-        event.preventDefault();
-        Swal.fire({
-            title: 'Yakin?',
-            text: "Untuk Membatalkan Pesanan",
-            icon: 'warning',
-            showCancelButton: true,
-            showConfirmButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya, hapus!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                document.getElementById('batal-pesanan' + id).submit();
-            }
-        })
+  $(document).on('mouseout', '#jumlah, #id_barang', function() {
+    var satuan = $('#satuan').val()
+    if (satuan === 'Meter') {
+      $('#ukuran').show()
+      //ambil data dari inputan harga
+      var harga = parseInt($('#harga').val())
+      //ambil nilai panjang dan lebar yang diinputkan
+      var panjang = $('#panjang').val()
+      var lebar = $('#lebar').val()
+      //hitung jumlah dari perkalian panjang dan lebar dan simpan ke variabel ukuran
+      var ukuran = panjang * lebar
+      //hitung total harga berdasarkan perhitungan yang diambil dari data variabel ukuran dan harga
+      var totalharga = ukuran * harga
+      //ambil data inputan jumlah
+      var jumlah = $(this).val()
+      //menampilkan subtotal berdasarkan perhitungan yang diambil dari data variabel totalharga dan jumlah
+      $('#totalharga').val(totalharga)
+      $('#subtotal').val(totalharga * jumlah)
+    } else {
+      $('#ukuran').hide()
+      var harga = parseInt($('#harga').val())
+      var jumlah = parseInt($(this).val())
+      $('#totalharga').val(harga)
+      $('#subtotal').val(jumlah * harga)
     }
+  });
+
+  // Fungsi untuk menyimpan input pesanan saat klik tombol tambahkan
+  $(function () {
+    $('.btn-inputPesanan').on('click', function () {
+      $('.form-inputPesanan').submit();
+    });
+  });
+
+  // Alert berhasil input pesanan
+  $(function(){
+    var Toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 3000
+    });
+    @if(Session::has('sukses-input-pesanan'))
+    Toast.fire({
+      icon: 'success',
+      title: '{{ Session::get('sukses-input-pesanan') }}'
+    })
+    @endif
+  });
+
+  // Fungsi untuk membatalkan pesanan ketika klik tombol batal
+  function deletePesanan(id) {
+    event.preventDefault();
+    Swal.fire({
+      title: 'Anda Yakin?',
+      text: "Untuk membatalkan pesanan",
+      icon: 'warning',
+      showCancelButton: true,
+      showConfirmButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Ya'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        document.getElementById('batal-pesanan' + id).submit();
+      }
+    })
+    }
+
 </script>
 
 {{-- script detail pesanan --}}
 <script>
-    // Menampilkan form edit pesanan
-    function editDetailPesanan(url) {
-        $('#modal-pesanan').modal('show');
-        $('#modal-pesanan .modal-title').text('Edit Pesanan');
 
-        $('#modal-pesanan form')[0].reset();
-        $('#modal-pesanan form').attr('action', url);
-        $('#modal-pesanan [name=_method]').val('put');
+  // Menampilkan form edit pesanan
+  function editDetailPesanan(url) {
+    $('#modal-pesanan').modal('show');
+    $('#modal-pesanan .modal-title').text('Edit Pesanan');
+    $('#modal-pesanan form')[0].reset();
+    $('#modal-pesanan form').attr('action', url);
+    $('#modal-pesanan [name=_method]').val('put');
 
-        $('#modal-pesanan').on('change', '#barang', function(){
-          var id_barang = $(this).val()
-          $.ajax({
-            url : "{{ route('pesanan_detail.barang') }}",
-            type : 'get',
-            data: { 
-              id_barang : id_barang,
-              _token : "{{ csrf_token() }}" 
-            },
-            success: function (res) {
-              console.log(res);
-              $('#bahan').val(res.id_bahan)
-              $('#harga_detail').val(res.harga)
-            }
-          })
-        })
-
-        $('#modal-pesanan').on('mouseout', '#jumlah_detail', function() {
-          var harga = parseInt($('#harga_detail').val())
-          var jumlah = parseInt($(this).val())
-          $('#subtotal_detail').val(jumlah * harga)
-        });
-
-        $.get(url)
-            .done((response) => {
-                $('#modal-pesanan [name=nama_pesanan]').val(response.nama_pesanan);
-                $('#modal-pesanan [name=id_barang]').val(response.id_barang);
-                $('#modal-pesanan [name=id_bahan]').val(response.id_bahan);
-                $('#modal-pesanan [name=harga]').val(response.harga);
-                $('#modal-pesanan [name=jumlah]').val(response.jumlah);
-                $('#modal-pesanan [name=subtotal]').val(response.subtotal);
-                $('#modal-pesanan [name=id_finishing]').val(response.id_finishing);
-                $('#modal-pesanan [name=status_detail]').val(response.status_detail);
-            })
+    $('#modal-pesanan').on('change', '#barang', function(){
+      var id_barang = $(this).val()
+      $.ajax({
+        url : "{{ route('pesanan_detail.barang') }}",
+        type : 'get',
+        data: { 
+          id_barang : id_barang,
+          _token : "{{ csrf_token() }}" 
+        },
+        success: function (res) {
+          console.log(res);
+          $('#bahan').val(res.id_bahan)
+          $('#harga_detail').val(res.harga)
+          $('#satuan_detail').val(res.satuan)
         }
+      })
+    })
 
-        // Alert berhasil edit pesanan
-        $(function(){
-          var Toast = Swal.mixin({
-          toast: true,
-          position: 'top-end',
-          showConfirmButton: false,
-          timer: 3000
-        });
-        @if(Session::has('sukses-edit-pesanan'))
-        Toast.fire({
-          icon: 'success',
-          title: '{{ Session::get('sukses-edit-pesanan') }}'
-        })
-        @endif
-      });
-
-      // Haous detail pesanan yang dipilih
-        function deleteDetailPesanan(id) {
-        event.preventDefault();
-        Swal.fire({
-            title: 'Yakin?',
-            text: "Untuk Membatalkan Pesanan",
-            icon: 'warning',
-            showCancelButton: true,
-            showConfirmButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya, hapus!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                document.getElementById('hapus-pesanan-detail' + id).submit();
-            }
-        })
+    $('#modal-pesanan').on('mouseout', '#jumlah_detail, #barang', function() {
+    var satuan = $('#satuan_detail').val()
+    if (satuan === 'Meter') {
+      $('#detail-ukuran').show()
+      //ambil data dari inputan harga
+      var harga = parseInt($('#harga_detail').val())
+      //ambil nilai panjang dan lebar yang diinputkan
+      var panjang = $('#panjang_detail').val()
+      var lebar = $('#lebar_detail').val()
+      //hitung jumlah dari perkalian panjang dan lebar dan simpan ke variabel ukuran
+      var ukuran = panjang * lebar
+      //hitung total harga berdasarkan perhitungan yang diambil dari data variabel ukuran dan harga
+      var totalharga = ukuran * harga
+      //ambil data inputan jumlah
+      var jumlah = $(this).val()
+      //menampilkan subtotal berdasarkan perhitungan yang diambil dari data variabel totalharga dan jumlah
+      $('#totalharga_detail').val(totalharga)
+      $('#subtotal_detail').val(totalharga * jumlah)
+    } else {
+      $('#detail-ukuran').hide()
+      var harga = parseInt($('#harga_detail').val())
+      var jumlah = parseInt($(this).val())
+      $('#totalharga_detail').val(harga)
+      $('#subtotal').val(jumlah * harga)
     }
+  });
 
-    // Fungsi untuk menyimpan detail pesanan saat klik tombol simpan
-    $(function () {
-      $('.btn-simpanPesanan').on('click', function () {
-        $('.form-simpanPesanan').submit();
-        });
+    $('#modal-pesanan').on('mouseout', '#jumlah_detail', function() {
+      var harga = parseInt($('#harga_detail').val())
+      var jumlah = parseInt($(this).val())
+      $('#subtotal_detail').val(jumlah * harga)
     });
+
+    $.get(url)
+    .done((response) => {
+      $('#modal-pesanan [name=nama_pesanan]').val(response.nama_pesanan);
+      $('#modal-pesanan [name=id_barang]').val(response.id_barang);
+      $('#modal-pesanan [name=id_bahan]').val(response.id_bahan);
+      $('#modal-pesanan [name=harga]').val(response.harga);
+      $('#modal-pesanan [name=jumlah]').val(response.jumlah);
+      $('#modal-pesanan [name=subtotal]').val(response.subtotal);
+      $('#modal-pesanan [name=id_finishing]').val(response.id_finishing);
+      $('#modal-pesanan [name=status_detail]').val(response.status_detail);
+    })
+  }
+
+  // Alert berhasil edit pesanan
+  $(function(){
+    var Toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 3000
+    });
+    @if(Session::has('sukses-edit-pesanan'))
+    Toast.fire({
+      icon: 'success',
+      title: '{{ Session::get('sukses-edit-pesanan') }}'
+    })
+    @endif
+  });
+
+  // Hapus detail pesanan yang dipilih
+  function deleteDetailPesanan(id) {
+    event.preventDefault();
+    Swal.fire({
+      title: 'Anda Yakin?',
+      text: "Ingin menghapus item pesanan ini?",
+      icon: 'warning',
+      showCancelButton: true,
+      showConfirmButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Ya'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        document.getElementById('hapus-pesanan-detail' + id).submit();
+      }
+    })
+  }
+
+  // Fungsi untuk menyimpan detail pesanan saat klik tombol simpan
+  $(function () {
+    $('.btn-simpanPesanan').on('click', function () {
+      $('.form-simpanPesanan').submit();
+    });
+    });
+    
 </script>
 
-<script>
-    $(function(){
-        var Toast = Swal.mixin({
-        toast: true,
-        position: 'top-end',
-        showConfirmButton: false,
-        timer: 3000
-    });
-    @if(Session::has('sukses-tambah-barang'))
-    Toast.fire({
-            icon: 'success',
-            title: '{{ Session::get('sukses-tambah-barang') }}'
-        })
-    @endif
-    @if(Session::has('sukses-ubah-barang'))
-    Toast.fire({
-            icon: 'success',
-            title: '{{ Session::get('sukses-ubah-barang') }}'
-        })
-    @endif
-});
-</script>
 @endsection

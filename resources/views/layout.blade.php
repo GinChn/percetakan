@@ -26,6 +26,7 @@
     <!-- Select2 -->
     <link rel="stylesheet" href="{{ asset('assets/plugins/select2/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
+    @yield('style')
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -159,30 +160,23 @@
                                 </p>
                             </a>
                         </li>
-                        <li class="nav-item {{ Request::is('pembayaran*') ? 'menu-open' : '' }}">
-                            <a href="#" class="nav-link {{ Request::is('pembayaran*') ? 'active' : '' }}">
+                        <li class="nav-item">
+                            <a href="/pembayaran" class="nav-link {{ Request::is('pembayaran*') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-money-bill-wave"></i>
                                 <p>
                                     Pembayaran
-                                    <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="/pembayaran" class="nav-link {{ Request::is('pembayaran') ? 'active' : '' }}">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Lunas</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="/pembayaran/belum-lunas" class="nav-link {{ Request::is('pembayaran/belum-lunas') ? 'active' : '' }}">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Belum Lunas</p>
-                                    </a>
-                                </li>
-                            </ul>
                         </li>
                         <li class="nav-item">
+                            <a href="/pekerjaan" class="nav-link {{ Request::is('pekerjaan*') ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-business-time"></i>
+                                <p>
+                                    Pekerjaan
+                                </p>
+                            </a>
+                        </li>
+                        {{-- <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-business-time"></i>
                                 <p>
@@ -204,7 +198,7 @@
                                     </a>
                                 </li>
                             </ul>
-                        </li>
+                        </li> --}}
                         <li class="nav-item">
                             <a href="/pengeluaran"
                                 class="nav-link {{ Request::is('pengeluaran*') ? 'active' : '' }}">

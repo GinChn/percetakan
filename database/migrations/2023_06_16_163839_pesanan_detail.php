@@ -20,8 +20,10 @@ class PesananDetail extends Migration
             $table->integer('id_barang');
             $table->integer('id_bahan');
             $table->integer('harga');
+            $table->string('satuan');
             $table->float('panjang')->nullable();
             $table->float('lebar')->nullable();
+            $table->integer('totalharga');
             $table->integer('jumlah');
             $table->integer('subtotal');
             $table->integer('id_finishing');

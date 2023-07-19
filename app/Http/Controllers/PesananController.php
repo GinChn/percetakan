@@ -17,7 +17,7 @@ class PesananController extends Controller
     public function index()
     {
         return view('pesanan.index', [
-            'pesanan' => Pesanan::all()
+            'pesanan' => Pesanan::orderBy('no_nota', 'desc')->get()
         ]);
     }
 
@@ -67,7 +67,7 @@ class PesananController extends Controller
             'nama_pelanggan' => $request->nama_pelanggan,
             'no_telp' => $request->no_telp,
             'total' => $request->total,
-            'status_pembayaran' => 'Belum Lunas'
+            'status_pembayaran' => 'Menunggu Pembayaran'
         ]);
 
         return redirect('/pesanan');

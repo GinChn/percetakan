@@ -17,7 +17,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <button onclick="addPengeluaran('{{ route('pengeluaran.store') }}')" class="btn btn-success">
+                    <button onclick="addPengeluaran('{{ route('pengeluaran.store') }}')" class="btn btn-success btn-sm">
                         Tambah Pengeluaran
                     </button>
                 </div>
@@ -26,8 +26,9 @@
                         <thead>
                             <tr>
                                 <th style="width: 10px">No</th>
+                                <th>Tanggal</th>
                                 <th>Keterangan</th>
-                                <th>Harga</th>
+                                <th>Nominal</th>
                                 <th>Jumlah</th>
                                 <th>Total</th>
                                 <th>Aksi</th>
@@ -37,8 +38,9 @@
                             @foreach ($pengeluaran as $item)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
+                                <td>{{ tanggal_indonesia($item->created_at) }}</td>
                                 <td>{{ $item->keterangan }}</td>
-                                <td>{{ format_uang($item->harga) }}</td>
+                                <td>{{ format_uang($item->nominal) }}</td>
                                 <td>{{ $item->jumlah }}</td>
                                 <td>{{ format_uang($item->total) }}</td>
                                 <td>
@@ -67,8 +69,6 @@
 @endsection
 
 @section('script')
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
 <script>
     function addPengeluaran(url) {
         $('#modal-pengeluaran').modal('show');
@@ -78,10 +78,10 @@
         $('#modal-pengeluaran form').attr('action', url);
         $('#modal-pengeluaran [name=_method]').val('post');
 
-        $("#harga, #jumlah").keyup(function() {
-            var harga = $("#harga").val();
+        $("#nominal, #jumlah").keyup(function() {
+            var nominal = $("#nominal").val();
             var jumlah = $("#jumlah").val();
-            var total = parseInt(harga) * parseInt(jumlah);
+            var total = parseInt(nominal) * parseInt(jumlah);
             $("#total").val(total);
         })
     }
@@ -94,10 +94,10 @@
         $('#modal-pengeluaran form').attr('action', url);
         $('#modal-pengeluaran [name=_method]').val('put');
         
-        $("#harga, #jumlah").keyup(function() {
-            var harga = $("#harga").val();
+        $("#nominal, #jumlah").keyup(function() {
+            var nominal = $("#nominal").val();
             var jumlah = $("#jumlah").val();
-            var total = parseInt(harga) * parseInt(jumlah);
+            var total = parseInt(nominal) * parseInt(jumlah);
             $("#total").val(total);
         })
 
@@ -105,29 +105,16 @@
             .done((response) => {
                 $('#modal-pengeluaran [name=keterangan]').val(response.keterangan);
                 $('#modal-pengeluaran [name=jumlah]').val(response.jumlah);
-                $('#modal-pengeluaran [name=harga]').val(response.harga);
+                $('#modal-pengeluaran [name=nominal]').val(response.nominal);
                 $('#modal-pengeluaran [name=total]').val(response.total);
             })
     }
-</script>
 
-<script>
-    $(document).ready(function() {
-        $("#harga, #jumlah").keyup(function() {
-            var harga = $("#harga").val();
-            var jumlah = $("jumlah").val();
-            var total = parseInt(harga) * parseInt(jumlah);
-            $("#total").val(total);
-        })
-    })
-</script>
-
-<script>
     function deletePengeluaran(id) {
         event.preventDefault();
         Swal.fire({
-            title: 'Yakin?',
-            text: "Hapus data ini",
+            title: 'Anda Yakin?',
+            text: "Hapus data pengeluaran ini?",
             icon: 'warning',
             showCancelButton: true,
             showConfirmButton: true,
@@ -145,9 +132,7 @@
             }
         })
     }
-</script>
 
-<script>
     $(function(){
         var Toast = Swal.mixin({
         toast: true,
@@ -157,14 +142,14 @@
     });
     @if(Session::has('sukses-tambah-pengeluaran'))
     Toast.fire({
-            icon: 'success',
-            title: '{{ Session::get('sukses-tambah-pengeluaran') }}'
+        icon: 'success',
+        title: '{{ Session::get('sukses-tambah-pengeluaran') }}'
         })
     @endif
     @if(Session::has('sukses-ubah-pengeluaran'))
     Toast.fire({
-            icon: 'success',
-            title: '{{ Session::get('sukses-ubah-pengeluaran') }}'
+        icon: 'success',
+        title: '{{ Session::get('sukses-ubah-pengeluaran') }}'
         })
     @endif
 });

@@ -6,7 +6,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0">Data Pesanan</h1>
+                <h1 class="m-0">Pesanan</h1>
             </div>
         </div>
     </div>
@@ -17,17 +17,16 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    {{-- <a href="/pesanan_detail" class="btn btn-success">Buat Pesanan</a> --}}
-                    <a href="{{ route('pesanan.create') }}" class="btn btn-success">Buat Pesanan</a>
+                    <a href="{{ route('pesanan.create') }}" class="btn btn-success btn-sm">Buat Pesanan</a>
                 </div>
                 <div class="card-body">
                     <table id="table2" class="table table-bordered table-striped">
                         <thead>
                             <tr>
                                 <th width="5%">No</th>
-                                <th>Tanggal</th>
                                 <th>No Nota</th>
                                 <th>Nama Pelanggan</th>
+                                <th>Tanggal</th>
                                 <th>Total</th>
                                 <th>Status Pesanan</th>
                                 <th>Aksi</th>
@@ -37,9 +36,9 @@
                             @foreach ($pesanan as $item)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ tanggal_indonesia($item->created_at) }}</td>
                                 <td>{{ $item->no_nota }}</td>
                                 <td>{{ $item->nama_pelanggan }}</td>
+                                <td>{{ tanggal_indonesia($item->created_at) }}</td>
                                 <td>{{ format_uang($item->total) }}</td>
                                 <td>
                                     @if ($item->status_pesanan == 'Selesai')
@@ -60,6 +59,7 @@
                                             <i class="fa fa-trash"></i>
                                         </button>
                                     </form>
+                                    {{-- <a class="btn btn-sm btn-primary" href="/pesanan/{{ $item->id_pesanan }}/edit"><i class="fas fa-edit"></i></a> --}}
                                 </td>
                             </tr>
                             @endforeach
@@ -79,13 +79,13 @@
         event.preventDefault();
         Swal.fire({
             title: 'Yakin?',
-            text: "Hapus data ini",
+            text: "Hapus data pesanan ini?",
             icon: 'warning',
             showCancelButton: true,
             showConfirmButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya, hapus!'
+            confirmButtonText: 'Ya'
         }).then((result) => {
             if (result.isConfirmed) {
                 document.getElementById('hapus-pesanan' + id).submit();
