@@ -26,8 +26,13 @@ class UserFactory extends Factory
         return [
             // 'name' => $this->faker->name(),
             'username' => $this->faker->unique()->safeEmail(),
-            // 'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            'password' => Hash::make('12345678'), // password
+            'password' => Hash::make('12345'), // password
+            'nama' => $this->faker->name(),
+            'tanggal_lahir' => $this->faker->date(),
+            'alamat' => $this->faker->address(),
+            'no_telp' => $this->faker->phoneNumber(),
+            'pendidikan' => Str::random(10),
+            'id_level' => 1,
             'remember_token' => Str::random(10),
         ];
     }

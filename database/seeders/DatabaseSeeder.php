@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        User::factory()->times(5)->create();
+        User::factory()->times(3)->create();
         // Level
         Level::create([
             'nama_level' => 'Administrator'
