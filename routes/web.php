@@ -11,6 +11,7 @@ use App\Http\Controllers\KaryawanController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PekerjaanController;
 use App\Http\Controllers\PembayaranController;
+use App\Http\Controllers\RegistrasiController;
 use App\Http\Controllers\PengeluaranController;
 use App\Http\Controllers\PesananDetailController;
 
@@ -42,6 +43,8 @@ Route::resource('/bahan', BahanController::class);
 Route::resource('/barang', BarangController::class);
 
 Route::resource('/karyawan', KaryawanController::class);
+
+Route::resource('/registrasi', RegistrasiController::class);
 
 Route::resource('/pesanan', PesananController::class);
 

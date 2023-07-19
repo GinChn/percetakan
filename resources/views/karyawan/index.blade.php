@@ -16,41 +16,29 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <div class="card-header">
-                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-default">
-                        Tambah User
-                    </button>
-                </div>
                 <div class="card-body">
                     <table id="table2" class="table table-bordered table-striped">
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Data 1</th>
-                                <th>Data 1</th>
-                                <th>Data 1</th>
-                                <th>Data 1</th>
-                                <th>Aksi</th>
+                                <th>nama Lengkap</th>
+                                <th>Tanggal Lahir</th>
+                                <th>Alamat</th>
+                                <th>No Telp</th>
+                                <th>Pendidikan</th>
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach ($karyawan as $item)
                             <tr>
-                                <td>#</td>
-                                <td>#</td>
-                                <td>#</td>
-                                <td>#</td>
-                                <td>#</td>
-                                <td>
-                                    <a href="#" class="btn-sm btn-primary"><i class="fas fa-pen"></i></a>
-                                    <form id="#" action="#" method="post" class="d-inline">
-                                        @csrf
-                                        @method('delete')
-                                        <button type="submit" class="btn-sm btn-danger border-0 delete-btn">
-                                            <i class="fa fa-trash"></i>
-                                        </button>
-                                    </form>
-                                </td>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $item->nama }}</td>
+                                <td>{{ tanggal_indonesia($item->tanggal_lahir) }}</td>
+                                <td>{{ $item->alamat }}</td>
+                                <td>{{ $item->no_telp }}</td>
+                                <td>{{ $item->pendidikan }}</td>
                             </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
