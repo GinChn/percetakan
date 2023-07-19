@@ -30,12 +30,14 @@ use App\Http\Controllers\StatusController;
 //     return view('administrator.dashboard');
 // });
 
-Route::get('/login', [LoginController::class, 'index']);
+Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
-Route::get('/reset-password', [LoginController::class, 'resetPassword']);
-Route::post('/logout', [LoginController::class, 'logout']);
+Route::get('/logout', [LoginController::class, 'logout']);
+// Route::get('/dashboard', DashboardController::class)->middleware('auth');
+Route::resource('/dashboard', DashboardController::class)->middleware('auth');
 
-Route::resource('/', DashboardController::class);
+Route::get('/reset-password', [LoginController::class, 'resetPassword']);
+Route::resource('/', StatusController::class);
 Route::resource('/cek-pesanan', StatusController::class);
 
 Route::resource('/mesin', MesinController::class);

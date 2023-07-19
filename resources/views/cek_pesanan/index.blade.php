@@ -46,7 +46,7 @@
                             {{-- <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a> --}}
                         </li>
                     </ul>
-                    <a href="" class="btn btn-sm btn-secondary my-2 my-sm-0">LOGIN</a>
+                    <a href="/login" class="btn btn-sm btn-secondary my-2 my-sm-0">LOGIN</a>
                 </div>
             </div>
         </nav>

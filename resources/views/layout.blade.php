@@ -51,6 +51,9 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                         <li class="user-header bg-success">
+                            @auth
+                                <p>Selamat datang, {{ auth()->user()->username }}</p>
+                            @endauth
                             <img src="{{ asset('assets/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2"
                                 alt="User Image">
                             <p>
@@ -59,7 +62,7 @@
                         </li>
                         <li class="user-footer">
                             <a href="#" class="btn btn-default btn-flat">Profile</a>
-                            <a href="#" class="btn btn-default btn-flat float-right">Logout</a>
+                            <a href="/logout" class="btn btn-default btn-flat float-right">Logout</a>
                         </li>
                     </ul>
                 </li>

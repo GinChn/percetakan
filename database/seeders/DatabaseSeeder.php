@@ -10,7 +10,10 @@ use App\Models\Satuan;
 use App\Models\Status;
 use App\Models\Finishing;
 use Illuminate\Database\Seeder;
-use Illuminate\Foundation\Auth\User;
+// use Illuminate\Foundation\Auth\User;
+use App\Models\User;
+use Database\Factories\UserFactory;
+
 
 class DatabaseSeeder extends Seeder
 {
@@ -21,6 +24,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        User::factory()->times(5)->create();
         // Level
         Level::create([
             'nama_level' => 'Administrator'
@@ -59,15 +63,15 @@ class DatabaseSeeder extends Seeder
         Satuan::create([
             'nama_satuan' => 'Meter'
         ]);
-        
+
         Satuan::create([
             'nama_satuan' => 'Pcs'
         ]);
-        
+
         Satuan::create([
             'nama_satuan' => 'Box'
         ]);
-        
+
         Satuan::create([
             'nama_satuan' => 'Lembar'
         ]);
@@ -80,7 +84,7 @@ class DatabaseSeeder extends Seeder
         Status::create([
             'status' => 'Selesai'
         ]);
-        
+
         // Bahan
         Bahan::create([
             'nama_bahan' => 'Backlite'

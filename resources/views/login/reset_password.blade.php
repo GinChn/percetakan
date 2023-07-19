@@ -28,11 +28,10 @@
                         <button type="submit" name="reset">Lanjutkan</button>
                     </form>
                 </div>
-                <a href="">Kembali ke halaman Login</a>
+                <a href="/login">Kembali ke halaman Login</a>
             </div>
         </div>
-
-
+    </div>
     </div>
 
 </body>
