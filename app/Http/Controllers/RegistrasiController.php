@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Level;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Illuminate\Foundation\Auth\User;
+// use Illuminate\Foundation\Auth\User;
 
-class KaryawanController extends Controller
+class RegistrasiController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +17,9 @@ class KaryawanController extends Controller
      */
     public function index()
     {
-        return view('karyawan.index', [
-            'karyawan' => User::all()
+        return view('registrasi.index', [
+            'users' => User::all(),
+            'level' => Level::all()->pluck('nama_level', 'id_level')
         ]);
     }
 
@@ -27,7 +30,9 @@ class KaryawanController extends Controller
      */
     public function create()
     {
-        //
+        return view('registrasi.create', [
+            'level' => Level::all()
+        ]);
     }
 
     /**
@@ -38,7 +43,20 @@ class KaryawanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $token = md5($request->input('username') . microtime());
+        User::create([
+            'username' => $request->username,
+            'password' => $request->password,
+            'nama' => $request->nama,
+            'tanggal_lahir' => $request->tanggal_lahir,
+            'alamat' => $request->alamat,
+            'no_telp' => $request->no_telp,
+            'pendidikan' => $request->pendidikan,
+            'id_level' => $request->level,
+            'remember_token' => $token
+        ]);
+
+        return redirect('/registrasi');
     }
 
     /**
@@ -83,6 +101,8 @@ class KaryawanController extends Controller
      */
     public function destroy($id)
     {
-        //
+        User::find($id)->delete();
+
+        return back();
     }
 }

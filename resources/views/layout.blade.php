@@ -147,8 +147,8 @@
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-business-time"></i>
+                            <a href="/registrasi" class="nav-link {{ Request::is('registrasi*') ? 'active' : '' }}"">
+                                <i class="nav-icon fas fa-address-card"></i>
                                 <p>
                                     Registrasi User
                                 </p>
