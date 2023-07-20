@@ -10,21 +10,11 @@
     {{-- sweet alert --}}
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.min.css">
     <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome-free/css/all.min.css') }}">
+
 </head>
 
 <body>
-    @if (Session::has('gagal-login'))
-        <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                Swal.fire({
-                    icon: 'error',
-                    title: '{{ Session::get('gagal-login') }}',
-                    showConfirmButton: false,
-                    timer: 3000
-                });
-            });
-        </script>
-    @endif
+
     <div class="background-wrapper">
         <div class="login-container">
             <div class="login-wrapper">
@@ -62,37 +52,34 @@
     </div>
 
 
-    {{-- <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script> --}}
     <!-- Use SweetAlert2 version 11 -->
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.all.min.js"></script>
     <script src="{{ asset('assets/plugins/jquery/jquery.min.js') }}"></script>
     <!-- jquery-validation -->
     <script src="{{ asset('assets/plugins/jquery-validation/jquery.validate.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/jquery-validation/additional-methods.min.js') }}"></script>
-    <!-- date-range-picker -->
-    <script src="{{ asset('assets/plugins/daterangepicker/daterangepicker.js') }}"></script>
-    <!-- Bootstrap 4 -->
-    <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <!-- AdminLTE App -->
     <script src="{{ asset('assets/dist/js/adminlte.min.js') }}"></script>
-
-
     <script>
-        $(function() {
+        @if (Session::has('gagal-login'))
             var Toast = Swal.mixin({
                 toast: true,
                 position: 'top-end',
                 showConfirmButton: false,
                 timer: 3000
             });
-            @if (Session::has('gagal-login'))
+            document.addEventListener("DOMContentLoaded", function() {
                 Toast.fire({
                     icon: 'error',
-                    title: '{{ Session::get('gagal-login') }}'
-                })
-            @endif
-        });
+                    title: '{{ Session::get('gagal-login') }}',
+                    timer: 3000
+                });
+            });
+        @endif
     </script>
+
+
 </body>
 
 </html>

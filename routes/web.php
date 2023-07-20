@@ -16,6 +16,8 @@ use App\Http\Controllers\PengeluaranController;
 use App\Http\Controllers\PesananDetailController;
 use App\Http\Controllers\StatusController;
 
+use App\Http\Middleware\CekRole;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -34,8 +36,34 @@ use App\Http\Controllers\StatusController;
 Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
 Route::get('/logout', [LoginController::class, 'logout']);
-// Route::get('/dashboard', DashboardController::class)->middleware('auth');
-Route::resource('/dashboard', DashboardController::class)->middleware('auth');
+// Route::resource('/dashboard', DashboardController::class)->middleware('auth');
+
+
+Route::group(['middleware' => 'auth'], function () {
+    Route::resource('/dashboard', DashboardController::class);
+
+    Route::group(['middleware' => ['cekrole:Administrator']], function () {
+        Route::resource('/registrasi', RegistrasiController::class);
+    });
+
+    Route::group(['middleware' => ['cekrole:Manajer']], function () {
+        Route::resource('/laporan', RegistrasiController::class);
+    });
+
+    Route::group(['middleware' => ['cekrole:Desainer']], function () {
+        Route::resource('/pesanan', RegistrasiController::class);
+    });
+    Route::group(['middleware' => ['cekrole:Kasir']], function () {
+        Route::resource('/pesanan', RegistrasiController::class);
+    });
+    Route::group(['middleware' => ['cekrole:Operator']], function () {
+        Route::resource('/pesanan', RegistrasiController::class);
+    });
+});
+
+
+
+
 
 Route::get('/reset-password', [LoginController::class, 'resetPassword']);
 Route::resource('/', StatusController::class);
@@ -49,7 +77,7 @@ Route::resource('/barang', BarangController::class);
 
 Route::resource('/karyawan', KaryawanController::class);
 
-Route::resource('/registrasi', RegistrasiController::class);
+// Route::resource('/registrasi', RegistrasiController::class);
 
 Route::resource('/pesanan', PesananController::class);
 
