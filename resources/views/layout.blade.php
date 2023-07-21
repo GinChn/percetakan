@@ -31,6 +31,9 @@
 </head>
 
 <body class="hold-transition sidebar-mini">
+    <?php
+    $nama_level = auth()->user()->level->nama_level;
+    ?>
     <div class="wrapper">
         <!-- Navbar -->
         <nav class="main-header navbar navbar-expand navbar-white navbar-light">
@@ -91,96 +94,44 @@
                                 </p>
                             </a>
                         </li>
-                        <li class="nav-header">MASTER</li>
-                        <li
-                            class="nav-item {{ Request::is('mesin*') || Request::is('bahan*') || Request::is('barang*') ? 'menu-open' : '' }}">
-                            <a href="#" class="nav-link  ">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
-                                <p>
-                                    Data Master
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="/mesin" class="nav-link {{ Request::is('mesin*') ? 'active' : '' }}">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Mesin</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="/bahan" class="nav-link {{ Request::is('bahan*') ? 'active' : '' }}">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Bahan</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="/barang" class="nav-link {{ Request::is('barang*') ? 'active' : '' }}">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Barang</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li
-                            class="nav-item {{ Request::is('pelanggan*') || Request::is('karyawan*') ? 'menu-open' : '' }}"">
-                            <a href="#" class="nav-link >
-                                <i class="nav-icon fas
-                                fa-address-card"></i>
-                                <p>
-                                    Data User
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="/karyawan"
-                                        class="nav-link {{ Request::is('karyawan*') ? 'active' : '' }}">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Karyawan</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Pelanggan</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/registrasi" class="nav-link {{ Request::is('registrasi*') ? 'active' : '' }}"">
-                                <i class="nav-icon fas fa-address-card"></i>
-                                <p>
-                                    Registrasi User
-                                </p>
-                            </a>
-                        </li>
+
                         <li class="nav-header">TRANSAKSI</li>
-                        <li class="nav-item">
-                            <a href="/pesanan" class="nav-link {{ Request::is('pesanan*') ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-file-invoice"></i>
-                                <p>
-                                    Pesanan
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/pembayaran" class="nav-link {{ Request::is('pembayaran*') ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-money-bill-wave"></i>
-                                <p>
-                                    Pembayaran
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/pekerjaan" class="nav-link {{ Request::is('pekerjaan*') ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-business-time"></i>
-                                <p>
-                                    Pekerjaan
-                                </p>
-                            </a>
-                        </li>
+                        @if ($nama_level == 'Administrator' || $nama_level == 'Desainer' || $nama_level == 'Kasir' || $nama_level == 'Operator')
+                            <li class="nav-item">
+                                <a href="/pesanan" class="nav-link {{ Request::is('pesanan*') ? 'active' : '' }}">
+                                    <i class="nav-icon fas fa-file-invoice"></i>
+                                    <p>
+                                        Pesanan
+                                    </p>
+                                </a>
+                            </li>
+                        @endif
+                        @if ($nama_level == 'Administrator' || $nama_level == 'Kasir')
+                            <li class="nav-item">
+                                <a href="/pembayaran"
+                                    class="nav-link {{ Request::is('pembayaran*') ? 'active' : '' }}">
+                                    <i class="nav-icon fas fa-money-bill-wave"></i>
+                                    <p>
+                                        Pembayaran
+                                    </p>
+                                </a>
+                            </li>
+                        @endif
+                        @if (
+                            $nama_level == 'Administrator' ||
+                                $nama_level == 'Kasir' ||
+                                $nama_level == 'Desainer' ||
+                                $nama_level == 'Operator' ||
+                                $nama_level == 'Manajer')
+                            <li class="nav-item">
+                                <a href="/pekerjaan" class="nav-link {{ Request::is('pekerjaan*') ? 'active' : '' }}">
+                                    <i class="nav-icon fas fa-business-time"></i>
+                                    <p>
+                                        Pekerjaan
+                                    </p>
+                                </a>
+                            </li>
+                        @endif
                         {{-- <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-business-time"></i>
@@ -204,24 +155,100 @@
                                 </li>
                             </ul>
                         </li> --}}
-                        <li class="nav-item">
-                            <a href="/pengeluaran"
-                                class="nav-link {{ Request::is('pengeluaran*') ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-file-export"></i>
-                                <p>
-                                    Pengeluaran
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-header">REPORT</li>
-                        <li class="nav-item">
-                            <a href="/laporan" class="nav-link {{ Request::is('laporan*') ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-file"></i>
-                                <p>
-                                    Laporan
-                                </p>
-                            </a>
-                        </li>
+                        @if ($nama_level == 'Administrator' || $nama_level == 'Kasir')
+                            <li class="nav-item">
+                                <a href="/pengeluaran"
+                                    class="nav-link {{ Request::is('pengeluaran*') ? 'active' : '' }}">
+                                    <i class="nav-icon fas fa-file-export"></i>
+                                    <p>
+                                        Pengeluaran
+                                    </p>
+                                </a>
+                            </li>
+                        @endif
+                        @if ($nama_level == 'Administrator' || $nama_level == 'Manajer' || $nama_level == 'Kasir')
+                            <li class="nav-header">REPORT</li>
+                            <li class="nav-item">
+                                <a href="/laporan" class="nav-link {{ Request::is('laporan*') ? 'active' : '' }}">
+                                    <i class="nav-icon fas fa-file"></i>
+                                    <p>
+                                        Laporan
+                                    </p>
+                                </a>
+                            </li>
+                        @endif
+                        @if ($nama_level == 'Administrator' || $nama_level == 'Kasir')
+                            <li class="nav-header">MASTER</li>
+                            <li
+                                class="nav-item {{ Request::is('mesin*') || Request::is('bahan*') || Request::is('barang*') ? 'menu-open' : '' }}">
+                                <a href="#" class="nav-link  ">
+                                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                                    <p>
+                                        Data Master
+                                        <i class="right fas fa-angle-left"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="/mesin"
+                                            class="nav-link {{ Request::is('mesin*') ? 'active' : '' }}">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Mesin</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="/bahan"
+                                            class="nav-link {{ Request::is('bahan*') ? 'active' : '' }}">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Bahan</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="/barang"
+                                            class="nav-link {{ Request::is('barang*') ? 'active' : '' }}">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Barang</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-header">USER</li>
+                            <li
+                                class="nav-item {{ Request::is('pelanggan*') || Request::is('karyawan*') ? 'menu-open' : '' }}"">
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon
+                                    fas fa-address-card"></i>
+                                    <p>
+                                        Data User
+                                        <i class="right fas fa-angle-left"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="/karyawan"
+                                            class="nav-link {{ Request::is('karyawan*') ? 'active' : '' }}">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Karyawan</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Pelanggan</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/registrasi"
+                                    class="nav-link {{ Request::is('registrasi*') ? 'active' : '' }}"">
+                                    <i class="nav-icon fas fa-address-card"></i>
+                                    <p>
+                                        Registrasi User
+                                    </p>
+                                </a>
+                            </li>
+                        @endif
                     </ul>
                 </nav>
             </div>

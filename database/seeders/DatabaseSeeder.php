@@ -13,7 +13,7 @@ use Illuminate\Database\Seeder;
 // use Illuminate\Foundation\Auth\User;
 use App\Models\User;
 use Database\Factories\UserFactory;
-
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        User::factory()->times(3)->create();
+        // User::factory()->times(3)->create();
         // Level
         Level::create([
             'nama_level' => 'Administrator'
@@ -142,6 +142,62 @@ class DatabaseSeeder extends Seeder
             'id_mesin' => '3',
             'satuan' => 'Lembar',
             'harga' => '80000'
+        ]);
+
+        User::create([
+            'username' => 'admin@gmail.com',
+            'password' => Hash::make('12345'), // password
+            'nama' => 'Saya Administrator',
+            'tanggal_lahir' => '2000-01-01',
+            'alamat' => 'Jalan Maju 1 Kali',
+            'no_telp' => '08012028399',
+            'pendidikan' => 'SMA',
+            'id_level' => 1,
+            'remember_token' => '12345',
+        ]);
+        User::create([
+            'username' => 'kasir@gmail.com',
+            'password' => Hash::make('12345'), // password
+            'nama' => 'Saya Kasir',
+            'tanggal_lahir' => '2001-01-01',
+            'alamat' => 'Jalan Merdeka 17 Agustus',
+            'no_telp' => '08276733372',
+            'pendidikan' => 'SMK',
+            'id_level' => 4,
+            'remember_token' => '12345',
+        ]);
+        User::create([
+            'username' => 'desainer@gmail.com',
+            'password' => Hash::make('12345'), // password
+            'nama' => 'Saya Desainer',
+            'tanggal_lahir' => '2002-01-01',
+            'alamat' => 'Jalan Jembatan Rusak No. 2',
+            'no_telp' => '085233332372',
+            'pendidikan' => 'SMK',
+            'id_level' => 3,
+            'remember_token' => '12345',
+        ]);
+        User::create([
+            'username' => 'operator@gmail.com',
+            'password' => Hash::make('12345'), // password
+            'nama' => 'Saya Operator',
+            'tanggal_lahir' => '1999-01-01',
+            'alamat' => 'Jalan Saja Dulu',
+            'no_telp' => '0852309090',
+            'pendidikan' => 'SMK',
+            'id_level' => 5,
+            'remember_token' => '12345',
+        ]);
+        User::create([
+            'username' => 'manajer@gmail.com',
+            'password' => Hash::make('12345'), // password
+            'nama' => 'Saya Manajer',
+            'tanggal_lahir' => '1998-01-01',
+            'alamat' => 'Jalan Menara No.90',
+            'no_telp' => '08523090888',
+            'pendidikan' => 'S1 Hukum',
+            'id_level' => 2,
+            'remember_token' => '12345',
         ]);
     }
 }
