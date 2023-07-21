@@ -27,6 +27,7 @@
     <link rel="stylesheet" href="{{ asset('assets/plugins/select2/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
     @yield('style')
+
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -39,7 +40,7 @@
                             class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="/" class="nav-link">Home</a>
+                    <a href="/dashboard" class="nav-link">Home</a>
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto">
@@ -51,9 +52,7 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                         <li class="user-header bg-success">
-                            @auth
-                                <p>Selamat datang, {{ auth()->user()->username }}</p>
-                            @endauth
+
                             <img src="{{ asset('assets/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2"
                                 alt="User Image">
                             <p>
@@ -85,7 +84,7 @@
                         data-accordion="false">
                         <li class="nav-header">DASHBOARD</li>
                         <li class="nav-item">
-                            <a href="/" class="nav-link {{ Request::is('/*') ? 'active' : '' }}">
+                            <a href="/dashboard" class="nav-link {{ Request::is('/*') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
                                     Dashboard
@@ -93,8 +92,9 @@
                             </a>
                         </li>
                         <li class="nav-header">MASTER</li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
+                        <li
+                            class="nav-item {{ Request::is('mesin*') || Request::is('bahan*') || Request::is('barang*') ? 'menu-open' : '' }}">
+                            <a href="#" class="nav-link  ">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
                                     Data Master
@@ -122,9 +122,11 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-address-card"></i>
+                        <li
+                            class="nav-item {{ Request::is('pelanggan*') || Request::is('karyawan*') ? 'menu-open' : '' }}"">
+                            <a href="#" class="nav-link >
+                                <i class="nav-icon fas
+                                fa-address-card"></i>
                                 <p>
                                     Data User
                                     <i class="right fas fa-angle-left"></i>
@@ -281,6 +283,9 @@
     {{-- Sweet Alert2 --}}
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     {{-- Data Table --}}
+
+
+
     <script>
         $(function() {
 
