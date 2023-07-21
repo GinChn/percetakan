@@ -34,75 +34,71 @@ use App\Http\Middleware\CekRole;
 // });
 Route::resource('/', StatusController::class);
 Route::resource('/cek-pesanan', StatusController::class);
-Route::get('/login', [LoginController::class, 'index'])->name('login');
+Route::get('/login', [LoginController::class, 'index'])->name('login')->middleware('guest');
 Route::post('/login', [LoginController::class, 'login']);
-Route::get('/logout', [LoginController::class, 'logout']);
+
 Route::get('/reset-password', [LoginController::class, 'resetPassword']);
 
 
 Route::group(['middleware' => 'auth'], function () {
     // yg sudah login biasa akses:
+    Route::get('/logout', [LoginController::class, 'logout']);
     Route::resource('/dashboard', DashboardController::class);
+    Route::resource('/pekerjaan', PekerjaanController::class);
 
     // yg role administrator bisa akses:
-    Route::group(['middleware' => ['cekrole:Administrator']], function () {
+    // Route::group(['middleware' => ['cekrole:Administrator']], function () {
+    //     Route::resource('/registrasi', RegistrasiController::class);
+    //     Route::resource('/mesin', MesinController::class);
+    //     Route::resource('/bahan', BahanController::class);
+    //     Route::resource('/barang', BarangController::class);
+    //     Route::resource('/karyawan', KaryawanController::class);
+    //     Route::get('/pesanan_detail/loadbarang', [PesananDetailController::class, 'loadBarang'])->name('pesanan_detail.barang');
+    //     Route::delete('/pesanan_detail/{id}/batal_pesanan', [PesananDetailController::class, 'batalPesanan'])->name('batal.pesanan');
+    //     Route::resource('/pesanan_detail', PesananDetailController::class)
+    //         ->except('create');
+    //     Route::resource('/pesanan', PesananController::class);
+    //     Route::resource('/pembayaran', PembayaranController::class);
+    //     Route::get('/pembayaran/{id}/bayar', [PembayaranController::class, 'pembayaran'])->name('bayar.pesanan');
+    //     Route::get('/pembayaran/{id}/nota', [PembayaranController::class, 'nota'])->name('pembayaran.nota');
+    //     Route::resource('/pekerjaan', PekerjaanController::class);
+    //     Route::resource('/laporan', LaporanController::class);
+    //     Route::post('/laporan', [LaporanController::class, 'handleForm'])->name('submit_tanggal');
+    //     Route::get('/export-excel', [LaporanController::class, 'exportExcel'])->name('export.excel');
+    //     Route::get('/export-pdf', [LaporanController::class, 'exportPdf'])->name('export.pdf');
+    // });
+    Route::group(['middleware' => ['cekrole:Administrator,Desainer,Operator,Kasir']], function () {
+        Route::resource('/pesanan', PesananController::class);
+        Route::get('/pesanan_detail/loadbarang', [PesananDetailController::class, 'loadBarang'])->name('pesanan_detail.barang');
+    });
+
+
+    Route::group(['middleware' => ['cekrole:Administrator,Kasir,Manajer']], function () {
+        Route::resource('/laporan', LaporanController::class);
+        Route::post('/laporan', [LaporanController::class, 'handleForm'])->name('submit_tanggal');
+        Route::get('/export-excel', [LaporanController::class, 'exportExcel'])->name('export.excel');
+        Route::get('/export-pdf', [LaporanController::class, 'exportPdf'])->name('export.pdf');
+    });
+
+
+    // yg role desainer bisa akses:
+    Route::group(['middleware' => ['cekrole:Administrator,Desainer']], function () {
+        Route::get('/pesanan_detail/loadbarang', [PesananDetailController::class, 'loadBarang'])->name('pesanan_detail.barang');
+        Route::delete('/pesanan_detail/{id}/batal_pesanan', [PesananDetailController::class, 'batalPesanan'])->name('batal.pesanan');
+        Route::resource('/pesanan_detail', PesananDetailController::class)
+            ->except('create');
+    });
+
+    // yg role kasir bisa akses:
+    Route::group(['middleware' => ['cekrole:Administrator,Kasir']], function () {
         Route::resource('/registrasi', RegistrasiController::class);
         Route::resource('/mesin', MesinController::class);
         Route::resource('/bahan', BahanController::class);
         Route::resource('/barang', BarangController::class);
         Route::resource('/karyawan', KaryawanController::class);
-        Route::resource('/pesanan', PesananController::class);
-        Route::get('/pesanan_detail/loadbarang', [PesananDetailController::class, 'loadBarang'])->name('pesanan_detail.barang');
-        Route::delete('/pesanan_detail/{id}/batal_pesanan', [PesananDetailController::class, 'batalPesanan'])->name('batal.pesanan');
-        Route::resource('/pesanan_detail', PesananDetailController::class)
-            ->except('create');
         Route::resource('/pembayaran', PembayaranController::class);
         Route::get('/pembayaran/{id}/bayar', [PembayaranController::class, 'pembayaran'])->name('bayar.pesanan');
         Route::get('/pembayaran/{id}/nota', [PembayaranController::class, 'nota'])->name('pembayaran.nota');
-        Route::resource('/pekerjaan', PekerjaanController::class);
-        Route::resource('/laporan', LaporanController::class);
-        Route::post('/laporan', [LaporanController::class, 'handleForm'])->name('submit_tanggal');
-        Route::get('/export-excel', [LaporanController::class, 'exportExcel'])->name('export.excel');
-        Route::get('/export-pdf', [LaporanController::class, 'exportPdf'])->name('export.pdf');
-    });
-
-    // yg role manajer bisa akses:
-    Route::group(['middleware' => ['cekrole:Manajer']], function () {
-        Route::resource('/pesanan', PesananController::class);
-        Route::resource('/laporan', LaporanController::class);
-        Route::post('/laporan', [LaporanController::class, 'handleForm'])->name('submit_tanggal');
-        //export excel
-        Route::get('/export-excel', [LaporanController::class, 'exportExcel'])->name('export.excel');
-        Route::get('/export-pdf', [LaporanController::class, 'exportPdf'])->name('export.pdf');
-    });
-
-    // yg role desainer bisa akses:
-    Route::group(['middleware' => ['cekrole:Desainer']], function () {
-        Route::resource('/pesanan', PesananController::class);
-        Route::get('/pesanan_detail/loadbarang', [PesananDetailController::class, 'loadBarang'])->name('pesanan_detail.barang');
-        Route::delete('/pesanan_detail/{id}/batal_pesanan', [PesananDetailController::class, 'batalPesanan'])->name('batal.pesanan');
-        Route::resource('/pesanan_detail', PesananDetailController::class)
-            ->except('create');
-        Route::resource('/pekerjaan', PekerjaanController::class);
-    });
-
-    // yg role kasir bisa akses:
-    Route::group(['middleware' => ['cekrole:Kasir']], function () {
-        Route::resource('/pesanan', PesananController::class);
-        Route::resource('/mesin', MesinController::class);
-        Route::resource('/bahan', BahanController::class);
-        Route::resource('/barang', BarangController::class);
-        Route::resource('/karyawan', KaryawanController::class);
-        Route::resource('/pembayaran', PembayaranController::class);
-        Route::get('/pembayaran/{id}/bayar', [PembayaranController::class, 'pembayaran'])->name('bayar.pesanan');
-        Route::get('/pembayaran/{id}/nota', [PembayaranController::class, 'nota'])->name('pembayaran.nota');
-        Route::resource('/pekerjaan', PekerjaanController::class);
         Route::resource('/pengeluaran', PengeluaranController::class);
-    });
-
-    // yg role operator bisa akses:
-    Route::group(['middleware' => ['cekrole:Operator']], function () {
-        Route::resource('/pesanan', PesananController::class);
-        Route::resource('/pekerjaan', PekerjaanController::class);
     });
 });

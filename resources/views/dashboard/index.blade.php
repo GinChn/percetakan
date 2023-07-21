@@ -2,13 +2,11 @@
 
 @section('content')
     <section class="content-header">
-        @if (Auth::check())
-            <!-- Tampilkan konten jika pengguna sudah masuk -->
-            <p>Selamat datang, {{ Auth::user()->username }}</p>
-        @else
-            <!-- Tampilkan konten jika pengguna belum masuk -->
-            <p>Silakan masuk untuk melanjutkan</p>
-        @endif
+
+        @auth
+            <p>Selamat datang, {{ auth()->user()->nama }}</p>
+            <p>Level: {{ auth()->user()->level->nama_level }}</p>
+        @endauth
 
         <div class="container-fluid">
             <div class="row mb-2">

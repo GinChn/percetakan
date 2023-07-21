@@ -30,9 +30,8 @@
                     @csrf
                     <div class="login-field">
                         <i class="login-icon fas fa-user"></i>
-                        <input type="text" name="username" id="username"
-                            class="login-input @error('username') @enderror" placeholder="Username" autofocus
-                            value="{{ old('username') }}" required>
+                        <input type="text" name="username" id="username" class="login-input" placeholder="Username"
+                            autofocus value="{{ old('username') }}" required>
                     </div>
                     <div class="login-field">
                         <i class="login-icon fas fa-lock"></i>
