@@ -28,9 +28,8 @@ class PesananDetail extends Migration
             $table->integer('subtotal');
             $table->integer('id_finishing');
             $table->string('status_detail');
-            $table->string('desainer')->nullable();
             $table->string('kasir')->nullable();
-            $table->string('operator')->nullable();
+
             $table->timestamps();
         });
     }

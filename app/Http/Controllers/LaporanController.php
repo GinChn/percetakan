@@ -27,9 +27,68 @@ class LaporanController extends Controller
         // ambil semua inputan
         $data_input_laporan = $request->all();
         $jenis_laporan = $data_input_laporan['jenis_laporan'];
+
+        $data_laporan = $this->getQueryData($jenis_laporan, $data_input_laporan);
+
+        // kirim ke view data laporan yg sudah didapat beserta data inputan
+        return view('laporan.index', ['data_laporan' => $data_laporan, 'data_input' => $data_input_laporan]);
+    }
+
+    public function exportExcel(Request $request)
+    {
+        return $this->exportFile($request, 'xlsx');
+    }
+
+    public function exportPdf(Request $request)
+    {
+        return $this->exportFile($request, 'pdf');
+    }
+
+    private function exportFile(Request $request, $format)
+    {
+        // ambil semua inputan
+        $data_input_laporan = $request->all();
+        $jenis_laporan = $data_input_laporan['jenis_laporan'] ?? null;
+
+        // Check if the necessary date keys exist in the array
+        $tanggal_laporan = $data_input_laporan['tanggal_laporan'] ?? null;
+        $tanggal_laporan_awal = $data_input_laporan['tanggal_laporan_awal'] ?? null;
+        $tanggal_laporan_akhir = $data_input_laporan['tanggal_laporan_akhir'] ?? null;
+
+        // Perform further validation if needed
+        if ($jenis_laporan === null) {
+            return redirect()->back()->with('gagal-export', 'Jenis laporan belum dipilih.');
+        }
+
+        if ($jenis_laporan === 'harian' && $tanggal_laporan === null) {
+            return redirect()->back()->with('gagal-export', 'Tanggal laporan harian belum dipilih.');
+        }
+
+        if ($jenis_laporan === 'bulanan' && ($tanggal_laporan_awal === null || $tanggal_laporan_akhir === null)) {
+            return redirect()->back()->with('gagal-export', 'Periode laporan bulanan belum dipilih.');
+        }
+
+        $data_laporan = $this->getQueryData($jenis_laporan, $data_input_laporan);
+        $nama_file = $this->generateFileName($jenis_laporan, $tanggal_laporan, $tanggal_laporan_awal, $tanggal_laporan_akhir, $format);
+
+        if ($format === 'xlsx') {
+            $laporanExport = new LaporanExportView($data_laporan, $data_input_laporan);
+            return Excel::download($laporanExport, $nama_file);
+        } elseif ($format === 'pdf') {
+            $pdf = Pdf::loadView('laporan.laporanpdf', ['data_laporan' => $data_laporan, 'data_input' => $data_input_laporan]);
+
+            return $pdf->download($nama_file);
+        }
+
+        return redirect()->back()->with('error', 'Format file tidak didukung.');
+    }
+
+    private function getQueryData($jenis_laporan, $data_input_laporan)
+    {
+        $data_pemasukan = [];
+        $data_pengeluaran = [];
         $total_bersih = null;
 
-        // cek milih laporan harian atau bulanan
         if ($jenis_laporan == "harian") {
             $tanggal_laporan = $data_input_laporan['tanggal_laporan'];
 
@@ -39,24 +98,32 @@ class LaporanController extends Controller
             $data_pengeluaran = Pengeluaran::whereDate('created_at', $tanggal_laporan)->get();
 
             $total_pemasukan = Pesanan::select(
-                DB::raw('SUM(total) as total_pemasukan_harian')
+                DB::raw('SUM(total) as total_pemasukan')
             )
                 ->whereDate('created_at', $tanggal_laporan)
                 ->where('status_pesanan', 'Selesai')
                 ->groupBy(DB::raw('DATE(created_at)'))
                 ->first();
+            if ($total_pemasukan) {
+                $total_pemasukan = $total_pemasukan->total_pemasukan;
+            } else {
+                $total_pemasukan = 0;
+            }
 
             $total_pengeluaran = Pengeluaran::select(
-                DB::raw('SUM(total) as total_pengeluaran_harian')
+                DB::raw('SUM(total) as total_pengeluaran')
             )
                 ->whereDate('created_at', $tanggal_laporan)
                 ->groupBy(DB::raw('DATE(created_at)'))
                 ->first();
-
-            if ($total_pemasukan && $total_pengeluaran) {
-                $total_bersih = $total_pemasukan->total_pemasukan_harian - $total_pengeluaran->total_pengeluaran_harian;
+            if ($total_pengeluaran) {
+                $total_pengeluaran = $total_pengeluaran->total_pengeluaran;
+            } else {
+                $total_pengeluaran = 0;
             }
-            // $total_bersih = $total_pemasukan->total_pemasukan_harian - $total_pengeluaran->total_pengeluaran_harian;
+
+            // Lakukan pengurangan
+            $total_bersih = $total_pemasukan - $total_pengeluaran;
         } else if ($jenis_laporan == "bulanan") {
             $tanggal_laporan_awal = $data_input_laporan['tanggal_laporan_awal'];
             $tanggal_laporan_akhir = $data_input_laporan['tanggal_laporan_akhir'];
@@ -100,94 +167,8 @@ class LaporanController extends Controller
             'total_keluar' => $total_pengeluaran,
             'total_bersih' => $total_bersih
         ];
-        // kirim ke view data laporan yg sudah didapat beserta data inputan
-        return view('laporan.index', ['data_laporan' => $data_laporan, 'data_input' => $data_input_laporan]);
-    }
 
-    public function exportExcel(Request $request)
-    {
-        return $this->exportFile($request, 'xlsx');
-    }
-
-    public function exportPdf(Request $request)
-    {
-        return $this->exportFile($request, 'pdf');
-    }
-
-    private function exportFile(Request $request, $format)
-    {
-        $jenis_laporan = $request->query('jenis_laporan');
-        $tanggal_laporan = $request->query('tanggal_laporan');
-        $tanggal_laporan_awal = $request->query('tanggal_laporan_awal');
-        $tanggal_laporan_akhir = $request->query('tanggal_laporan_akhir');
-
-        $data_laporan = $this->getQueryData($jenis_laporan, $tanggal_laporan, $tanggal_laporan_awal, $tanggal_laporan_akhir);
-
-        $data_input = [
-            'jenis_laporan' => $jenis_laporan,
-            'tanggal_laporan' => $tanggal_laporan,
-            'tanggal_laporan_awal' => $tanggal_laporan_awal,
-            'tanggal_laporan_akhir' => $tanggal_laporan_akhir
-        ];
-
-        $nama_file = $this->generateFileName($jenis_laporan, $tanggal_laporan, $tanggal_laporan_awal, $tanggal_laporan_akhir, $format);
-
-        if ($format === 'xlsx') {
-            $laporanExport = new LaporanExportView($data_laporan, $data_input);
-            return Excel::download($laporanExport, $nama_file);
-        } elseif ($format === 'pdf') {
-            $pdf = Pdf::loadView('laporan.laporanpdf', compact('data_laporan', 'data_input'));
-            return $pdf->download($nama_file);
-        }
-
-        return redirect()->back()->with('error', 'Format file tidak didukung.');
-    }
-
-    private function getQueryData($jenis_laporan, $tanggal_laporan, $tanggal_laporan_awal, $tanggal_laporan_akhir)
-    {
-        $query_pemasukan = Pesanan::where('status_pesanan', 'Selesai');
-        $query_pengeluaran = Pengeluaran::query();
-
-        if ($jenis_laporan == "harian") {
-            $query_pemasukan->whereDate('created_at', $tanggal_laporan);
-            $query_pengeluaran->whereDate('created_at', $tanggal_laporan);
-        } elseif ($jenis_laporan == "bulanan") {
-            $query_pemasukan->whereBetween('created_at', [$tanggal_laporan_awal, $tanggal_laporan_akhir]);
-            $query_pengeluaran->whereBetween('created_at', [$tanggal_laporan_awal, $tanggal_laporan_akhir]);
-        }
-
-        $data_pemasukan = $query_pemasukan->get();
-        $data_pengeluaran = $query_pengeluaran->get();
-
-        $total_pemasukan = Pesanan::select(
-            DB::raw('SUM(total) as total_pemasukan_harian')
-        )
-            ->where('status_pesanan', 'Selesai')
-            ->when($jenis_laporan == "harian", function ($query) use ($tanggal_laporan) {
-                $query->whereDate('created_at', $tanggal_laporan)
-                    ->groupBy(DB::raw('DATE(created_at)'));
-            })
-            ->first();
-
-        $total_pengeluaran = Pengeluaran::select(
-            DB::raw('SUM(total) as total_pengeluaran_harian')
-        )
-            ->when($jenis_laporan == "harian", function ($query) use ($tanggal_laporan) {
-                $query->whereDate('created_at', $tanggal_laporan)
-                    ->groupBy(DB::raw('DATE(created_at)'));
-            })
-            ->first();
-
-        $total_bersih = $total_pemasukan ? $total_pemasukan->total_pemasukan_harian : 0;
-        $total_bersih -= $total_pengeluaran ? $total_pengeluaran->total_pengeluaran_harian : 0;
-
-        return [
-            'data_masuk' => $data_pemasukan,
-            'data_keluar' => $data_pengeluaran,
-            'total_masuk' => $total_pemasukan,
-            'total_keluar' => $total_pengeluaran,
-            'total_bersih' => $total_bersih
-        ];
+        return $data_laporan;
     }
 
     private function generateFileName($jenis_laporan, $tanggal_laporan, $tanggal_laporan_awal, $tanggal_laporan_akhir, $format)

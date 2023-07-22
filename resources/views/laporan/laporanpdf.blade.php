@@ -57,9 +57,7 @@
                 <tr>
                     <td colspan="4">Total Pemasukan</td>
                     <td>
-                        @if ($data_laporan['total_masuk'])
-                            {{ $data_laporan['total_masuk']->total_pemasukan_harian }}
-                        @endif
+                        {{ $data_laporan['total_masuk'] }}
                     </td>
                 </tr>
             </tfoot>
@@ -82,7 +80,7 @@
                         <tr>
                             <td>{{ $keluar->created_at }}</td>
                             <td>{{ $keluar->keterangan }}</td>
-                            <td>{{ $keluar->harga }}</td>
+                            <td>{{ $keluar->nominal }}</td>
                             <td>{{ $keluar->jumlah }}</td>
                             <td>{{ $keluar->total }}</td>
                             <td></td>
@@ -94,9 +92,7 @@
                 <tr>
                     <td colspan="4">Total Pengeluaran</td>
                     <td>
-                        @if ($data_laporan['total_keluar'])
-                            {{ $data_laporan['total_keluar']->total_pengeluaran_harian }}
-                        @endif
+                        {{ $data_laporan['total_keluar'] }}
                     </td>
                 </tr>
             </tfoot>
@@ -108,9 +104,7 @@
                 <tr>
                     <td colspan="4">Total Pemasukan Bersih</td>
                     <td colspan="2" style="text-align: center">
-                        @if ($data_laporan['total_bersih'])
-                            {{ $data_laporan['total_bersih'] }}
-                        @endif
+                        {{ $data_laporan['total_bersih'] }}
                     </td>
                 </tr>
             </tfoot>
@@ -144,9 +138,7 @@
                 <tr>
                     <td colspan="2">Total Pemasukan</td>
                     <td>
-                        @if ($data_laporan['total_masuk'])
-                            {{ $data_laporan['total_masuk'] }}
-                        @endif
+                        {{ $data_laporan['total_masuk'] }}
                     </td>
                 </tr>
             </tfoot>
@@ -176,9 +168,7 @@
                 <tr>
                     <td colspan="2">Total Pengeluaran</td>
                     <td>
-                        @if ($data_laporan['total_keluar'])
-                            {{ $data_laporan['total_keluar'] }}
-                        @endif
+                        {{ $data_laporan['total_keluar'] }}
                     </td>
                 </tr>
             </tfoot>
@@ -190,9 +180,7 @@
                 <tr>
                     <td style="width: 55%">Total Pemasukan Bersih</td>
                     <td style="text-align: left">
-                        @if ($data_laporan['total_bersih'])
-                            {{ $data_laporan['total_bersih'] }}
-                        @endif
+                        {{ $data_laporan['total_bersih'] }}
                     </td>
                 </tr>
             </tfoot>

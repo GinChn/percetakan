@@ -23,6 +23,8 @@ class Pesanan extends Migration
             $table->integer('kembali')->default(0);
             $table->string('status_pesanan')->nullable();
             $table->string('status_pembayaran')->nullable();
+            $table->string('desainer')->nullable();
+            $table->string('operator')->nullable();
             $table->timestamps();
         });
     }

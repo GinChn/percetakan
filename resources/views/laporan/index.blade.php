@@ -176,16 +176,7 @@
                                 <div class="col d-flex justify-content-center">
                                     <p id="total-angka-masuk" class="text-bold d-flex align-items-center"
                                         style="height:100%;">
-                                        @if ($data_input['jenis_laporan'] == 'harian')
-                                            @if ($data_laporan['total_masuk'])
-                                                {{ $data_laporan['total_masuk']->total_pemasukan_harian }}
-                                            @endif
-                                        @elseif($data_input['jenis_laporan'] == 'bulanan')
-                                            @if ($data_laporan['total_masuk'])
-                                                {{ $data_laporan['total_masuk'] }}
-                                            @endif
-                                        @endif
-
+                                        {{ $data_laporan['total_masuk'] }}
                                     </p>
                                 </div>
                             </div>
@@ -218,7 +209,7 @@
                                             <tr>
                                                 <td>{{ $index + 1 }}</td>
                                                 <td>{{ $keluar->keterangan }}</td>
-                                                <td>{{ $keluar->harga }}</td>
+                                                <td>{{ $keluar->nominal }}</td>
                                                 <td>{{ $keluar->jumlah }}</td>
                                                 <td class="total-keluar">{{ $keluar->total }}</td>
 
@@ -260,15 +251,7 @@
                                 <div class="col d-flex justify-content-center">
                                     <p id="total-angka-keluar" class="text-bold d-flex align-items-center"
                                         style="height:100%;">
-                                        @if ($data_input['jenis_laporan'] == 'harian')
-                                            @if ($data_laporan['total_keluar'])
-                                                {{ $data_laporan['total_keluar']->total_pengeluaran_harian }}
-                                            @endif
-                                        @elseif($data_input['jenis_laporan'] == 'bulanan')
-                                            @if ($data_laporan['total_keluar'])
-                                                {{ $data_laporan['total_keluar'] }}
-                                            @endif
-                                        @endif
+                                        {{ $data_laporan['total_keluar'] }}
                                     </p>
                                 </div>
                             </div>
@@ -293,9 +276,7 @@
                                 <div class="col d-flex justify-content-center">
                                     <p id="total-bersih" class="text-bold d-flex align-items-center"
                                         style="height:100%;">
-                                        @if (isset($data_laporan['total_bersih']))
-                                            {{ $data_laporan['total_bersih'] }}
-                                        @endif
+                                        {{ $data_laporan['total_bersih'] }}
                                     </p>
                                 </div>
                             </div>
@@ -303,7 +284,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
 
     @endif
@@ -325,10 +305,6 @@
                 $('.pick_harian, .pick_bulanan').hide();
                 $('.tombol_cek').hide();
 
-                // if (pilihLaporan === 'harian' || pilihLaporan === 'bulanan') {
-                //     $('.pick_harian, .tombol_cek, .export-pdf, .export-excel').show();
-                // }
-
                 if (pilihLaporan === 'harian') {
                     $('.pick_harian, .tombol_cek, .export-pdf, .export-excel').show();
                 } else if (pilihLaporan === 'bulanan') {
@@ -337,6 +313,19 @@
 
             });
         });
-        // menampilkan jumlah pemasukan dan pengeluaran
     </script>
+    @if (Session::has('gagal-export'))
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                Swal.fire({
+                    icon: 'error',
+                    title: '{{ Session::get('gagal-export') }}',
+                    timer: 3000,
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false
+                });
+            });
+        </script>
+    @endif
 @endsection
