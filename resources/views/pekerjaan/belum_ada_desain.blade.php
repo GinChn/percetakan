@@ -25,10 +25,10 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Nota</th>
                                     <th>Tanggal</th>
                                     <th>Nama Pelanggan</th>
-                                    <th>Status Pesanan</th>
+                                    <th>Status Desain</th>
+                                    <th>Status Pekerjaan</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -36,10 +36,9 @@
                                 @foreach ($pekerjaan as $item)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $item->no_nota }}</td>
                                         <td>{{ tanggal_indonesia($item->created_at) }}</td>
                                         <td>{{ $item->nama_pelanggan }}</td>
-                                        {{-- <td>{{ $item->status_desain }}</td> --}}
+                                        <td>{{ $item->status_desain }}</td>
                                         <td>{{ $item->status_pesanan }}</td>
                                         <td>
                                             <a href="#" class="btn-sm btn-primary"><i class="fas fa-pen"></i></a>
