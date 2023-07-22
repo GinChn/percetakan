@@ -51,7 +51,7 @@
                     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
                         <img src="{{ asset('assets/dist/img/user2-160x160.jpg') }}"
                             class="user-image img-circle elevation-2" alt="User Image">
-                        <span class="d-none d-md-inline">User</span>
+                        <span class="d-none d-md-inline">{{ auth()->user()->nama }}</span>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                         <li class="user-header bg-success">
@@ -59,7 +59,7 @@
                             <img src="{{ asset('assets/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2"
                                 alt="User Image">
                             <p>
-                                User
+                                {{ auth()->user()->nama }}
                             </p>
                         </li>
                         <li class="user-footer">
@@ -73,8 +73,7 @@
         <!-- /.navbar -->
 
         <aside class="main-sidebar sidebar-dark-olive elevation-4">
-            <!-- Brand Logo -->
-            <a href="/" class="brand-link bg-light">
+            <a href="/dashboard" class="brand-link bg-light">
                 <img src="{{ asset('assets/dist/img/logo.png') }}" alt="AdminLTE Logo" class="brand-image"
                     style="opacity: .8">
                 <span class="brand-text font-weight-light">AAL Printing</span>
@@ -87,7 +86,7 @@
                         data-accordion="false">
                         <li class="nav-header">DASHBOARD</li>
                         <li class="nav-item">
-                            <a href="/dashboard" class="nav-link {{ Request::is('/*') ? 'active' : '' }}">
+                            <a href="/dashboard" class="nav-link {{ Request::is('dashboard*') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
                                     Dashboard
@@ -328,15 +327,9 @@
     {{-- Sweet Alert2 --}}
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     {{-- Data Table --}}
-
-
-
     <script>
         $(function() {
-
-
             var tableIds = ['#table2', '#table2_pemasukan', '#table2_pengeluaran'];
-
             $(tableIds.join(', ')).each(function() {
                 $(this).DataTable({
                     "paging": true,
