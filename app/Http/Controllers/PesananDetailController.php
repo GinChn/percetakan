@@ -59,11 +59,13 @@ class PesananDetailController extends Controller
             'satuan' => $request->satuan,
             'panjang' => $request->panjang,
             'lebar' => $request->lebar,
+            'totalukuran' => $request->totalukuran,
             'totalharga' => $request->totalharga,
             'jumlah' => $request->jumlah,
             'subtotal' => $request->subtotal,
             'id_finishing' => $request->id_finishing,
-            'status_detail' => $request->status_detail
+            'status_detail' => $request->status_detail,
+            'desainer' => $request->desainer
         ]);
 
         return back()->with('sukses-input-pesanan', 'Pesanan Berhasil Ditambahkan');
@@ -110,6 +112,7 @@ class PesananDetailController extends Controller
             'satuan' => $request->satuan,
             'panjang' => $request->panjang,
             'lebar' => $request->lebar,
+            'totalukuran' => $request->totalukuran,
             'totalharga' => $request->totalharga,
             'jumlah' => $request->jumlah,
             'subtotal' => $request->subtotal,

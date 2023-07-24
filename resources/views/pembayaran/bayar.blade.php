@@ -22,10 +22,7 @@
                 <td>No Nota</td>
               </tr>
               <tr>
-                <td>Kasir</td>
-              </tr>
-              <tr>
-                <td>Tanggal</td>
+                <td>Hari/Tanggal</td>
               </tr>
             </table>
           </div>
@@ -34,9 +31,6 @@
               @foreach ($data as $item)
               <tr>
                 <td>: <b>{{ $item->no_nota }}</b></td>
-              </tr>
-              <tr>
-                <td>: <b>Kasir</b></td>
               </tr>
               <tr>
                 <td>: <b>{{ tanggal_indonesia($item->created_at) }}</b></td>
@@ -107,6 +101,7 @@
     <form action="{{ route('pembayaran.store') }}" class="form-pembayaran" method="post">
     @csrf
     <input type="hidden" name="id_pesanan" value="{{ $item->id_pesanan }}">
+    <input type="hidden" name="kasir" value="{{ auth()->user()->nama }}">
     <div class="row">
       <div class="col-6"></div>
       <div class="col-6">

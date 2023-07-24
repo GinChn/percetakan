@@ -24,9 +24,11 @@
           <div class="card-body">
             <div class="row">
               <input type="hidden" class="form-control" name="id_pesanan" id="id_pesanan" value="{{ $data->id_pesanan }}">
+              <input type="hidden" class="form-control form-control-sm" id="desainer" name="desainer" value="{{ auth()->user()->nama }}">
               <input type="hidden" class="form-control form-control-sm" id="totalharga" name="totalharga">
+              <input type="hidden" class="form-control form-control-sm" id="totalukuran" name="totalukuran">
               <input type="hidden" class="form-control form-control-sm" id="satuan" name="satuan">
-              <input type="hidden" class="form-control" name="id_bahan" id="bahan">
+              <input type="hidden" class="form-control" name="id_bahan" id="id_bahan">
               <div class="col-6" style="padding: 5px 40px">
                 <div class="form-group row">
                   <label for="no_nota" class="col-sm-3 col-form-label" style="font-size: 11pt">No Nota</label>
@@ -110,7 +112,7 @@
               @csrf
               @method('delete')
               <button type="submit" class="btn btn-danger btn-sm border-0 delete-btn" onclick="deletePesanan({{ $data->id_pesanan }})">
-                Batal
+                Kembali
               </button>
             </form>
             <button type="submit" class="btn btn-success btn-sm float-right btn-inputPesanan">Tambahkan</button>
@@ -150,7 +152,11 @@
               <td>{{ $loop->iteration }}</td>
               <td>{{ $item->nama_pesanan }}</td>
               <td>{{ $item->nama_barang }}</td>
-              <td>{{ $item->panjang }} x {{ $item->lebar }}</td>
+              @if ($item->satuan == 'Meter')
+              <td>{{ $item->panjang }} x {{ $item->lebar }} m </td>
+              @else
+              <td></td>
+              @endif
               <td>{{ format_uang($item->harga) }}</td>
               <td>{{ $item->jumlah }}</td>
               <td>{{ format_uang($item->subtotal) }}</td>
@@ -187,7 +193,7 @@
               </td>
             </tr>
             @php
-                $total += $item->harga * $item->jumlah;
+                $total += $item->subtotal;
             @endphp
             @endforeach
             </tbody>
@@ -262,7 +268,7 @@
       },
       success: function (res) {
         console.log(res);
-        $('#bahan').val(res.id_bahan)
+        $('#id_bahan').val(res.id_bahan)
         $('#harga').val(res.harga)
         $('#satuan').val(res.satuan)
       }
@@ -285,6 +291,7 @@
       //ambil data inputan jumlah
       var jumlah = $(this).val()
       //menampilkan subtotal berdasarkan perhitungan yang diambil dari data variabel totalharga dan jumlah
+      $('#totalukuran').val(ukuran * jumlah)
       $('#totalharga').val(totalharga)
       $('#subtotal').val(totalharga * jumlah)
     } else {
@@ -385,6 +392,7 @@
       //ambil data inputan jumlah
       var jumlah = $(this).val()
       //menampilkan subtotal berdasarkan perhitungan yang diambil dari data variabel totalharga dan jumlah
+      $('#totalukuran_detail').val(ukuran * jumlah)
       $('#totalharga_detail').val(totalharga)
       $('#subtotal_detail').val(totalharga * jumlah)
     } else {
@@ -392,26 +400,23 @@
       var harga = parseInt($('#harga_detail').val())
       var jumlah = parseInt($(this).val())
       $('#totalharga_detail').val(harga)
-      $('#subtotal').val(jumlah * harga)
+      $('#subtotal_detail').val(jumlah * harga)
     }
   });
-
-    $('#modal-pesanan').on('mouseout', '#jumlah_detail', function() {
-      var harga = parseInt($('#harga_detail').val())
-      var jumlah = parseInt($(this).val())
-      $('#subtotal_detail').val(jumlah * harga)
-    });
 
     $.get(url)
     .done((response) => {
       $('#modal-pesanan [name=nama_pesanan]').val(response.nama_pesanan);
       $('#modal-pesanan [name=id_barang]').val(response.id_barang);
       $('#modal-pesanan [name=id_bahan]').val(response.id_bahan);
+      $('#modal-pesanan [name=panjang]').val(response.panjang);
+      $('#modal-pesanan [name=lebar]').val(response.lebar);
       $('#modal-pesanan [name=harga]').val(response.harga);
       $('#modal-pesanan [name=jumlah]').val(response.jumlah);
       $('#modal-pesanan [name=subtotal]').val(response.subtotal);
       $('#modal-pesanan [name=id_finishing]').val(response.id_finishing);
       $('#modal-pesanan [name=status_detail]').val(response.status_detail);
+      $('#modal-pesanan [name=satuan]').val(response.satuan);
     })
   }
 

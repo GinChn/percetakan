@@ -30,4 +30,5 @@ class PesananDetail extends Model
     {
         return $this->belongsTo(Pesanan::class, 'id_pesanan');
     }
+
 }
