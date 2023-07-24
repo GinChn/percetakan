@@ -33,7 +33,7 @@
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $item->nama }}</td>
-                                <td>{{ tanggal_indonesia($item->tanggal_lahir) }}</td>
+                                <td>{{ tanggal_indonesia($item->tanggal_lahir, false) }}</td>
                                 <td>{{ $item->alamat }}</td>
                                 <td>{{ $item->no_telp }}</td>
                                 <td>{{ $item->pendidikan }}</td>

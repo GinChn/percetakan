@@ -49,21 +49,21 @@
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item dropdown user-menu">
                     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-                        <img src="{{ asset('assets/dist/img/user2-160x160.jpg') }}"
+                        <img src="{{ asset('assets/dist/img/user.png') }}"
                             class="user-image img-circle elevation-2" alt="User Image">
                         <span class="d-none d-md-inline">{{ auth()->user()->nama }}</span>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                         <li class="user-header bg-success">
 
-                            <img src="{{ asset('assets/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2"
+                            <img src="{{ asset('assets/dist/img/user.png') }}" class="img-circle elevation-2"
                                 alt="User Image">
                             <p>
                                 {{ auth()->user()->nama }}
                             </p>
                         </li>
                         <li class="user-footer">
-                            <a href="#" class="btn btn-default btn-flat">Profile</a>
+                            <a href="/profile" class="btn btn-default btn-flat">Profile</a>
                             <a href="/logout" class="btn btn-default btn-flat float-right">Logout</a>
                         </li>
                     </ul>
@@ -100,7 +100,7 @@
                                 <a href="/pesanan" class="nav-link {{ Request::is('pesanan*') ? 'active' : '' }}">
                                     <i class="nav-icon fas fa-file-invoice"></i>
                                     <p>
-                                        Pesanan
+                                        Buat Pesanan
                                     </p>
                                 </a>
                             </li>

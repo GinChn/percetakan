@@ -26,7 +26,7 @@
                             <tr>
                                 <th style="width: 10px">No</th>
                                 <th>Username</th>
-                                <th>Nama Lengkap</th>
+                                <th>Nama</th>
                                 <th>Level</th>
                                 <th>Aksi</th>
                             </tr>
@@ -39,9 +39,6 @@
                                 <td>{{ $item->nama }}</td>
                                 <td>{{ $item->level->nama_level }}</td>
                                 <td>
-                                    {{-- <button onclick="editBarang('{{ route('barang.update', $item->id_barang) }}')" class="btn btn-sm btn-primary">
-                                        <i class="fas fa-pen"></i>
-                                    </button> --}}
                                     <form id="hapus-user{{ $item->id_user }}" action="{{ route('registrasi.destroy', $item->id_user) }}" method="post" class="d-inline">
                                         @csrf
                                         @method('delete')
