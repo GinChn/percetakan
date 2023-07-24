@@ -123,7 +123,7 @@
                                         <th>No</th>
                                         <th>No Nota</th>
                                         <th>Nama Pelanggan</th>
-                                        <th>Total Tagihan</th>
+                                        <th>Total</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
@@ -134,9 +134,10 @@
                                                 <td>{{ $index + 1 }}</td>
                                                 <td>{{ $masuk->no_nota }}</td>
                                                 <td>{{ $masuk->nama_pelanggan }}</td>
-                                                <td class="total-masuk">{{ $masuk->total }}</td>
+                                                <td class="total-masuk">{{ format_uang($masuk->total) }}</td>
                                                 <td>
-                                                    <a href="#" class="btn-sm btn-primary">Detail</a>
+                                                    <a href="pekerjaan/{{ $masuk->id_pesanan }}/detail"
+                                                        class="btn-sm btn-primary">Detail</a>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -158,8 +159,8 @@
                                         @foreach ($data_laporan['data_masuk'] as $index => $masuk)
                                             <tr>
                                                 <td>{{ $index + 1 }}</td>
-                                                <td>{{ $masuk->tanggal }}</td>
-                                                <td class="total-masuk">{{ $masuk->total_tagihan }}</td>
+                                                <td>{{ tanggal_indonesia($masuk->tanggal, false) }}</td>
+                                                <td class="total-masuk">{{ format_uang($masuk->total_tagihan) }}</td>
                                                 <td><a href="#" class="btn-sm btn-primary">Detail</a></td>
                                             </tr>
                                         @endforeach
@@ -176,7 +177,7 @@
                                 <div class="col d-flex justify-content-center">
                                     <p id="total-angka-masuk" class="text-bold d-flex align-items-center"
                                         style="height:100%;">
-                                        {{ $data_laporan['total_masuk'] }}
+                                        {{ format_uang($data_laporan['total_masuk']) }}
                                     </p>
                                 </div>
                             </div>
@@ -209,9 +210,9 @@
                                             <tr>
                                                 <td>{{ $index + 1 }}</td>
                                                 <td>{{ $keluar->keterangan }}</td>
-                                                <td>{{ $keluar->nominal }}</td>
+                                                <td>{{ format_uang($keluar->nominal) }}</td>
                                                 <td>{{ $keluar->jumlah }}</td>
-                                                <td class="total-keluar">{{ $keluar->total }}</td>
+                                                <td class="total-keluar">{{ format_uang($keluar->total) }}</td>
 
                                             </tr>
                                         @endforeach
@@ -233,8 +234,9 @@
                                         @foreach ($data_laporan['data_keluar'] as $index => $keluar)
                                             <tr>
                                                 <td>{{ $index + 1 }}</td>
-                                                <td>{{ $keluar->tanggal }}</td>
-                                                <td class="total-keluar">{{ $keluar->total_pengeluaran }}</td>
+                                                <td>{{ tanggal_indonesia($keluar->tanggal) }}</td>
+                                                <td class="total-keluar">{{ format_uang($keluar->total_pengeluaran) }}
+                                                </td>
                                                 <td><a href="#" class="btn-sm btn-primary">Detail</a></td>
                                             </tr>
                                         @endforeach
@@ -251,7 +253,7 @@
                                 <div class="col d-flex justify-content-center">
                                     <p id="total-angka-keluar" class="text-bold d-flex align-items-center"
                                         style="height:100%;">
-                                        {{ $data_laporan['total_keluar'] }}
+                                        {{ format_uang($data_laporan['total_keluar']) }}
                                     </p>
                                 </div>
                             </div>
@@ -276,7 +278,7 @@
                                 <div class="col d-flex justify-content-center">
                                     <p id="total-bersih" class="text-bold d-flex align-items-center"
                                         style="height:100%;">
-                                        {{ $data_laporan['total_bersih'] }}
+                                        {{ format_uang($data_laporan['total_bersih']) }}
                                     </p>
                                 </div>
                             </div>

@@ -16,6 +16,22 @@
     </div>
 
     <div class="container-fluid">
+        <div class="row mb-4">
+            <div class="col-12">
+                @foreach ($data as $item)
+                    @if ($item->status_pesanan == 'Selesai')
+                        <form method="POST" action="{{ route('pekerjaan.update_status_diambil_id', $item->id_pesanan) }}"
+                            style="display: inline;">
+                            @csrf
+                            <button type="submit" class="btn btn-sm btn-outline-info float-right">Tandai Sudah
+                                Diambil</button>
+                        </form>
+                    @elseif($item->status_pesanan == 'Sudah Diambil')
+                        <span class="badge badge-info float-right">Sudah Diambil</span>
+                    @endif
+                @endforeach
+            </div>
+        </div>
         <div class="invoice p-3 mb-3 card-outline card-secondary">
             <div class="row" style="margin-bottom: 30px">
                 <div class="col-sm-8">
@@ -248,4 +264,25 @@
             </div> --}}
         </div>
     </div>
+    <!-- Use SweetAlert2 version 11 -->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.all.min.js"></script>
+    <script src="{{ asset('assets/plugins/jquery/jquery.min.js') }}"></script>
+    <script>
+        @if (Session::has('status'))
+            var Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+            });
+            document.addEventListener("DOMContentLoaded", function() {
+                Toast.fire({
+                    icon: 'success',
+                    title: '{{ Session::get('status') }}',
+                    timer: 3000
+                });
+            });
+        @endif
+    </script>
 @endsection

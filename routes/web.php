@@ -49,9 +49,17 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('/dashboard', DashboardController::class);
     Route::post('/pekerjaan/{id}/update-status', [PekerjaanController::class, 'updateStatus'])->name('pekerjaan.update_status');
     Route::get('/pekerjaan/{id}/detail', [PekerjaanController::class, 'pekerjaanDetail'])->name('pekerjaan.detail');
+    Route::post('/pekerjaan/update-status-all-2', [PekerjaanController::class, 'updateStatusAll2'])->name('pekerjaan.update_status_2'); // ubah ke sudah ada desain
+    Route::post('/pekerjaan/update-status-all-3', [PekerjaanController::class, 'updateStatusAll3'])->name('pekerjaan.update_status_3'); // ubah ke dikerjakan
+    Route::post('/pekerjaan/update-status-all-4', [PekerjaanController::class, 'updateStatusAll4'])->name('pekerjaan.update_status_4'); // ubah ke selesai
+    Route::post('/pekerjaan/update-status-diambil', [PekerjaanController::class, 'updateStatusDiambilAll'])->name('pekerjaan.update_status_diambil'); // ubah ke selesai
+    Route::post('/pekerjaan/{id}/update-status-diambil', [PekerjaanController::class, 'updateStatusDiambil'])->name('pekerjaan.update_status_diambil_id'); // ubah ke selesai
 
     Route::get('/pekerjaan/belum-ada-desain', [PekerjaanController::class, 'belumAdaDesain']);
     Route::get('/pekerjaan/sudah-ada-desain', [PekerjaanController::class, 'sudahAdaDesain']);
+    Route::get('/pekerjaan/dikerjakan', [PekerjaanController::class, 'dikerjakan']);
+    Route::get('/pekerjaan/selesai', [PekerjaanController::class, 'selesai']);
+    Route::get('/pekerjaan/sudah_diambil', [PekerjaanController::class, 'sudahDiambil']);
     Route::resource('/pekerjaan', PekerjaanController::class);
     // Route::get('/detail-status-pekerjaan', [PekerjaanController::class, 'detailStatusPekerjaan'])->name('detail-status-pekerjaan');
 

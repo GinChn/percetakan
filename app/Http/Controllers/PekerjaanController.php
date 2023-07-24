@@ -43,17 +43,56 @@ class PekerjaanController extends Controller
             $statusDetail = $request->input('status_detail');
             $statusText = $this->getStatusValue($statusDetail); // Call getStatusValue function
 
-            // Check if the record exists, and if not found, it will throw an exception
-            $pesananDetail = PesananDetail::findOrFail($id);
 
-            // Use the 'update' method to update the 'status_detail' attribute
+            $pesananDetail = PesananDetail::findOrFail($id);
             $pesananDetail->update(['status_detail' => $statusText]);
 
-            return back()->with('status', 'Status updated successfully');
+            return back()->with('status', 'Berhasil update status item pesanan!');
         } catch (ModelNotFoundException $exception) {
             // Handle the case when the record with the specified $id is not found
             return back()->withErrors('Record not found.');
         }
+    }
+
+    public function updateStatusDiambilAll(Request $request)
+    {
+        $ids = $request->input('ids');
+        Pesanan::whereIn('id_pesanan', $ids)
+            ->update(['status_pesanan' => 'Sudah Diambil']);
+
+        return response()->json(['message' => 'Data updated successfully']);
+    }
+    public function updateStatusDiambil($id)
+    {
+        $pesanan = Pesanan::findOrFail($id);
+        $pesanan->update(['status_pesanan' => 'Sudah Diambil']);
+
+        return back()->with('status', 'Berhasil update status pesanan!');
+    }
+
+    public function updateStatusAll2(Request $request)
+    {
+        $ids = $request->input('ids');
+        PesananDetail::whereIn('id_pesanan_detail', $ids)
+            ->update(['status_detail' => 'Sudah Ada Desain']);
+
+        return response()->json(['message' => 'Data updated successfully']);
+    }
+    public function updateStatusAll3(Request $request)
+    {
+        $ids = $request->input('ids');
+        PesananDetail::whereIn('id_pesanan_detail', $ids)
+            ->update(['status_detail' => 'Dikerjakan']);
+
+        return response()->json(['message' => 'Data updated successfully']);
+    }
+    public function updateStatusAll4(Request $request)
+    {
+        $ids = $request->input('ids');
+        PesananDetail::whereIn('id_pesanan_detail', $ids)
+            ->update(['status_detail' => 'Selesai']);
+
+        return response()->json(['message' => 'Data updated successfully']);
     }
 
     public function belumAdaDesain()
@@ -78,6 +117,26 @@ class PekerjaanController extends Controller
             ->where('status_detail', 'Sudah Ada Desain')
             ->get();
         return view('pekerjaan.sudah_ada_desain', ['data' => $data]);
+    }
+    public function dikerjakan()
+    {
+        $data = PesananDetail::select('*')
+            ->join('pesanan', 'pesanan_detail.id_pesanan', '=', 'pesanan.id_pesanan')
+            ->join('finishing', 'pesanan_detail.id_finishing', '=', 'finishing.id_finishing')
+            ->join('barang', 'pesanan_detail.id_barang', '=', 'barang.id_barang')
+            ->where('status_detail', 'Dikerjakan')
+            ->get();
+        return view('pekerjaan.dikerjakan', ['data' => $data]);
+    }
+    public function selesai()
+    {
+        $pesananSelesai = Pesanan::where('status_pesanan', 'Selesai')->get();
+        return view('pekerjaan.selesai', ['data' => $pesananSelesai]);
+    }
+    public function sudahDiambil()
+    {
+        $data = Pesanan::where('status_pesanan', 'Sudah Diambil')->get();
+        return view('pekerjaan.sudah_diambil', ['data' => $data]);
     }
 
 
@@ -109,6 +168,7 @@ class PekerjaanController extends Controller
                 DB::raw('COUNT(pesanan_detail.id_pesanan) as banyak_status_detail'),
                 DB::raw('SUM(CASE WHEN pesanan_detail.status_detail = "Selesai" THEN 1 ELSE 0 END) as banyak_status_selesai')
             )
+            ->where('status_pesanan', '<>', 'Sudah Diambil')
             ->groupBy('pesanan.id_pesanan', 'pesanan.no_nota', 'pesanan.nama_pelanggan', 'pesanan.created_at')
             ->get();
 

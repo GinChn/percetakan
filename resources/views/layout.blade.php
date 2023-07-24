@@ -49,8 +49,8 @@
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item dropdown user-menu">
                     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-                        <img src="{{ asset('assets/dist/img/user.png') }}"
-                            class="user-image img-circle elevation-2" alt="User Image">
+                        <img src="{{ asset('assets/dist/img/user.png') }}" class="user-image img-circle elevation-2"
+                            alt="User Image">
                         <span class="d-none d-md-inline">{{ auth()->user()->nama }}</span>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
@@ -158,15 +158,17 @@
                                             </a>
                                         </li>
                                     @endif
-                                    @if ($nama_level == 'Administrator' || $nama_level == 'Operator' || $nama_level == 'Kasir')
+                                    @if ($nama_level == 'Administrator' || $nama_level == 'Operator')
                                         <li class="nav-item">
-                                            <a href="#" class="nav-link">
+                                            <a href="/pekerjaan/dikerjakan" class="nav-link">
                                                 <i class="far fa-circle nav-icon"></i>
-                                                <p>Sedang Dikerjakan</p>
+                                                <p>Dikerjakan</p>
                                             </a>
                                         </li>
+                                    @endif
+                                    @if ($nama_level == 'Administrator' || $nama_level == 'Operator' || $nama_level == 'Kasir')
                                         <li class="nav-item">
-                                            <a href="#" class="nav-link">
+                                            <a href="/pekerjaan/selesai" class="nav-link">
                                                 <i class="far fa-circle nav-icon"></i>
                                                 <p>Selesai</p>
                                             </a>
@@ -174,7 +176,7 @@
                                     @endif
                                     @if ($nama_level == 'Administrator' || $nama_level == 'Kasir')
                                         <li class="nav-item">
-                                            <a href="#" class="nav-link">
+                                            <a href="/pekerjaan/sudah_diambil" class="nav-link">
                                                 <i class="far fa-circle nav-icon"></i>
                                                 <p>Sudah Diambil</p>
                                             </a>

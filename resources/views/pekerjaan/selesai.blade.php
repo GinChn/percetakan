@@ -6,7 +6,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h4 class="m-0">Belum Ada Desain</h4>
+                    <h1 class="m-0">Pesanan Selesai</h1>
                 </div>
             </div>
         </div>
@@ -35,16 +35,11 @@
                         <table id="table2" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th width="5%">No</th>
+                                    <th>No</th>
                                     <th>Nota</th>
                                     <th>Tanggal</th>
-                                    <th>Pelanggan</th>
-                                    <th>Pesanan</th>
-                                    <th>Barang</th>
-                                    <th>P</th>
-                                    <th>L</th>
-                                    <th>QTY</th>
-                                    <th>Finishing</th>
+                                    <th>Nama Pelanggan</th>
+                                    <th>Aksi</th>
                                     <th class="pilih-check hide-on-start">Pilih</th>
                                 </tr>
                             </thead>
@@ -55,18 +50,15 @@
                                         <td>{{ $item->no_nota }}</td>
                                         <td>{{ tanggal_indonesia($item->created_at) }}</td>
                                         <td>{{ $item->nama_pelanggan }}</td>
-                                        <td>{{ $item->nama_pesanan }}</td>
-                                        <td>{{ $item->nama_barang }}</td>
-                                        <td>{{ $item->panjang }}</td>
-                                        <td>{{ $item->lebar }}</td>
-                                        <td>{{ $item->jumlah }}</td>
-                                        <td>{{ $item->nama_finishing }}</td>
-                                        {{-- Add a checkbox for each row --}}
+                                        <td>
+                                            <a href="/pekerjaan/{{ $item->id_pesanan }}/detail"
+                                                class="btn-sm btn-primary">Detail</a>
+                                        </td>
                                         <td class="pilih-check hide-on-start">
                                             <div class="checkbox-wrapper-46">
-                                                <input class="inp-cbx" id="cbx-{{ $item->id_pesanan_detail }}"
-                                                    type="checkbox" value="{{ $item->id_pesanan_detail }}">
-                                                <label class="cbx" for="cbx-{{ $item->id_pesanan_detail }}"><span>
+                                                <input class="inp-cbx" id="cbx-{{ $item->id_pesanan }}" type="checkbox"
+                                                    value="{{ $item->id_pesanan }}">
+                                                <label class="cbx" for="cbx-{{ $item->id_pesanan }}"><span>
                                                         <svg width="12px" height="10px" viewbox="0 0 12 10">
                                                             <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
                                                         </svg></span><span></span>
@@ -135,7 +127,7 @@
                 Swal.fire({
                     icon: 'warning',
                     title: 'Konfirmasi',
-                    text: "Apakah Anda yakin ingin mengubah status ke 'Sudah Ada Desain'?",
+                    text: "Apakah Anda yakin ingin mengubah status pesanan ke 'Sudah Diambil'?",
                     showCancelButton: true,
                     confirmButtonColor: '#28a745',
                     cancelButtonColor: '#dc3545',
@@ -144,7 +136,7 @@
                     if (result.isConfirmed) {
                         // Make an AJAX request to the Laravel controller to update the data
                         $.ajax({
-                            url: "{{ route('pekerjaan.update_status_2') }}",
+                            url: "{{ route('pekerjaan.update_status_diambil') }}",
                             type: "POST",
                             data: {
                                 ids: selectedItems,

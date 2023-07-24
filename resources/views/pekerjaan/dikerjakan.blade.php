@@ -6,7 +6,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h4 class="m-0">Belum Ada Desain</h4>
+                    <h4 class="m-0">Dikerjakan</h4>
                 </div>
             </div>
         </div>
@@ -135,7 +135,7 @@
                 Swal.fire({
                     icon: 'warning',
                     title: 'Konfirmasi',
-                    text: "Apakah Anda yakin ingin mengubah status ke 'Sudah Ada Desain'?",
+                    text: "Apakah Anda yakin ingin mengubah status ke 'Selesai'?",
                     showCancelButton: true,
                     confirmButtonColor: '#28a745',
                     cancelButtonColor: '#dc3545',
@@ -144,7 +144,7 @@
                     if (result.isConfirmed) {
                         // Make an AJAX request to the Laravel controller to update the data
                         $.ajax({
-                            url: "{{ route('pekerjaan.update_status_2') }}",
+                            url: "{{ route('pekerjaan.update_status_4') }}",
                             type: "POST",
                             data: {
                                 ids: selectedItems,
