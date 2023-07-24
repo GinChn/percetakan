@@ -1,22 +1,23 @@
 <?php
 
+use App\Http\Middleware\CekRole;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BahanController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MesinController;
 use App\Http\Controllers\BarangController;
+use App\Http\Controllers\StatusController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\PesananController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\KaryawanController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PekerjaanController;
 use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\RegistrasiController;
+
 use App\Http\Controllers\PengeluaranController;
 use App\Http\Controllers\PesananDetailController;
-use App\Http\Controllers\StatusController;
-
-use App\Http\Middleware\CekRole;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,6 +45,7 @@ Route::get('/reset-password', [LoginController::class, 'resetPassword']);
 Route::group(['middleware' => 'auth'], function () {
     // yg sudah login biasa akses:
     Route::get('/logout', [LoginController::class, 'logout']);
+    Route::resource('/profile', ProfileController::class);
     Route::resource('/dashboard', DashboardController::class);
     Route::post('/pekerjaan/{id}/update-status', [PekerjaanController::class, 'updateStatus'])->name('pekerjaan.update_status');
     Route::get('/pekerjaan/{id}/detail', [PekerjaanController::class, 'pekerjaanDetail'])->name('pekerjaan.detail');

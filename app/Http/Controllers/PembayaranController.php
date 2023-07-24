@@ -40,6 +40,7 @@ class PembayaranController extends Controller
     public function store(Request $request)
     {
         Pesanan::find($request->id_pesanan)->update([
+            'kasir' => $request->kasir,
             'bayar' => $request->bayar,
             'kembali' => $request->kembali,
             'status_pembayaran' => 'Lunas'

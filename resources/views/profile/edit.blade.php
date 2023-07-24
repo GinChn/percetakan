@@ -5,7 +5,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0">Registrasi User</h1>
+                <h1 class="m-0">Edit Profile</h1>
             </div>
         </div>
     </div>
@@ -16,77 +16,59 @@
         <div class="col-12">
             <div class="card card-outline card-success">
                 <div class="card-header">
-                    <h3 class="card-title">Form tambah user</h3>
+                    <h3 class="card-title">Form Edit Profile</h3>
                 </div>
-                <form action="{{ route('registrasi.store') }}" method="POST" id="formRegistrasi">
+                <form action="{{ route('profile.update', $profile->id_user) }}" method="POST" id="formProfile">
                     @csrf
+                    @method('PUT')
                     <div class="card-body">
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>Username</label>
-                                    <input type="email" name="username" class="form-control" placeholder="Username">
+                                    <input type="email" name="username" class="form-control" value="{{ $profile->username }}" placeholder="Username">
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label>Password</label>
-                                    <input type="password" name="password" class="form-control" placeholder="Password">
+                                    <label>Nama</label>
+                                    <input type="text" name="nama" class="form-control" value="{{ $profile->nama }}" placeholder="Nama">
                                 </div>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label>Nama</label>
-                                    <input type="text" name="nama" class="form-control" placeholder="Nama">
-                                </div>
-                            </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>Tanggal Lahir</label>
                                     <div class="input-group">
-                                        <input type="date" name="tanggal_lahir" class="form-control" data-inputmask-alias="datetime" data-inputmask-inputformat="dd/mm/yyyy">
+                                        <input type="date" name="tanggal_lahir" class="form-control" value="{{ $profile->tanggal_lahir }}" data-inputmask-alias="datetime" data-inputmask-inputformat="dd/mm/yyyy">
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>Alamat</label>
-                                    <input type="text" name="alamat" class="form-control" placeholder="Alamat">
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label>No Telp</label>
-                                    <input type="text" name="no_telp" class="form-control" placeholder="Nomor Telepon">
+                                    <input type="text" name="alamat" class="form-control" value="{{ $profile->alamat }}" placeholder="Alamat">
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label>Pendidikan</label>
-                                    <input type="text" name="pendidikan" class="form-control" placeholder="Pendidikan Terakhir">
+                                    <label>No Telp</label>
+                                    <input type="text" name="no_telp" class="form-control" value="{{ $profile->no_telp }}" placeholder="Nomor Telepon">
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label>Level</label>
-                                    <select class="custom-select" name="level">
-                                        <option value="">Pilih Level</option>
-                                        @foreach ($level as $item)
-                                        <option value="{{ $item->id_level }}">{{ $item->nama_level }}</option>
-                                        @endforeach
-                                    </select>
+                                    <label>Pendidikan</label>
+                                    <input type="text" name="pendidikan" class="form-control" value="{{ $profile->pendidikan }}" placeholder="Pendidikan Terakhir">
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="card-footer">
-                        <a href="/registrasi" class="btn btn-sm btn-danger">Kembali</a>
+                        <a href="/profile" class="btn btn-sm btn-danger">Kembali</a>
                         <button type="submit" class="btn btn-sm btn-success float-right">Simpan</button>
                     </div>
                 </form>
@@ -99,15 +81,11 @@
 @section('script')
 <script>
     $(function () {
-        $('#formRegistrasi').validate({
+        $('#formProfile').validate({
             rules: {
                 username: {
                     required: true,
                     email: true
-                },
-                password: {
-                    required: true,
-                    minlength: 5
                 },
                 nama: {
                     required: true
@@ -115,16 +93,13 @@
                 tanggal_lahir: {
                     required: true
                 },
-                alamat: {
-                    required: true
-                },
                 no_telp: {
                     required: true
                 },
-                pendidikan: {
+                alamat: {
                     required: true
                 },
-                level: {
+                pendidikan: {
                     required: true
                 },
             },
@@ -132,10 +107,6 @@
                 username: {
                     required: "Username tidak boleh kosong",
                     email: "Masukkan username menggunakan email"
-                },
-                password: {
-                    required: "Password tidak boleh kosong",
-                    minlength: "Panjang password minimal 5 karakter"
                 },
                 nama: {
                     required: "Nama tidak boleh kosong"

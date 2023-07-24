@@ -25,11 +25,12 @@ class PesananDetail extends Migration
             $table->float('lebar')->nullable();
             $table->integer('totalharga');
             $table->integer('jumlah');
+            $table->float('totalukuran')->nullable();
             $table->integer('subtotal');
             $table->integer('id_finishing');
             $table->string('status_detail');
-            $table->string('kasir')->nullable();
-
+            $table->string('desainer')->nullable();
+            $table->string('operator')->nullable();
             $table->timestamps();
         });
     }

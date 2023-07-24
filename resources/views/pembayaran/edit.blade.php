@@ -25,7 +25,7 @@
                 <td>Kasir</td>
               </tr>
               <tr>
-                <td>Tanggal</td>
+                <td>Hari/Tanggal</td>
               </tr>
             </table>
           </div>
@@ -36,7 +36,7 @@
                 <td>: <b>{{ $item->no_nota }}</b></td>
               </tr>
               <tr>
-                <td>: <b>Kasir</b></td>
+                <td>: <b>{{ $item->kasir }}</b></td>
               </tr>
               <tr>
                 <td>: <b>{{ tanggal_indonesia($item->created_at) }}</b></td>

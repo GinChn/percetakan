@@ -174,7 +174,11 @@
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $item->nama_pesanan }}</td>
                                     <td>{{ $item->nama_barang }}</td>
-                                    <td>{{ $item->panjang }} x {{ $item->lebar }}</td>
+                                    @if ($item->satuan == 'Meter')
+                                        <td>{{ $item->panjang }} x {{ $item->lebar }} m </td>
+                                    @else
+                                        <td></td>
+                                    @endif
                                     <td>{{ format_uang($item->harga) }}</td>
                                     <td>{{ $item->jumlah }}</td>
                                     <td>{{ format_uang($item->subtotal) }}</td>
@@ -201,7 +205,7 @@
                                     </td>
                                 </tr>
                                 @php
-                                    $total += $item->harga * $item->jumlah;
+                                    $total += $item->subtotal;
                                 @endphp
                             @endforeach
                         </tbody>
@@ -279,7 +283,7 @@
                 },
                 success: function(res) {
                     console.log(res);
-                    $('#bahan').val(res.id_bahan)
+                    $('#id_bahan').val(res.id_bahan)
                     $('#harga').val(res.harga)
                     $('#satuan').val(res.satuan)
                 }
@@ -302,6 +306,7 @@
                 //ambil data inputan jumlah
                 var jumlah = $(this).val()
                 //menampilkan subtotal berdasarkan perhitungan yang diambil dari data variabel totalharga dan jumlah
+                $('#totalukuran').val(ukuran * jumlah)
                 $('#totalharga').val(totalharga)
                 $('#subtotal').val(totalharga * jumlah)
             } else {

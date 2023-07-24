@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Pesanan;
 use Carbon\Carbon;
+use App\Models\Pesanan;
 use Illuminate\Http\Request;
+use App\Models\PesananDetail;
 use Illuminate\Routing\Controller;
 
 class PesananController extends Controller
@@ -116,7 +117,8 @@ class PesananController extends Controller
      */
     public function destroy($id)
     {
-        Pesanan::find($id)->delete();
+        Pesanan::where('id_pesanan', $id)->delete();
+        PesananDetail::where('id_pesanan', $id)->delete();
 
         return back();
     }

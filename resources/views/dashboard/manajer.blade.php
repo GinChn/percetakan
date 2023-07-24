@@ -180,47 +180,47 @@
 @endsection
 
 @section('script')
-    <script>
-        $(function() {
-            var PendapatanCanvas = $('#pendapatanChart').get(0).getContext('2d')
+<script>
+    $(function() {
+        var PendapatanCanvas = $('#pendapatanChart').get(0).getContext('2d')
 
-            var PendapatanData = {
-                labels: {{ json_encode($data_tanggal) }},
-                datasets: [{
-                    label: 'Pendapatan',
-                    backgroundColor: '',
-                    borderColor: '#00a65a',
-                    // pointRadius: false,
-                    pointColor: '#3b8bba',
-                    pointStrokeColor: 'rgba(60,141,188,1)',
-                    pointHighlightFill: false,
-                    pointHighlightStroke: 'rgba(60,141,188,1)',
-                    data: {{ json_encode($data_pendapatan) }}
-                }, ]
+        var PendapatanData = {
+            labels: {{ json_encode($data_tanggal) }},
+            datasets: [{
+                label: 'Pendapatan',
+                backgroundColor: '',
+                borderColor: '#00a65a',
+                // pointRadius: false,
+                pointColor: '#3b8bba',
+                pointStrokeColor: 'rgba(60,141,188,1)',
+                pointHighlightFill: false,
+                pointHighlightStroke: 'rgba(60,141,188,1)',
+                data: {{ json_encode($data_pendapatan) }}
+            }, ]
+        }
+
+        var PendapatanOptions = {
+            maintainAspectRatio: false,
+            responsive: true,
+            legend: {
+                display: false
+            },
+            scales: {
+                xAxes: [{
+                    gridLines: {
+                        display: false,
+                    }
+                }]
             }
+        }
+        PendapatanData.datasets[0].fill = false;
+        PendapatanOptions.datasetFill = false
 
-            var PendapatanOptions = {
-                maintainAspectRatio: false,
-                responsive: true,
-                legend: {
-                    display: false
-                },
-                scales: {
-                    xAxes: [{
-                        gridLines: {
-                            display: false,
-                        }
-                    }]
-                }
-            }
-            PendapatanData.datasets[0].fill = false;
-            PendapatanOptions.datasetFill = false
-
-            var PendapatanChart = new Chart(PendapatanCanvas, {
-                type: 'line',
-                data: PendapatanData,
-                options: PendapatanOptions
-            })
+        var PendapatanChart = new Chart(PendapatanCanvas, {
+            type: 'line',
+            data: PendapatanData,
+            options: PendapatanOptions
         })
-    </script>
+    })
+</script>
 @endsection

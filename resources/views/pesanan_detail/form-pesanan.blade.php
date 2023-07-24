@@ -11,10 +11,12 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <input type="hidden" class="form-control form-control-sm" id="totalharga_detail" name="totalharga">
-                    <input type="hidden" class="form-control form-control-sm" id="satuan_detail" name="satuan">
                     <div class="card-body">
                             <input type="hidden" class="form-control" name="id_pesanan" id="id_pesanan" value="{{ $data->id_pesanan }}">
+                            <input type="hidden" class="form-control" name="id_bahan" id="bahan">
+                            <input type="hidden" class="form-control form-control-sm" id="totalharga_detail" name="totalharga">
+                            <input type="hidden" class="form-control form-control-sm" id="totalukuran_detail" name="totalukuran_detail">
+                            <input type="hidden" class="form-control form-control-sm" id="satuan_detail" name="satuan">
                         <div class="form-group">
                             <label for="nama_pesanan">Nama Pesanan</label>
                             <input type="text" class="form-control" name="nama_pesanan" id="nama_pesanan" placeholder="Masukkan Nama Pesanan" required>
@@ -28,7 +30,6 @@
                                 @endforeach
                             </select>
                         </div>
-                        <input type="hidden" class="form-control" name="id_bahan" id="bahan">
                         <div class="form-group" id="detail-ukuran">
                             <label for="ukuran">Ukuran</label>
                             <input type="number" class="form-control" name="panjang" id="panjang_detail" placeholder="panjang" >

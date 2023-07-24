@@ -15,10 +15,10 @@
         p {
             display: block;
             margin: 3px;
-            font-size: 10pt;
+            font-size: 8pt;
         }
         table td {
-            font-size: 9pt;
+            font-size: 8pt;
         }
         .text-center {
             text-align: center;
@@ -30,7 +30,7 @@
         @media print {
             @page {
                 margin: 0;
-                size: 75mm 
+                size: 57mm
     ';
     ?>
     <?php 
@@ -42,7 +42,7 @@
     <?php
     $style .= '
             html, body {
-                width: 70mm;
+                width: 50mm;
             }
             .btn-print {
                 display: none;
@@ -58,19 +58,19 @@
     <button class="btn-print" style="position: absolute; right: 1rem; top: rem;" onclick="window.print()">Print</button>
     <div class="text-center">
         <h3 style="margin-bottom: 5px;">AAL Digital Printing</h3>
-        <p>Jl.A.Yani KM. 3,5 Komplek Beringin</p>
+        <p>Jl.A.Yani KM. 3,5</p>
+        <p>Komplek Beringin</p>
         <p>Telp/wa : 0895 4111 95023</p>
     </div>
-    <br>
     <div class="clear-both" style="clear: both;"></div>
-    <p class="text-center">======================================</p>
+    <p class="text-center">================================</p>
     @foreach ($data as $item)
     <p>No Nota &emsp; &emsp; : {{ $item->no_nota }}</p>
-    <p>Tanggal &emsp; &emsp; : {{ tanggal_indonesia($item->created_at) }}</p>
+    <p>Tanggal &emsp; &emsp; : {{ date('d-m-Y', strtotime($item->created_at)) }}</p>
     <p>Pelanggan &emsp; : {{ $item->nama_pelanggan }}</p>
-    <p>Kasir &emsp; &emsp; &emsp; : #</p>
+    <p>Kasir &emsp; &emsp; &emsp; : {{ $item->kasir }}</p>
     @endforeach
-    <p class="text-center">-------------------------------------</p>
+    <p class="text-center">-------------------------------</p>
     <table width="100%" style="border: 0;">
         @foreach ($detail as $item)
         @if ($item->satuan == 'Meter')
@@ -88,7 +88,7 @@
             </tr>
         @endforeach
     </table>
-    <p class="text-center">-------------------------------------</p>
+    <p class="text-center">-------------------------------</p>
     @foreach ($data as $item)
     <table width="100%" style="border: 0;">
         <tr>
@@ -106,7 +106,8 @@
     </table>
     @endforeach
 
-    <p class="text-center">======================================</p>
+    <p class="text-center">================================</p>
+    <p class="text-center">Nota Harap Dibawa Saat Pengambilan Pesanan</p>
     <p class="text-center">-- TERIMA KASIH --</p>
 
     <script>
