@@ -69,53 +69,6 @@
         </div>
 
         <div class="row">
-            <div class="col-lg-3 col-6">
-                <div class="small-box bg-gradient-danger">
-                    <div class="inner">
-                        <h3>{{ $desain_belum }}</h3>
-                        <p>Desain Belum Selesai</p>
-                    </div>
-                    <div class="icon">
-                        <i class="far fa-file-excel"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-6">
-                <div class="small-box bg-gradient-warning">
-                    <div class="inner">
-                        <h3>{{ $desain_selesai }}</h3>
-                        <p>Desain Selesai</p>
-                    </div>
-                    <div class="icon">
-                        <i class="fa fa-file"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-6">
-                <div class="small-box bg-gradient-info">
-                    <div class="inner">
-                        <h3>{{ $pekerjaan_selesai }}</h3>
-                        <p>Pesanan Dikerjakan</p>
-                    </div>
-                    <div class="icon">
-                        <i class="fa fa-hourglass-half"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-6">
-                <div class="small-box bg-gradient-success">
-                    <div class="inner">
-                        <h3>{{ $pekerjaan_dikerjakan }}</h3>
-                        <p>Pesanan Selesai</p>
-                    </div>
-                    <div class="icon">
-                        <i class="fa fa-check"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
             <div class="col-md-12">
                 <div class="card card-outline card-success">
                     <div class="card-header">
@@ -180,47 +133,47 @@
 @endsection
 
 @section('script')
-    <script>
-        $(function() {
-            var PendapatanCanvas = $('#pendapatanChart').get(0).getContext('2d')
+<script>
+    $(function() {
+        var PendapatanCanvas = $('#pendapatanChart').get(0).getContext('2d')
 
-            var PendapatanData = {
-                labels: {{ json_encode($data_tanggal) }},
-                datasets: [{
-                    label: 'Pendapatan',
-                    backgroundColor: '',
-                    borderColor: '#00a65a',
-                    // pointRadius: false,
-                    pointColor: '#3b8bba',
-                    pointStrokeColor: 'rgba(60,141,188,1)',
-                    pointHighlightFill: false,
-                    pointHighlightStroke: 'rgba(60,141,188,1)',
-                    data: {{ json_encode($data_pendapatan) }}
-                }, ]
+        var PendapatanData = {
+            labels: {{ json_encode($data_tanggal) }},
+            datasets: [{
+                label: 'Pendapatan',
+                backgroundColor: '',
+                borderColor: '#00a65a',
+                // pointRadius: false,
+                pointColor: '#3b8bba',
+                pointStrokeColor: 'rgba(60,141,188,1)',
+                pointHighlightFill: false,
+                pointHighlightStroke: 'rgba(60,141,188,1)',
+                data: {{ json_encode($data_pendapatan) }}
+            }, ]
+        }
+
+        var PendapatanOptions = {
+            maintainAspectRatio: false,
+            responsive: true,
+            legend: {
+                display: false
+            },
+            scales: {
+                xAxes: [{
+                    gridLines: {
+                        display: false,
+                    }
+                }]
             }
+        }
+        PendapatanData.datasets[0].fill = false;
+        PendapatanOptions.datasetFill = false
 
-            var PendapatanOptions = {
-                maintainAspectRatio: false,
-                responsive: true,
-                legend: {
-                    display: false
-                },
-                scales: {
-                    xAxes: [{
-                        gridLines: {
-                            display: false,
-                        }
-                    }]
-                }
-            }
-            PendapatanData.datasets[0].fill = false;
-            PendapatanOptions.datasetFill = false
-
-            var PendapatanChart = new Chart(PendapatanCanvas, {
-                type: 'line',
-                data: PendapatanData,
-                options: PendapatanOptions
-            })
+        var PendapatanChart = new Chart(PendapatanCanvas, {
+            type: 'line',
+            data: PendapatanData,
+            options: PendapatanOptions
         })
-    </script>
+    })
+</script>
 @endsection
