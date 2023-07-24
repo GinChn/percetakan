@@ -25,10 +25,14 @@
                             <div class="row">
                                 <input type="hidden" class="form-control" name="id_pesanan" id="id_pesanan"
                                     value="{{ $data->id_pesanan }}">
+                                <input type="hidden" class="form-control form-control-sm" id="desainer" name="desainer"
+                                    value="{{ auth()->user()->nama }}">
                                 <input type="hidden" class="form-control form-control-sm" id="totalharga"
                                     name="totalharga">
+                                <input type="hidden" class="form-control form-control-sm" id="totalukuran"
+                                    name="totalukuran">
                                 <input type="hidden" class="form-control form-control-sm" id="satuan" name="satuan">
-                                <input type="hidden" class="form-control" name="id_bahan" id="bahan">
+                                <input type="hidden" class="form-control" name="id_bahan" id="id_bahan">
                                 <div class="col-6" style="padding: 5px 40px">
                                     <div class="form-group row">
                                         <label for="no_nota" class="col-sm-3 col-form-label" style="font-size: 11pt">No
@@ -133,7 +137,7 @@
                             @method('delete')
                             <button type="submit" class="btn btn-danger btn-sm border-0 delete-btn"
                                 onclick="deletePesanan({{ $data->id_pesanan }})">
-                                Batal
+                                Kembali
                             </button>
                         </form>
                         <button type="submit"
@@ -183,8 +187,23 @@
                                     <td>{{ $item->jumlah }}</td>
                                     <td>{{ format_uang($item->subtotal) }}</td>
                                     <td>
-                                        <span
-                                            class="badge {{ getStatusColor($item->status_detail) }}">{{ $item->status_detail }}</span>
+                                        @if ($item->status_detail == 'Belum Ada Desain')
+                                            <span class="badge badge-danger">
+                                                {{ $item->status_detail }}
+                                            </span>
+                                        @elseif ($item->status_detail == 'Sudah Ada Desain')
+                                            <span class="badge badge-warning">
+                                                {{ $item->status_detail }}
+                                            </span>
+                                        @elseif ($item->status_detail == 'Dikerjakan')
+                                            <span class="badge badge-info">
+                                                {{ $item->status_detail }}
+                                            </span>
+                                        @else
+                                            <span class="badge badge-success">
+                                                {{ $item->status_detail }}
+                                            </span>
+                                        @endif
                                     </td>
                                     <td>
                                         <button
@@ -405,6 +424,7 @@
                     //ambil data inputan jumlah
                     var jumlah = $(this).val()
                     //menampilkan subtotal berdasarkan perhitungan yang diambil dari data variabel totalharga dan jumlah
+                    $('#totalukuran_detail').val(ukuran * jumlah)
                     $('#totalharga_detail').val(totalharga)
                     $('#subtotal_detail').val(totalharga * jumlah)
                 } else {
@@ -412,14 +432,8 @@
                     var harga = parseInt($('#harga_detail').val())
                     var jumlah = parseInt($(this).val())
                     $('#totalharga_detail').val(harga)
-                    $('#subtotal').val(jumlah * harga)
+                    $('#subtotal_detail').val(jumlah * harga)
                 }
-            });
-
-            $('#modal-pesanan').on('mouseout', '#jumlah_detail', function() {
-                var harga = parseInt($('#harga_detail').val())
-                var jumlah = parseInt($(this).val())
-                $('#subtotal_detail').val(jumlah * harga)
             });
 
             $.get(url)
@@ -427,11 +441,14 @@
                     $('#modal-pesanan [name=nama_pesanan]').val(response.nama_pesanan);
                     $('#modal-pesanan [name=id_barang]').val(response.id_barang);
                     $('#modal-pesanan [name=id_bahan]').val(response.id_bahan);
+                    $('#modal-pesanan [name=panjang]').val(response.panjang);
+                    $('#modal-pesanan [name=lebar]').val(response.lebar);
                     $('#modal-pesanan [name=harga]').val(response.harga);
                     $('#modal-pesanan [name=jumlah]').val(response.jumlah);
                     $('#modal-pesanan [name=subtotal]').val(response.subtotal);
                     $('#modal-pesanan [name=id_finishing]').val(response.id_finishing);
                     $('#modal-pesanan [name=status_detail]').val(response.status_detail);
+                    $('#modal-pesanan [name=satuan]').val(response.satuan);
                 })
         }
 
