@@ -67,7 +67,8 @@ class PesananController extends Controller
             'nama_pelanggan' => $request->nama_pelanggan,
             'no_telp' => $request->no_telp,
             'total' => $request->total,
-            'status_pembayaran' => 'Menunggu Pembayaran'
+            'status_pembayaran' => 'Menunggu Pembayaran',
+            'status_pesanan' => 'Dalam Proses'
         ]);
 
         return redirect('/pesanan');

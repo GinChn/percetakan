@@ -93,7 +93,7 @@ class LaporanController extends Controller
             $tanggal_laporan = $data_input_laporan['tanggal_laporan'];
 
             $data_pemasukan = Pesanan::whereDate('created_at', $tanggal_laporan)
-                ->where('status_pesanan', 'Selesai')
+                ->where('status_pembayaran', 'Lunas')
                 ->get();
             $data_pengeluaran = Pengeluaran::whereDate('created_at', $tanggal_laporan)->get();
 
@@ -101,7 +101,7 @@ class LaporanController extends Controller
                 DB::raw('SUM(total) as total_pemasukan')
             )
                 ->whereDate('created_at', $tanggal_laporan)
-                ->where('status_pesanan', 'Selesai')
+                ->where('status_pembayaran', 'Lunas')
                 ->groupBy(DB::raw('DATE(created_at)'))
                 ->first();
             if ($total_pemasukan) {
@@ -133,7 +133,7 @@ class LaporanController extends Controller
                 DB::raw('SUM(total) as total_tagihan')
             )
                 ->whereRaw('DATE(created_at) BETWEEN ? AND ?', [$tanggal_laporan_awal, $tanggal_laporan_akhir])
-                ->where('status_pesanan', 'Selesai')
+                ->where('status_pembayaran', 'Lunas')
                 ->groupBy(DB::raw('DATE(created_at)'))
                 ->get();
 
@@ -149,7 +149,7 @@ class LaporanController extends Controller
                 DB::raw('DATE(created_at)'),
                 [$tanggal_laporan_awal, $tanggal_laporan_akhir]
             )
-                ->where('status_pesanan', 'Selesai')
+                ->where('status_pembayaran', 'Lunas')
                 ->sum('total');
 
             $total_pengeluaran = Pengeluaran::whereBetween(
@@ -184,13 +184,6 @@ class LaporanController extends Controller
 
         return $nama_file;
     }
-
-
-
-    // public function exportexcel()
-    // {
-    //     return Excel::download(new LaporanExport, 'laporan.xlsx');
-    // }
 
     /**
      * Show the form for creating a new resource.

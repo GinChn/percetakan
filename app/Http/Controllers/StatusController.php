@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pesanan;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class StatusController extends Controller
 {
@@ -13,7 +16,37 @@ class StatusController extends Controller
      */
     public function index()
     {
-        return view('cek_pesanan.index');
+        $startDate = Carbon::now()->subDays(6);
+
+        $pesanan = Pesanan::where('created_at', '>=', $startDate)
+            ->where('status_pesanan', '<>', 'Sudah Diambil')
+            ->orderBy('status_pesanan', 'desc')
+            ->orderBy('created_at', 'asc')
+            ->orderBy('updated_at', 'desc')
+            ->get();
+
+        return view('cek_pesanan.index', ['pesanan' => $pesanan]);
+    }
+
+    public function cekStatusDetail($id)
+    {
+
+        return view('cek_pesanan.detail', [
+            'data' => Pesanan::where('id_pesanan', $id)->get(),
+            'detail' => DB::table('pesanan_detail')
+                ->join('barang', 'pesanan_detail.id_barang', '=', 'barang.id_barang')
+                ->join('finishing', 'pesanan_detail.id_finishing', '=', 'finishing.id_finishing')
+                ->where('id_pesanan', $id)
+                ->get()
+        ]);
+        // $data = Pesanan::where('id_pesanan', $id)->get();
+        // $detail = DB::table('pesanan_detail')
+        //     ->join('barang', 'pesanan_detail.id_barang', '=', 'barang.id_barang')
+        //     ->join('finishing', 'pesanan_detail.id_finishing', '=', 'finishing.id_finishing')
+        //     ->where('id_pesanan', $id)
+        //     ->get();
+
+        // dd($data, $detail);
     }
 
     /**

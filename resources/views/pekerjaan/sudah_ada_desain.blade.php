@@ -5,7 +5,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h4 class="m-0">Belum Ada Desain</h4>
+                    <h4 class="m-0">Sudah Ada Desain</h4>
                 </div>
             </div>
         </div>
@@ -34,24 +34,24 @@
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
-                            <tbody></tbody>
-                            @foreach ($data as $item)
-                                <tr>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $item->no_nota }}</td>
-                                    <td>{{ tanggal_indonesia($item->created_at) }}</td>
-                                    <td>{{ $item->nama_pelanggan }}</td>
-                                    <td>{{ $item->nama_pesanan }}</td>
-                                    <td>{{ $item->nama_barang }}</td>
-                                    <td>{{ $item->panjang }}</td>
-                                    <td>{{ $item->lebar }}</td>
-                                    <td>{{ $item->jumlah }}</td>
-                                    <td>{{ $item->nama_finishing }}</td>
-                                    <td>
-                                        <a href="#" class="btn-sm btn-success">Selesaikan</a>
-                                    </td>
-                                </tr>
-                            @endforeach
+                            <tbody>
+                                @foreach ($data as $item)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $item->no_nota }}</td>
+                                        <td>{{ tanggal_indonesia($item->created_at) }}</td>
+                                        <td>{{ $item->nama_pelanggan }}</td>
+                                        <td>{{ $item->nama_pesanan }}</td>
+                                        <td>{{ $item->nama_barang }}</td>
+                                        <td>{{ $item->panjang }}</td>
+                                        <td>{{ $item->lebar }}</td>
+                                        <td>{{ $item->jumlah }}</td>
+                                        <td>{{ $item->nama_finishing }}</td>
+                                        <td>
+                                            <a href="#" class="btn-sm btn-info">Kerjakan</a>
+                                        </td>
+                                    </tr>
+                                @endforeach
 
                             </tbody>
                         </table>

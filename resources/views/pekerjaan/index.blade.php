@@ -5,7 +5,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Data Penjualan</h1>
+                    <h1 class="m-0">Status Pekerjaan Pesanan</h1>
                 </div>
             </div>
         </div>
@@ -15,11 +15,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                    <div class="card-header">
-                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-default">
-                            Tambah Penjualan
-                        </button>
-                    </div>
+
                     <div class="card-body">
                         <table id="table2" class="table table-bordered table-striped">
                             <thead>
@@ -28,22 +24,31 @@
                                     <th>Nota</th>
                                     <th>Tanggal</th>
                                     <th>Nama Pelanggan</th>
-                                    <th>Status Pesanan</th>
+                                    <th>Status Pekerjaan</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($pekerjaan as $item)
+                                @foreach ($progresPesanan as $item)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $item->no_nota }}</td>
                                         <td>{{ tanggal_indonesia($item->created_at) }}</td>
                                         <td>{{ $item->nama_pelanggan }}</td>
-                                        {{-- <td>{{ $item->status_desain }}</td> --}}
-                                        <td>{{ $item->status_pesanan }}</td>
                                         <td>
-                                            <a href="#" class="btn-sm btn-primary"><i class="fas fa-pen"></i></a>
-                                            <a href="#" class="btn-sm btn-primary"><i class="fas fa-pen"></i></a>
+                                            <div class="progress mb-3">
+                                                <div class="progress-bar {{ $item->progres < 50 ? 'bg-danger' : ($item->progres == 100 ? 'bg-success' : 'bg-warning') }}"
+                                                    role="progressbar" aria-valuenow="{{ $item->progres }}"
+                                                    aria-valuemin="0" aria-valuemax="100"
+                                                    style="width: {{ $item->progres }}%">
+                                                    <span class="sr-only">{{ $item->progres }}% Complete</span>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <a href="/pekerjaan/{{ $item->id_pesanan }}/detail"
+                                                class="btn-sm btn-primary">Detail</a>
                                         </td>
                                     </tr>
                                 @endforeach

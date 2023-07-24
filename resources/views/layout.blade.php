@@ -93,14 +93,15 @@
                                 </p>
                             </a>
                         </li>
-
-                        <li class="nav-header">TRANSAKSI</li>
-                        @if ($nama_level == 'Administrator' || $nama_level == 'Desainer' || $nama_level == 'Kasir' || $nama_level == 'Operator')
+                        @if ($nama_level == 'Administrator' || $nama_level == 'Desainer' || $nama_level == 'Kasir')
+                            <li class="nav-header">TRANSAKSI</li>
+                        @endif
+                        @if ($nama_level == 'Administrator' || $nama_level == 'Desainer')
                             <li class="nav-item">
                                 <a href="/pesanan" class="nav-link {{ Request::is('pesanan*') ? 'active' : '' }}">
                                     <i class="nav-icon fas fa-file-invoice"></i>
                                     <p>
-                                        Pesanan
+                                        Buat Pesanan
                                     </p>
                                 </a>
                             </li>
@@ -123,52 +124,62 @@
                                 $nama_level == 'Operator' ||
                                 $nama_level == 'Manajer')
                             <li class="nav-header">PEKERJAAN</li>
-                            <li class="nav-item">
+                            <li class="nav-item {{ Request::is('pekerjaan*') ? 'menu-open' : '' }}">
                                 <a href="#" class="nav-link">
                                     <i class="nav-icon fas fa-business-time"></i>
                                     <p>
-                                        Status Pesanan
+                                        Progres Pesanan
                                         <i class="right fas fa-angle-left"></i>
                                     </p>
                                 </a>
                                 <ul class="nav nav-treeview">
                                     <li class="nav-item">
                                         <a href="/pekerjaan"
-                                            class="nav-link {{ Request::is('pekerjaan*') ? 'active' : '' }}">
+                                            class="nav-link {{ Request::is('pekerjaan') ? 'active' : '' }}">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Semua</p>
                                         </a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a href="/pekerjaan" class="nav-link ">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Belum Ada Desain</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Sudah Ada Desain</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Sedang Dikerjakan</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Selesai</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Sudah Diambil</p>
-                                        </a>
-                                    </li>
+                                    @if ($nama_level == 'Administrator' || $nama_level == 'Desainer')
+                                        <li class="nav-item">
+                                            <a href="/pekerjaan/belum-ada-desain"
+                                                class="nav-link {{ Request::is('pekerjaan/belum-ada-desain') ? 'active' : '' }}"">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>Belum Ada Desain</p>
+                                            </a>
+                                        </li>
+                                    @endif
+                                    @if ($nama_level == 'Administrator' || $nama_level == 'Desainer' || $nama_level == 'Operator')
+                                        <li class="nav-item">
+                                            <a href="/pekerjaan/sudah-ada-desain"
+                                                class="nav-link {{ Request::is('pekerjaan/sudah-ada-desain') ? 'active' : '' }}">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>Sudah Ada Desain</p>
+                                            </a>
+                                        </li>
+                                    @endif
+                                    @if ($nama_level == 'Administrator' || $nama_level == 'Operator' || $nama_level == 'Kasir')
+                                        <li class="nav-item">
+                                            <a href="#" class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>Sedang Dikerjakan</p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="#" class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>Selesai</p>
+                                            </a>
+                                        </li>
+                                    @endif
+                                    @if ($nama_level == 'Administrator' || $nama_level == 'Kasir')
+                                        <li class="nav-item">
+                                            <a href="#" class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>Sudah Diambil</p>
+                                            </a>
+                                        </li>
+                                    @endif
                                 </ul>
                             </li>
                         @endif
@@ -329,7 +340,9 @@
     {{-- Data Table --}}
     <script>
         $(function() {
-            var tableIds = ['#table2', '#table2_pemasukan', '#table2_pengeluaran'];
+            var tableIds = ['#table2', '#table2_pemasukan', '#table2_pengeluaran', '#table2_pekerjaan'
+
+            ];
             $(tableIds.join(', ')).each(function() {
                 $(this).DataTable({
                     "paging": true,

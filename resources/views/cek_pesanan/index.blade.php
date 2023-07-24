@@ -79,16 +79,23 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td class="show-desktop">1 Januari 2020</td>
-                                        <td class="show-desktop">00199222334344</td>
-                                        <td>Avian</td>
-                                        <td class="show-desktop"><span class="badge badge-success">Selesai</span></td>
-                                        <td>
-                                            <a href="" class="btn btn-sm btn-primary">Detail</a>
-                                        </td>
-                                    </tr>
+                                    @foreach ($pesanan as $item)
+                                        <tr>
+                                            <th scope="row">{{ $loop->iteration }}</th>
+                                            <td class="show-desktop">{{ tanggal_indonesia($item->created_at) }}</td>
+                                            <td class="show-desktop">{{ $item->no_nota }}</td>
+                                            <td>{{ $item->nama_pelanggan }}</td>
+                                            <td class="show-desktop"><span
+                                                    class="badge {{ $item->status_pesanan === 'Selesai' ? 'badge-success' : 'badge-warning' }}">
+                                                    {{ $item->status_pesanan }}
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <a href="/cek-pesanan/{{ $item->id_pesanan }}/detail"
+                                                    class="btn btn-sm btn-primary">Detail</a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
