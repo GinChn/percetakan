@@ -20,12 +20,16 @@
             <div class="col-12">
                 @foreach ($data as $item)
                     @if ($item->status_pesanan == 'Selesai')
-                        <form method="POST" action="{{ route('pekerjaan.update_status_diambil_id', $item->id_pesanan) }}"
-                            style="display: inline;">
-                            @csrf
-                            <button type="submit" class="btn btn-sm btn-outline-info float-right">Tandai Sudah
-                                Diambil</button>
-                        </form>
+                        @if ($nama_level == 'Administrator' || $nama_level == 'Kasir')
+                            <form method="POST" action="{{ route('pekerjaan.update_status_diambil_id', $item->id_pesanan) }}"
+                                style="display: inline;">
+                                @csrf
+                                <button type="submit" class="btn btn-sm btn-outline-info float-right">Tandai Sudah
+                                    Diambil</button>
+                            </form>
+                        @else
+                            <span class="badge badge-secondary float-right">Pesanan Belum Diambil</span>
+                        @endif
                     @elseif($item->status_pesanan == 'Sudah Diambil')
                         <span class="badge badge-info float-right">Sudah Diambil</span>
                     @endif
@@ -46,6 +50,12 @@
                             <td>Tanggal</td>
                             @foreach ($data as $item)
                                 <td>: <b>{{ tanggal_indonesia($item->created_at) }}</b></td>
+                            @endforeach
+                        </tr>
+                        <tr>
+                            <td>Kasir</td>
+                            @foreach ($data as $item)
+                                <td>: <b>{{ $item->kasir }}</b></td>
                             @endforeach
                         </tr>
                     </table>
@@ -77,14 +87,16 @@
                             <tr>
                                 <th width="5%">No</th>
                                 <th width="15%">Nama Pesanan</th>
-                                <th scope="col">Jenis Barang</th>
-                                <th width="5%">Panjang</th>
-                                <th width="5%"">Lebar</th>
-                                <th scope="col">Jumlah</th>
+                                <th scope="col">Barang</th>
+                                <th width="5%">P</th>
+                                <th width="5%"">L</th>
+                                <th scope="col">QTY</th>
                                 <th scope="col">Finishing</th>
+                                <th scope="col">Desainer</th>
+                                <th scope="col">Operator</th>
                                 <th scope="col">Status</th>
                                 @if ($nama_level == 'Administrator' || $nama_level == 'Desainer' || $nama_level == 'Operator')
-                                    <th scope="col">Ubah Status</th>
+                                    <th scope="col">Ubah</th>
                                 @endif
                             </tr>
                         </thead>
@@ -98,6 +110,8 @@
                                     <td>{{ $item->lebar }}</td>
                                     <td>{{ $item->jumlah }}</td>
                                     <td>{{ $item->nama_finishing }}</td>
+                                    <td>{{ $item->desainer }}</td>
+                                    <td>{{ $item->operator }}</td>
                                     <td>
                                         <span
                                             class="badge {{ getStatusColor($item->status_detail) }}">{{ $item->status_detail }}</span>

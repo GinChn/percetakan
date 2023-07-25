@@ -1,14 +1,12 @@
 @extends('layout')
 
 @section('content')
-    @php
-        $nama_level = auth()->user()->level->nama_level;
-    @endphp
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Pesanan</h1>
+                    <h4 class="m-0">Pesanan Lunas</h4>
+                    <p class="mt-2">{{ tanggal_indonesia($tanggal) }}</p>
                 </div>
             </div>
         </div>
@@ -18,11 +16,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                    @if ($nama_level == 'Administrator' || $nama_level == 'Desainer')
-                        <div class="card-header">
-                            <a href="{{ route('pesanan.create') }}" class="btn btn-success btn-sm">Buat Pesanan</a>
-                        </div>
-                    @endif
+
                     <div class="card-body">
                         <table id="table2" class="table table-bordered table-striped">
                             <thead>
@@ -30,13 +24,9 @@
                                     <th width="5%">No</th>
                                     <th>No Nota</th>
                                     <th>Nama Pelanggan</th>
-                                    <th>Tanggal</th>
                                     <th>Total</th>
-                                    <th>Pesanan</th>
-                                    <th>Pembayaran</th>
-                                    @if ($nama_level == 'Administrator' || $nama_level == 'Desainer')
-                                        <th>Aksi</th>
-                                    @endif
+                                    <th>Status Pesanan</th>
+                                    <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -45,7 +35,7 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $item->no_nota }}</td>
                                         <td>{{ $item->nama_pelanggan }}</td>
-                                        <td>{{ tanggal_indonesia($item->created_at) }}</td>
+                                        {{-- <td>{{ tanggal_indonesia($item->created_at) }}</td> --}}
                                         <td>{{ format_uang($item->total) }}</td>
                                         <td>
                                             @if ($item->status_pesanan == 'Selesai')
@@ -63,32 +53,9 @@
                                             @endif
                                         </td>
                                         <td>
-                                            @if ($item->status_pembayaran == 'Lunas')
-                                                <span class="badge badge-success">
-                                                    {{ $item->status_pembayaran }}
-                                                </span>
-                                            @else
-                                                <span class="badge badge-danger">
-                                                    {{ $item->status_pembayaran }}
-                                                </span>
-                                            @endif
+                                            <a href="../pekerjaan/{{ $item->id_pesanan }}/detail"
+                                                class="btn-sm btn-primary">Detail</a>
                                         </td>
-                                        @if ($nama_level == 'Administrator' || $nama_level == 'Desainer')
-                                            <td>
-                                                <form id="hapus-pesanan{{ $item->id_pesanan }}"
-                                                    action="{{ route('pesanan.destroy', $item->id_pesanan) }}"
-                                                    method="post" class="d-inline-block">
-                                                    @csrf
-                                                    @method('delete')
-                                                    <button type="submit" class="btn btn-sm btn-danger border-0 delete-btn"
-                                                        onclick="deletePesanan({{ $item->id_pesanan }})">
-                                                        <i class="fa fa-trash"></i>
-                                                    </button>
-                                                </form>
-                                                <a href="/pekerjaan/{{ $item->id_pesanan }}/detail"
-                                                    class="btn btn-default btn-sm"><i class="fas fa-list"></i></a>
-                                            </td>
-                                        @endif
                                     </tr>
                                 @endforeach
                             </tbody>

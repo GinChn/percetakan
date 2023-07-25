@@ -105,7 +105,7 @@
                     <th>Keterangan</th>
                     <th>Nominal</th>
                     <th>Qty</th>
-                    <th class="total-column">Total</th> <!-- Add the class for fixed width -->
+                    <th class="total-column">Total</th>
                 </tr>
             </thead>
             <tbody>
@@ -134,10 +134,9 @@
         <h4>BERSIH</h4>
         <table>
             <tfoot>
-                <tr></tr>
-                <td style="width: 55%">Total Pemasukan Bersih</td>
-                <td class="text-right total-column">{{ format_uang($data_laporan['total_bersih']) }}</td>
-                <!-- Add the class for right-aligned text and fixed width -->
+                <tr>
+                    <td style="width: 55% " class="total-label">Total Pemasukan Bersih</td>
+                    <td class="text-right total-column">{{ format_uang($data_laporan['total_bersih']) }}</td>
                 </tr>
             </tfoot>
         </table>
@@ -171,7 +170,6 @@
                 <tr>
                     <td colspan="2" class="total-label">Total Pemasukan</td>
                     <td class="text-right total-column">{{ format_uang($data_laporan['total_masuk']) }}</td>
-                    <!-- Add the class for right-aligned text and fixed width -->
                 </tr>
             </tfoot>
         </table>
@@ -210,13 +208,37 @@
         <table>
             <tfoot>
                 <tr>
-                    <td style="width: 50%">Total Pemasukan Bersih</td>
-                    <td class="text-right total-column">{{ format_uang($data_laporan['total_keluar']) }}</td>
+                    <td style="width: 50%" class="total-label">Total Pemasukan Bersih</td>
+                    <td class="text-right total-column">{{ format_uang($data_laporan['total_bersih']) }}</td>
                     <!-- Add the class for right-aligned text and fixed width -->
                 </tr>
             </tfoot>
         </table>
     @endif
+    <h4>Total Bahan Keluar</h4>
+    <table>
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Bahan</th>
+                <th>Jumlah Keluar</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($data_laporan['total_bahan'] as $index => $item)
+                <tr>
+                    <td>{{ $index + 1 }}</td>
+                    <td>{{ $item->nama_bahan }}</td>
+                    <td>
+                        @if ($item->satuan == 'Meter')
+                            {{ $item->total_keluar }} {{ $item->satuan }}
+                        @else
+                            {{ $item->total_jumlah }} {{ $item->satuan }}
+                        @endif
+                    </td>
+                </tr>
+            @endforeach
+    </table>
 </body>
 
 </html>

@@ -31,6 +31,8 @@
                     <div class="icon">
                         <i class="far fa-file-excel"></i>
                     </div>
+                    <a href="/pekerjaan/belum-ada-desain" class="small-box-footer">More info <i
+                            class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <div class="col-lg-3 col-6">
@@ -42,6 +44,8 @@
                     <div class="icon">
                         <i class="fa fa-file"></i>
                     </div>
+                    <a href="/pekerjaan/sudah-ada-desain" class="small-box-footer">More info <i
+                            class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <div class="col-lg-3 col-6">
@@ -53,6 +57,8 @@
                     <div class="icon">
                         <i class="fa fa-hourglass-half"></i>
                     </div>
+                    <a href="/pekerjaan/dikerjakan" class="small-box-footer">More info <i
+                            class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <div class="col-lg-3 col-6">
@@ -64,6 +70,8 @@
                     <div class="icon">
                         <i class="fa fa-check"></i>
                     </div>
+                    <a href="/pekerjaan/selesai" class="small-box-footer">More info <i
+                            class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
         </div>

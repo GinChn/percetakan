@@ -33,8 +33,6 @@ class PekerjaanController extends Controller
                 ->where('id_pesanan', $id)
                 ->get()
         ]);
-
-        // return view('pekerjaan.detail_status');
     }
 
     public function updateStatus(Request $request, $id)
@@ -43,9 +41,22 @@ class PekerjaanController extends Controller
             $statusDetail = $request->input('status_detail');
             $statusText = $this->getStatusValue($statusDetail); // Call getStatusValue function
 
-
             $pesananDetail = PesananDetail::findOrFail($id);
-            $pesananDetail->update(['status_detail' => $statusText]);
+
+            // Jika status_detail yang diupdate adalah 'Dikerjakan'
+            if ($statusText === 'Dikerjakan') {
+                // Mengambil nama user yang sedang login
+                $operator = auth()->user()->nama; // Disesuaikan dengan kolom nama pada model User atau sesuai dengan kebutuhan Anda
+
+                // Memperbarui status_detail dan operator
+                $pesananDetail->update([
+                    'status_detail' => $statusText,
+                    'operator' => $operator,
+                ]);
+            } else {
+                // Jika status_detail bukan 'Dikerjakan', hanya update status_detail
+                $pesananDetail->update(['status_detail' => $statusText]);
+            }
 
             return back()->with('status', 'Berhasil update status item pesanan!');
         } catch (ModelNotFoundException $exception) {
@@ -81,8 +92,12 @@ class PekerjaanController extends Controller
     public function updateStatusAll3(Request $request)
     {
         $ids = $request->input('ids');
+        $operator = auth()->user()->nama;
         PesananDetail::whereIn('id_pesanan_detail', $ids)
-            ->update(['status_detail' => 'Dikerjakan']);
+            ->update([
+                'status_detail' => 'Dikerjakan',
+                'operator' => $operator, // Memasukkan nama user yang sedang login ke dalam kolom 'operator'
+            ]);
 
         return response()->json(['message' => 'Data updated successfully']);
     }
@@ -131,6 +146,7 @@ class PekerjaanController extends Controller
     public function selesai()
     {
         $pesananSelesai = Pesanan::where('status_pesanan', 'Selesai')->get();
+        // dd($pesananSelesai);
         return view('pekerjaan.selesai', ['data' => $pesananSelesai]);
     }
     public function sudahDiambil()

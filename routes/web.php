@@ -82,16 +82,21 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/pekerjaan/sudah-ada-desain', [PekerjaanController::class, 'sudahAdaDesain']);
     Route::get('/pekerjaan/dikerjakan', [PekerjaanController::class, 'dikerjakan']);
     Route::get('/pekerjaan/selesai', [PekerjaanController::class, 'selesai']);
-    Route::get('/pekerjaan/sudah_diambil', [PekerjaanController::class, 'sudahDiambil']);
+    Route::get('/pekerjaan/sudah-diambil', [PekerjaanController::class, 'sudahDiambil']);
     Route::resource('/pekerjaan', PekerjaanController::class);
 
     Route::group(['middleware' => ['cekrole:Administrator,Desainer,Operator,Kasir']], function () {
         Route::resource('/pesanan', PesananController::class);
         Route::get('/pesanan_detail/loadbarang', [PesananDetailController::class, 'loadBarang'])->name('pesanan_detail.barang');
+        Route::resource('/mesin', MesinController::class);
+        Route::resource('/bahan', BahanController::class);
+        Route::resource('/barang', BarangController::class);
     });
 
 
     Route::group(['middleware' => ['cekrole:Administrator,Kasir,Manajer']], function () {
+        Route::get('/laporan/pengeluaran-periode', [LaporanController::class, 'pengeluaranPeriode'])->name('pengeluaran_periode');
+        Route::get('/laporan/pesanan-periode', [LaporanController::class, 'pesananPeriode'])->name('pesanan_periode');
         Route::resource('/laporan', LaporanController::class);
         Route::post('/laporan', [LaporanController::class, 'handleForm'])->name('submit_tanggal');
         Route::get('/export-excel', [LaporanController::class, 'exportExcel'])->name('export.excel');
@@ -110,9 +115,7 @@ Route::group(['middleware' => 'auth'], function () {
     // yg role kasir bisa akses:
     Route::group(['middleware' => ['cekrole:Administrator,Kasir']], function () {
         Route::resource('/registrasi', RegistrasiController::class);
-        Route::resource('/mesin', MesinController::class);
-        Route::resource('/bahan', BahanController::class);
-        Route::resource('/barang', BarangController::class);
+
         Route::resource('/karyawan', KaryawanController::class);
         Route::resource('/pembayaran', PembayaranController::class);
         Route::get('/pembayaran/{id}/bayar', [PembayaranController::class, 'pembayaran'])->name('bayar.pesanan');

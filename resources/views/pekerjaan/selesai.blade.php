@@ -1,6 +1,9 @@
 @extends('layout')
 
 @section('content')
+    @php
+        $nama_level = auth()->user()->level->nama_level;
+    @endphp
     <link rel="stylesheet" href="{{ asset('assets/dist/css/custom/checkbox.css') }}">
     <div class="content-header">
         <div class="container-fluid">
@@ -13,20 +16,22 @@
     </div>
 
     <div class="container-fluid">
-        <div class="row mb-4">
-            <div class="col-12">
+        @if ($nama_level == 'Administrator' || $nama_level == 'Kasir')
+            <div class="row mb-4">
+                <div class="col-12">
 
-                <div class="col-auto float-right" id="ubahButton">
-                    <button class="btn btn-sm btn-warning">Ubah</button>
-                </div>
-                <div class="col-auto float-right" id="okButton">
-                    <button class="btn btn-sm btn-success">OK</button>
-                </div>
-                <div class="col-auto float-right" id="batalButton">
-                    <button class="btn btn-sm btn-danger">Batal</button>
+                    <div class="col-auto float-right" id="ubahButton">
+                        <button class="btn btn-sm btn-warning">Ubah</button>
+                    </div>
+                    <div class="col-auto float-right" id="okButton">
+                        <button class="btn btn-sm btn-success">OK</button>
+                    </div>
+                    <div class="col-auto float-right" id="batalButton">
+                        <button class="btn btn-sm btn-danger">Batal</button>
+                    </div>
                 </div>
             </div>
-        </div>
+        @endif
         <div class="row">
             <div class="col-12">
                 <div class="card">

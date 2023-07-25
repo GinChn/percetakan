@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Maatwebsite\Excel\Facades\Excel;
-use App\Exports\LaporanExportView;
-use Illuminate\Support\Facades\DB;
 use App\Models\Pesanan;
 use App\Models\Pengeluaran;
 use Illuminate\Http\Request;
+use App\Models\PesananDetail;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Exports\LaporanExportView;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Carbon;
+use Maatwebsite\Excel\Facades\Excel;
 
 class LaporanController extends Controller
 {
@@ -20,6 +22,38 @@ class LaporanController extends Controller
     public function index()
     {
         return view('laporan.index');
+    }
+
+    public function pesananPeriode(Request $request)
+    {
+        $tanggal = $request->input('tanggal');
+
+        $tanggal = Carbon::parse($tanggal);
+
+        $pesanan = Pesanan::whereDate('created_at', $tanggal)
+            ->where('status_pembayaran', 'Lunas')
+            ->orderBy('no_nota', 'desc')
+            ->get();
+
+        return view('laporan.pesanan_periode', [
+            'tanggal' => $tanggal,
+            'pesanan' => $pesanan
+        ]);
+    }
+    public function pengeluaranPeriode(Request $request)
+    {
+        $tanggal = $request->input('tanggal');
+
+        $tanggal = Carbon::parse($tanggal);
+
+        $pengeluaran = Pengeluaran::whereDate('created_at', $tanggal)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('laporan.pengeluaran_periode', [
+            'pengeluaran' => $pengeluaran,
+            'tanggal' => $tanggal,
+        ]);
     }
 
     public function handleForm(Request $request)
@@ -124,6 +158,19 @@ class LaporanController extends Controller
 
             // Lakukan pengurangan
             $total_bersih = $total_pemasukan - $total_pengeluaran;
+
+            // dapatkan jumlah bahan keluar harian
+            $total_bahan = PesananDetail::select(
+                'pesanan_detail.id_bahan',
+                'bahan.nama_bahan',
+                'pesanan_detail.satuan',
+                DB::raw('SUM(pesanan_detail.totalukuran) as total_keluar'),
+                DB::raw('SUM(pesanan_detail.jumlah) as total_jumlah')
+            )
+                ->join('bahan', 'pesanan_detail.id_bahan', '=', 'bahan.id_bahan')
+                ->whereDate('pesanan_detail.created_at', $tanggal_laporan)
+                ->groupBy('pesanan_detail.id_bahan', 'bahan.nama_bahan', 'pesanan_detail.satuan')
+                ->get();
         } else if ($jenis_laporan == "bulanan") {
             $tanggal_laporan_awal = $data_input_laporan['tanggal_laporan_awal'];
             $tanggal_laporan_akhir = $data_input_laporan['tanggal_laporan_akhir'];
@@ -158,6 +205,19 @@ class LaporanController extends Controller
             )
                 ->sum('total');
             $total_bersih = $total_pemasukan - $total_pengeluaran;
+
+            // dapatkan jumlah bahan keluar bulanan
+            $total_bahan = PesananDetail::select(
+                'pesanan_detail.id_bahan',
+                'bahan.nama_bahan',
+                'pesanan_detail.satuan',
+                DB::raw('SUM(pesanan_detail.totalukuran) as total_keluar'),
+                DB::raw('SUM(pesanan_detail.jumlah) as total_jumlah')
+            )
+                ->join('bahan', 'pesanan_detail.id_bahan', '=', 'bahan.id_bahan')
+                ->whereRaw('DATE(pesanan_detail.created_at) BETWEEN ? AND ?', [$tanggal_laporan_awal, $tanggal_laporan_akhir])
+                ->groupBy('pesanan_detail.id_bahan', 'bahan.nama_bahan', 'pesanan_detail.satuan')
+                ->get();
         }
 
         $data_laporan = [
@@ -165,7 +225,8 @@ class LaporanController extends Controller
             'data_keluar' => $data_pengeluaran,
             'total_masuk' => $total_pemasukan,
             'total_keluar' => $total_pengeluaran,
-            'total_bersih' => $total_bersih
+            'total_bersih' => $total_bersih,
+            'total_bahan' => $total_bahan
         ];
 
         return $data_laporan;

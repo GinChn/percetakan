@@ -112,7 +112,15 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="card-title">Pemasukan</h5>
+                        <h5 class="card-title">Pemasukan
+
+                            @if ($data_input['jenis_laporan'] == 'harian')
+                                {{ tanggal_indonesia($data_input['tanggal_laporan'], false) }}
+                            @else
+                                {{ tanggal_indonesia($data_input['tanggal_laporan_awal'], false) }} -
+                                {{ tanggal_indonesia($data_input['tanggal_laporan_akhir'], false) }}
+                            @endif
+                        </h5>
                     </div>
                     <div class="card-body">
 
@@ -161,7 +169,8 @@
                                                 <td>{{ $index + 1 }}</td>
                                                 <td>{{ tanggal_indonesia($masuk->tanggal, false) }}</td>
                                                 <td class="total-masuk">{{ format_uang($masuk->total_tagihan) }}</td>
-                                                <td><a href="#" class="btn-sm btn-primary">Detail</a></td>
+                                                <td><a href="{{ route('pesanan_periode', ['tanggal' => $masuk->tanggal]) }}"
+                                                        class="btn-sm btn-primary">Detail</a></td>
                                             </tr>
                                         @endforeach
                                     @endif
@@ -190,7 +199,14 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="card-title">Pengeluaran</h5>
+                        <h5 class="card-title">Pengeluaran
+                            @if ($data_input['jenis_laporan'] == 'harian')
+                                {{ tanggal_indonesia($data_input['tanggal_laporan'], false) }}
+                            @else
+                                {{ tanggal_indonesia($data_input['tanggal_laporan_awal'], false) }} -
+                                {{ tanggal_indonesia($data_input['tanggal_laporan_akhir'], false) }}
+                            @endif
+                        </h5>
                     </div>
                     <div class="card-body">
                         @if ($data_input['jenis_laporan'] == 'harian')
@@ -237,7 +253,8 @@
                                                 <td>{{ tanggal_indonesia($keluar->tanggal) }}</td>
                                                 <td class="total-keluar">{{ format_uang($keluar->total_pengeluaran) }}
                                                 </td>
-                                                <td><a href="#" class="btn-sm btn-primary">Detail</a></td>
+                                                <td><a href="{{ route('pengeluaran_periode', ['tanggal' => $masuk->tanggal]) }}"
+                                                        class="btn-sm btn-primary">Detail</a></td>
                                             </tr>
                                         @endforeach
                                     @endif
@@ -266,7 +283,15 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="card-title">Pemasukan Bersih</h5>
+                        <h5 class="card-title">Pemasukan Bersih
+
+                            @if ($data_input['jenis_laporan'] == 'harian')
+                                {{ tanggal_indonesia($data_input['tanggal_laporan'], false) }}
+                            @else
+                                {{ tanggal_indonesia($data_input['tanggal_laporan_awal'], false) }} -
+                                {{ tanggal_indonesia($data_input['tanggal_laporan_akhir'], false) }}
+                            @endif
+                        </h5>
                     </div>
                     <div class="card-body">
                         <div class="total col-md-6 bg-black float-right">
@@ -283,6 +308,54 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">Total Bahan Keluar
+
+                            @if ($data_input['jenis_laporan'] == 'harian')
+                                {{ tanggal_indonesia($data_input['tanggal_laporan'], false) }}
+                            @else
+                                {{ tanggal_indonesia($data_input['tanggal_laporan_awal'], false) }} -
+                                {{ tanggal_indonesia($data_input['tanggal_laporan_akhir'], false) }}
+                            @endif
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        @if ($data_input['jenis_laporan'] == 'harian' || $data_input['jenis_laporan'] == 'bulanan')
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Bahan</th>
+                                        <th>Jumlah Keluar</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (isset($data_laporan['total_bahan']))
+                                        @foreach ($data_laporan['total_bahan'] as $index => $item)
+                                            <tr>
+                                                <td>{{ $index + 1 }}</td>
+                                                <td>{{ $item->nama_bahan }}</td>
+                                                <td>
+                                                    @if ($item->satuan == 'Meter')
+                                                        {{ $item->total_keluar }} {{ $item->satuan }}
+                                                    @else
+                                                        {{ $item->total_jumlah }} {{ $item->satuan }}
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    @endif
+                                </tbody>
+
+                            </table>
+                        @endif
                     </div>
                 </div>
             </div>

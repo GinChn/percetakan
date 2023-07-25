@@ -1,6 +1,9 @@
 @extends('layout')
 
 @section('content')
+    @php
+        $nama_level = auth()->user()->level->nama_level;
+    @endphp
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
@@ -15,18 +18,23 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">
-                        <button onclick="addMesin('{{ route('mesin.store') }}')" class="btn btn-sm btn-success">
-                            Tambah Mesin
-                        </button>
-                    </div>
+                    @if ($nama_level == 'Administrator' || $nama_level == 'Kasir')
+                        <div class="card-header">
+                            <button onclick="addMesin('{{ route('mesin.store') }}')" class="btn btn-sm btn-success">
+                                Tambah Mesin
+                            </button>
+                        </div>
+                    @endif
                     <div class="card-body">
                         <table id="table2" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
                                     <th style="width: 10px">No</th>
                                     <th>Jenis Mesin</th>
-                                    <th>Aksi</th>
+
+                                    @if ($nama_level == 'Administrator' || $nama_level == 'Kasir')
+                                        <th>Aksi</th>
+                                    @endif
                                 </tr>
                             </thead>
                             <tbody>
@@ -34,22 +42,24 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $item->jenis_mesin }}</td>
-                                        <td>
-                                            <button onclick="editMesin('{{ route('mesin.update', $item->id_mesin) }}')"
-                                                class="btn btn-sm btn-primary">
-                                                <i class="fas fa-pen"></i>
-                                            </button>
-                                            <form id="hapus-mesin{{ $item->id_mesin }}"
-                                                action="{{ route('mesin.destroy', $item->id_mesin) }}" method="post"
-                                                class="d-inline">
-                                                @csrf
-                                                @method('delete')
-                                                <button type="submit" class="btn btn-sm btn-danger border-0 delete-btn"
-                                                    onclick="deleteMesin({{ $item->id_mesin }})">
-                                                    <i class="fa fa-trash"></i>
+                                        @if ($nama_level == 'Administrator' || $nama_level == 'Kasir')
+                                            <td>
+                                                <button onclick="editMesin('{{ route('mesin.update', $item->id_mesin) }}')"
+                                                    class="btn btn-sm btn-primary">
+                                                    <i class="fas fa-pen"></i>
                                                 </button>
-                                            </form>
-                                        </td>
+                                                <form id="hapus-mesin{{ $item->id_mesin }}"
+                                                    action="{{ route('mesin.destroy', $item->id_mesin) }}" method="post"
+                                                    class="d-inline">
+                                                    @csrf
+                                                    @method('delete')
+                                                    <button type="submit" class="btn btn-sm btn-danger border-0 delete-btn"
+                                                        onclick="deleteMesin({{ $item->id_mesin }})">
+                                                        <i class="fa fa-trash"></i>
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        @endif
                                     </tr>
                                 @endforeach
                             </tbody>

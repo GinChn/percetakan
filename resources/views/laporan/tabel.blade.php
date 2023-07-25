@@ -169,7 +169,32 @@
                 </td>
             </tr>
         </table>
+
     @endif
+    <h3>Total Bahan Keluar</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Bahan</th>
+                <th>Jumlah Keluar</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($data_laporan['total_bahan'] as $index => $item)
+                <tr>
+                    <td>{{ $index + 1 }}</td>
+                    <td>{{ $item->nama_bahan }}</td>
+                    <td>
+                        @if ($item->satuan == 'Meter')
+                            {{ $item->total_keluar }} {{ $item->satuan }}
+                        @else
+                            {{ $item->total_jumlah }} {{ $item->satuan }}
+                        @endif
+                    </td>
+                </tr>
+            @endforeach
+    </table>
 </body>
 
 </html>

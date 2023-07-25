@@ -60,9 +60,13 @@
                     <span class="info-box-icon bg-gradient-success"><i class="fa fa-check-circle"></i></span>
                     <div class="info-box-content">
                         <p style="margin-bottom: 0%; font-size: 12pt">PEMASUKAN BERSIH</p>
-                        <p style="margin-bottom: 0%; font-size: 10pt"><b>{{ format_uang($pemasukan_harian - $pengeluaran_harian) }}</b></p>
+                        <p style="margin-bottom: 0%; font-size: 10pt">
+                            <b>{{ format_uang($pemasukan_harian - $pengeluaran_harian) }}</b>
+                        </p>
                         <p style="margin-bottom: 0%; font-size: 10pt">BULAN INI</p>
-                        <p style="margin-bottom: 0%; font-size: 10pt"><b>{{ format_uang($pemasukan_bulanan - $pengeluaran_bulanan) }}</b></p>
+                        <p style="margin-bottom: 0%; font-size: 10pt">
+                            <b>{{ format_uang($pemasukan_bulanan - $pengeluaran_bulanan) }}</b>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -78,6 +82,8 @@
                     <div class="icon">
                         <i class="far fa-file-excel"></i>
                     </div>
+                    <a href="/pekerjaan/belum-ada-desain" class="small-box-footer">More info <i
+                            class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <div class="col-lg-3 col-6">
@@ -89,6 +95,8 @@
                     <div class="icon">
                         <i class="fa fa-file"></i>
                     </div>
+                    <a href="/pekerjaan/sudah-ada-desain" class="small-box-footer">More info <i
+                            class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <div class="col-lg-3 col-6">
@@ -100,6 +108,8 @@
                     <div class="icon">
                         <i class="fa fa-hourglass-half"></i>
                     </div>
+                    <a href="/pekerjaan/dikerjakan" class="small-box-footer">More info <i
+                            class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <div class="col-lg-3 col-6">
@@ -111,6 +121,8 @@
                     <div class="icon">
                         <i class="fa fa-check"></i>
                     </div>
+                    <a href="/pekerjaan/selesai" class="small-box-footer">More info <i
+                            class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
         </div>
@@ -119,7 +131,8 @@
             <div class="col-md-12">
                 <div class="card card-outline card-success">
                     <div class="card-header">
-                        <h3 class="card-title">Grafik Pendapatan {{ tanggal_indonesia($tgl_awalBulan, false) }} s/d {{ tanggal_indonesia($tgl_akhirBulan, false) }}</h3>
+                        <h3 class="card-title">Grafik Pendapatan {{ tanggal_indonesia($tgl_awalBulan, false) }} s/d
+                            {{ tanggal_indonesia($tgl_akhirBulan, false) }}</h3>
                         <div class="card-tools">
                             <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                 <i class="fas fa-minus"></i>
@@ -140,7 +153,8 @@
             <div class="col-md-12">
                 <div class="card card-outline card-success">
                     <div class="card-header">
-                        <h3 class="card-title">Pengeluaran Bahan {{ tanggal_indonesia($tgl_awalBulan, false) }} s/d {{ tanggal_indonesia($tgl_akhirBulan, false) }}</h3>
+                        <h3 class="card-title">Pengeluaran Bahan {{ tanggal_indonesia($tgl_awalBulan, false) }} s/d
+                            {{ tanggal_indonesia($tgl_akhirBulan, false) }}</h3>
                         <div class="card-tools">
                             <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                 <i class="fas fa-minus"></i>
@@ -158,18 +172,18 @@
                             </thead>
                             <tbody>
                                 @foreach ($totalbahan as $item)
-                                <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>{{ $item->nama_bahan }}</td>
-                                <td>
-                                    @if ($item->satuan == 'Meter')
-                                    {{ $item->total_keluar }} {{ $item->satuan }}
-                                    @else
-                                        {{ $item->total_jumlah }} {{ $item->satuan }}
-                                    @endif
-                                </td>
-                            </tr>
-                            @endforeach
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $item->nama_bahan }}</td>
+                                        <td>
+                                            @if ($item->satuan == 'Meter')
+                                                {{ $item->total_keluar }} {{ $item->satuan }}
+                                            @else
+                                                {{ $item->total_jumlah }} {{ $item->satuan }}
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
