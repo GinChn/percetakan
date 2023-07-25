@@ -37,31 +37,55 @@ use App\Mail\SampleMail;
 // Route::get('/', function () {
 //     return view('administrator.dashboard');
 // });
+// Route::group(['middleware' => 'guest'], function () {
+//     Route::get('/login', [LoginController::class, 'index'])->name('login');
+//     Route::get('/lupa-password', [LoginController::class, 'lupaPassword']);
+//     Route::post('/lupa-password', [LoginController::class, 'submitForgetPasswordForm'])->name('password.email');
+//     Route::get('/reset-password/{token}', [LoginController::class, 'showResetPasswordForm'])->name('reset.password.get')->middleware('guest');
+//     Route::post('/reset-password', [LoginController::class, 'submitResetPasswordForm'])->name('reset.password.post');
+// });
+
+
+
+Route::group(['middleware' => 'guest'], function () {
+    // Route::get('/login', [LoginController::class, 'index'])->name('login');
+    // Route::post('/login', [LoginController::class, 'login']);
+    // Route::get('/lupa-password', [LoginController::class, 'lupaPassword']);
+
+    // Remove the 'guest' middleware from this route
+    Route::get('/lupa-password', [LoginController::class, 'lupaPassword']);
+    Route::post('/lupa-password', [LoginController::class, 'submitForgetPasswordForm'])->name('password.email');
+
+    // Adjust the middleware here to allow guests to access the reset password form
+    Route::get('/reset-password/{token}', [LoginController::class, 'showResetPasswordForm'])
+        ->name('reset.password.get');
+
+    // Remove the 'guest' middleware from this route
+    Route::post('/reset-password', [LoginController::class, 'submitResetPasswordForm'])->name('reset.password.post');
+});
+
 Route::resource('/', StatusController::class);
 Route::get('/cek-pesanan/{id}/detail', [StatusController::class, 'cekStatusDetail']);
 Route::resource('/cek-pesanan', StatusController::class);
 Route::get('/login', [LoginController::class, 'index'])->name('login')->middleware('guest');
 Route::post('/login', [LoginController::class, 'login']);
-Route::get('/tampil-ubah', [LoginController::class, 'tampilUbah']);
+// Route::get('/lupa-password', [LoginController::class, 'lupaPassword'])->middleware('guest');
+
+// Route::get('/login', [LoginController::class, 'index'])->name('login')->middleware('guest');
+// Route::get('/lupa-password', [LoginController::class, 'lupaPassword'])->middleware('guest');
 
 
+// Route::post('/lupa-password', [LoginController::class, 'submitForgetPasswordForm'])->name('password.email')->middleware('guest');
 
-Route::get('/send-email', function () {
-    $recipient = 'adn.wahni@gmail.com'; // Ganti dengan alamat email penerima
-    Mail::to($recipient)->send(new SampleMail());
-    return "Email has been sent successfully!";
-});
+// Route::get('/reset-password/{token}', [LoginController::class, 'showResetPasswordForm'])->name('reset.password.get')->middleware('guest');
+// Route::post('/reset-password', [LoginController::class, 'submitResetPasswordForm'])->name('reset.password.post');
 
-Route::get('/lupa-password', [LoginController::class, 'lupaPassword']);
-Route::post('/lupa-password', [LoginController::class, 'submitForgetPasswordForm'])->name('password.email');
-
-Route::get('/reset-password/{token}', [LoginController::class, 'showResetPasswordForm'])->name('reset.password.get');
-Route::post('/reset-password', [LoginController::class, 'submitResetPasswordForm'])->name('reset.password.post');
 
 
 Route::group(['middleware' => 'auth'], function () {
     // yg sudah login biasa akses:
     Route::get('/logout', [LoginController::class, 'logout']);
+
     Route::resource('/profile', ProfileController::class);
     Route::resource('/dashboard', DashboardController::class);
     Route::post('/pekerjaan/{id}/update-status', [PekerjaanController::class, 'updateStatus'])->name('pekerjaan.update_status');

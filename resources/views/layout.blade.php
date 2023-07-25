@@ -73,7 +73,7 @@
         <!-- /.navbar -->
 
         <aside class="main-sidebar sidebar-dark-olive elevation-4">
-            <a href="/dashboard" class="brand-link bg-light">
+            <a href="/" class="brand-link bg-light">
                 <img src="{{ asset('assets/dist/img/logo.png') }}" alt="AdminLTE Logo" class="brand-image"
                     style="opacity: .8">
                 <span class="brand-text font-weight-light">AAL Printing</span>

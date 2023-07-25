@@ -82,27 +82,39 @@ class LoginController extends Controller
     //         ? back()->with(['status' => __($status)])
     //         : back()->withErrors(['status' => __($status)]);
     // }
+
     function submitForgetPasswordForm(Request $request)
     {
         $request->validate([
             'username' => 'required|email|exists:users',
         ]);
 
-        $token = Str::random(64);
+        // Ambil data user berdasarkan email
+        $user = User::where('username', $request->username)->first();
 
-        DB::table('password_resets')->insert([
-            'email' => $request->username,
-            'token' => $token,
-            'created_at' => Carbon::now()
-        ]);
+        if ($user) {
+            $token = Str::random(64);
 
-        Mail::send('emails.forgetPassword', ['token' => $token], function ($message) use ($request) {
-            $message->to($request->username);
-            $message->subject('Reset Password');
-        });
+            DB::table('password_resets')->insert([
+                'email' => $request->username,
+                'token' => $token,
+                'created_at' => Carbon::now()
+            ]);
 
-        return back()->with('status', 'Kami telah mengirimkan tautan ke email Anda!');
+            Mail::send('emails.forgetPassword', [
+                'token' => $token,
+                'nama_pengguna' => $user->nama // Menggunakan kolom 'nama' dari tabel users
+            ], function ($message) use ($request) {
+                $message->to($request->username);
+                $message->subject('Reset Password');
+            });
+
+            return back()->with('status', 'Kami telah mengirimkan tautan ke email Anda!');
+        } else {
+            return back()->withErrors(['username' => 'Email tidak ditemukan']);
+        }
     }
+
 
     public function showResetPasswordForm($token)
     {

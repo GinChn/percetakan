@@ -19,17 +19,10 @@ class RedirectIfAuthenticated
      */
     public function handle(Request $request, Closure $next, ...$guards)
     {
-        // $guards = empty($guards) ? [null] : $guards;
 
-        // foreach ($guards as $guard) {
-        //     if (Auth::guard($guard)->check()) {
-        //         return redirect(RouteServiceProvider::HOME);
-        //     }
-        // }
-
-        if (Auth::check() && $request->is('login')) {
+        if (Auth::check() && $request->is('login', 'lupa-password', 'reset-password', 'reset-password*')) {
             return redirect('/dashboard');
-        } elseif (Auth::guest() && !$request->is('login')) {
+        } elseif (Auth::guest() && !$request->is('login', 'lupa-password', 'reset-password*')) {
             return redirect('/');
         }
 
