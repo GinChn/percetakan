@@ -65,6 +65,9 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
             // 'username' => 'username',
+            'table' => 'users',
+            'username' => 'email',
+            'throttle' => 60,
         ],
 
         // 'users' => [

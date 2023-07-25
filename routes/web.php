@@ -19,6 +19,10 @@ use App\Http\Controllers\RegistrasiController;
 use App\Http\Controllers\PengeluaranController;
 use App\Http\Controllers\PesananDetailController;
 
+
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SampleMail;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -38,8 +42,21 @@ Route::get('/cek-pesanan/{id}/detail', [StatusController::class, 'cekStatusDetai
 Route::resource('/cek-pesanan', StatusController::class);
 Route::get('/login', [LoginController::class, 'index'])->name('login')->middleware('guest');
 Route::post('/login', [LoginController::class, 'login']);
+Route::get('/tampil-ubah', [LoginController::class, 'tampilUbah']);
 
-Route::get('/reset-password', [LoginController::class, 'resetPassword']);
+
+
+Route::get('/send-email', function () {
+    $recipient = 'adn.wahni@gmail.com'; // Ganti dengan alamat email penerima
+    Mail::to($recipient)->send(new SampleMail());
+    return "Email has been sent successfully!";
+});
+
+Route::get('/lupa-password', [LoginController::class, 'lupaPassword']);
+Route::post('/lupa-password', [LoginController::class, 'submitForgetPasswordForm'])->name('password.email');
+
+Route::get('/reset-password/{token}', [LoginController::class, 'showResetPasswordForm'])->name('reset.password.get');
+Route::post('/reset-password', [LoginController::class, 'submitResetPasswordForm'])->name('reset.password.post');
 
 
 Route::group(['middleware' => 'auth'], function () {
@@ -61,7 +78,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/pekerjaan/selesai', [PekerjaanController::class, 'selesai']);
     Route::get('/pekerjaan/sudah_diambil', [PekerjaanController::class, 'sudahDiambil']);
     Route::resource('/pekerjaan', PekerjaanController::class);
-    // Route::get('/detail-status-pekerjaan', [PekerjaanController::class, 'detailStatusPekerjaan'])->name('detail-status-pekerjaan');
 
     Route::group(['middleware' => ['cekrole:Administrator,Desainer,Operator,Kasir']], function () {
         Route::resource('/pesanan', PesananController::class);

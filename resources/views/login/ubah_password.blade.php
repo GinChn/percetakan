@@ -7,6 +7,44 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Reset Password</title>
     <link rel="stylesheet" href="{{ asset('assets/dist/css/custom/reset-password.css') }}">
+    <style>
+        .reset-container {
+            width: 30%;
+        }
+
+        .reset-wrapper p {
+            text-align: center
+        }
+
+        .text-danger {
+            color: #dc3545;
+        }
+
+        .text-danger:hover {
+            color: #bd2130;
+        }
+
+        /* Additional style for error messages */
+        .error-message {
+            font-size: 14px;
+            color: #dc3545;
+            margin-top: 5px;
+        }
+
+        .flash-error {
+            color: #721c24;
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+            padding: 8px 15px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        form input {
+            margin-bottom: 10px;
+        }
+    </style>
+
 </head>
 
 <body>
@@ -17,16 +55,26 @@
 
             <div class="reset-wrapper">
                 <div class="title">
-                    <h3>Reset Password</h3>
+                    <h3>Ganti Password</h3>
                 </div>
-                <p>Masukkan alamat email yang terdaftar untuk menerima tautan reset kata sandi.</p>
+                <p>Masukkan Password Baru</p>
 
                 <div class="form-reset">
-                    <form action="{{ route('password.email') }}" method="post">
+                    <form action="{{ route('reset.password.post') }}" method="post">
                         @csrf
-                        <label for="email">Email</label>
-                        <input type="email" name="username" id="email">
-                        <button type="submit" name="reset">Kirim</button>
+                        <input type="hidden" name="token" value="{{ $token }}">
+                        <label for="password">Password</label>
+                        <input type="password" name="password" id="password" required>
+                        @error('password')
+                            <span class="text-danger error-message flash-error">{{ $message }}</span>
+                        @enderror
+                        <label for="confirmPassword">Konfirmasi Password</label>
+                        <input type="password" name="password_confirmation" id="confirmPassword" required>
+                        @error('password_confirmation')
+                            <span class="text-danger error-message flash-error">{{ $message }}</span>
+                        @enderror
+
+                        <button type="submit">Ubah Password</button>
                     </form>
                 </div>
                 <a href="/login">Kembali ke halaman Login</a>
@@ -44,7 +92,7 @@
     <!-- AdminLTE App -->
     <script src="{{ asset('assets/dist/js/adminlte.min.js') }}"></script>
 
-    @if ($errors->any())
+    {{-- @if ($errors->any())
         <script>
             var Toast = Swal.mixin({
                 toast: true,
@@ -63,7 +111,7 @@
                 @endforeach
             });
         </script>
-    @endif
+    @endif --}}
     @if (session('status'))
         <script>
             var Toast = Swal.mixin({
@@ -77,6 +125,24 @@
                 Toast.fire({
                     icon: 'success',
                     title: '{{ session('status') }}',
+                    timer: 3000
+                });
+            });
+        </script>
+    @endif
+    @if (session('error'))
+        <script>
+            var Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+            });
+
+            document.addEventListener("DOMContentLoaded", function() {
+                Toast.fire({
+                    icon: 'error',
+                    title: '{{ session('error') }}',
                     timer: 3000
                 });
             });

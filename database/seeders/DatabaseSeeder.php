@@ -153,7 +153,6 @@ class DatabaseSeeder extends Seeder
             'no_telp' => '08012028399',
             'pendidikan' => 'SMA',
             'id_level' => 1,
-            'remember_token' => '12345',
         ]);
         User::create([
             'username' => 'kasir@gmail.com',
@@ -164,7 +163,6 @@ class DatabaseSeeder extends Seeder
             'no_telp' => '08276733372',
             'pendidikan' => 'SMK',
             'id_level' => 4,
-            'remember_token' => '12345',
         ]);
         User::create([
             'username' => 'desainer@gmail.com',
@@ -175,7 +173,6 @@ class DatabaseSeeder extends Seeder
             'no_telp' => '085233332372',
             'pendidikan' => 'SMK',
             'id_level' => 3,
-            'remember_token' => '12345',
         ]);
         User::create([
             'username' => 'operator@gmail.com',
@@ -186,7 +183,6 @@ class DatabaseSeeder extends Seeder
             'no_telp' => '0852309090',
             'pendidikan' => 'SMK',
             'id_level' => 5,
-            'remember_token' => '12345',
         ]);
         User::create([
             'username' => 'manajer@gmail.com',
@@ -197,7 +193,6 @@ class DatabaseSeeder extends Seeder
             'no_telp' => '08523090888',
             'pendidikan' => 'S1 Hukum',
             'id_level' => 2,
-            'remember_token' => '12345',
         ]);
     }
 }

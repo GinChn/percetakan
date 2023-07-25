@@ -3,17 +3,17 @@
 namespace App\Models;
 
 use App\Models\Level;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-// use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Contracts\Auth\CanResetPassword;
+use Illuminate\Auth\Passwords\CanResetPassword as CanResetPasswordTrait;
 
-class User extends Model implements Authenticatable
+class User extends Model implements Authenticatable, CanResetPassword
 {
-    use HasFactory;
-
+    use HasFactory, HasApiTokens, Notifiable, CanResetPasswordTrait;
 
     protected $table = 'users';
     protected $primaryKey = 'id_user';
@@ -23,7 +23,6 @@ class User extends Model implements Authenticatable
     {
         return $this->belongsTo(Level::class, 'id_level');
     }
-
 
     public function getAuthIdentifierName()
     {
@@ -53,5 +52,15 @@ class User extends Model implements Authenticatable
     public function getRememberTokenName()
     {
         return 'remember_token'; // Nama kolom yang digunakan untuk remember token
+    }
+
+    public function getEmailForPasswordReset()
+    {
+        return $this->username; // Return the email address for password reset
+    }
+
+    public function sendPasswordResetNotification($token)
+    {
+        // Implement your password reset notification logic here
     }
 }

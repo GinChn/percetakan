@@ -41,7 +41,7 @@
                     <div class="button-wrapper">
 
                         <button type="submit" name="login">LOGIN</button>
-                        <a href="/reset-password">Lupa Password?</a>
+                        <a href="/lupa-password">Lupa Password?</a>
                     </div>
                 </form>
             </div>
@@ -72,6 +72,23 @@
                 Toast.fire({
                     icon: 'error',
                     title: '{{ Session::get('gagal-login') }}',
+                    timer: 3000
+                });
+            });
+        @endif
+    </script>
+    <script>
+        @if (Session::has('message'))
+            var Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+            });
+            document.addEventListener("DOMContentLoaded", function() {
+                Toast.fire({
+                    icon: 'success',
+                    title: '{{ Session::get('message') }}',
                     timer: 3000
                 });
             });
