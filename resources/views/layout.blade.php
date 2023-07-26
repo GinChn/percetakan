@@ -234,7 +234,7 @@
                                             <p>Barang</p>
                                         </a>
                                     </li>
-                                    @if ($nama_level == 'Administrator' || $nama_level == 'Kasir')
+                                    @if ($nama_level == 'Administrator')
                                         <li class="nav-item">
                                             <a href="/karyawan"
                                                 class="nav-link {{ Request::is('karyawan*') ? 'active' : '' }}">
@@ -247,7 +247,7 @@
                                 </ul>
                             </li>
                         @endif
-                        @if ($nama_level == 'Administrator' || $nama_level == 'Kasir')
+                        @if ($nama_level == 'Administrator')
                             <li class="nav-header">USER</li>
 
                             <li class="nav-item">
@@ -275,11 +275,7 @@
         <!-- /.content -->
 
         <footer class="main-footer">
-            <div class="float-right d-none d-sm-block">
-                <b>Version</b> 3.2.0
-            </div>
-            <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights
-            reserved.
+            <strong>Copyright &copy; 2023 AAL Printing</strong>
         </footer>
 
         <!-- Control Sidebar -->

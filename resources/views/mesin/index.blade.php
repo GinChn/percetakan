@@ -18,7 +18,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    @if ($nama_level == 'Administrator' || $nama_level == 'Kasir')
+                    @if ($nama_level == 'Administrator')
                         <div class="card-header">
                             <button onclick="addMesin('{{ route('mesin.store') }}')" class="btn btn-sm btn-success">
                                 Tambah Mesin
@@ -32,7 +32,7 @@
                                     <th style="width: 10px">No</th>
                                     <th>Jenis Mesin</th>
 
-                                    @if ($nama_level == 'Administrator' || $nama_level == 'Kasir')
+                                    @if ($nama_level == 'Administrator')
                                         <th>Aksi</th>
                                     @endif
                                 </tr>
@@ -42,7 +42,7 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $item->jenis_mesin }}</td>
-                                        @if ($nama_level == 'Administrator' || $nama_level == 'Kasir')
+                                        @if ($nama_level == 'Administrator')
                                             <td>
                                                 <button onclick="editMesin('{{ route('mesin.update', $item->id_mesin) }}')"
                                                     class="btn btn-sm btn-primary">

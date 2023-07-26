@@ -95,7 +95,7 @@
                                 <th scope="col">Desainer</th>
                                 <th scope="col">Operator</th>
                                 <th scope="col">Status</th>
-                                @if ($nama_level == 'Administrator' || $nama_level == 'Desainer' || $nama_level == 'Operator')
+                                @if (($nama_level == 'Administrator' || $nama_level == 'Desainer' || $nama_level == 'Operator') && $tampilUbah)
                                     <th scope="col">Ubah</th>
                                 @endif
                             </tr>
@@ -116,7 +116,7 @@
                                         <span
                                             class="badge {{ getStatusColor($item->status_detail) }}">{{ $item->status_detail }}</span>
                                     </td>
-                                    @if ($nama_level == 'Administrator' || $nama_level == 'Desainer' || $nama_level == 'Operator')
+                                    @if (($nama_level == 'Administrator' || $nama_level == 'Desainer' || $nama_level == 'Operator') && $tampilUbah)
                                         <td>
 
 
@@ -194,7 +194,7 @@
                                                 </form>
                                             @endif
 
-                                            @if ($nama_level == 'Administrator')
+                                            @if ($nama_level == 'Administrator' && $tampilUbah)
                                                 <button type="button"
                                                     class="btn btn-default btn-sm dropdown-toggle dropdown-icon"
                                                     data-toggle="dropdown">

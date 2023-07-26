@@ -73,8 +73,8 @@
                                                 </span>
                                             @endif
                                         </td>
-                                        @if ($nama_level == 'Administrator' || $nama_level == 'Desainer')
-                                            <td>
+                                        <td>
+                                            @if ($nama_level == 'Administrator' || ($nama_level == 'Desainer' && $item->status_pembayaran != 'Lunas'))
                                                 <form id="hapus-pesanan{{ $item->id_pesanan }}"
                                                     action="{{ route('pesanan.destroy', $item->id_pesanan) }}"
                                                     method="post" class="d-inline-block">
@@ -85,10 +85,11 @@
                                                         <i class="fa fa-trash"></i>
                                                     </button>
                                                 </form>
-                                                <a href="/pekerjaan/{{ $item->id_pesanan }}/detail"
-                                                    class="btn btn-default btn-sm"><i class="fas fa-list"></i></a>
-                                            </td>
-                                        @endif
+                                            @endif
+                                            <a href="/pekerjaan/{{ $item->id_pesanan }}/detail"
+                                                class="btn btn-default btn-sm"><i class="fas fa-list"></i></a>
+                                        </td>
+
                                     </tr>
                                 @endforeach
                             </tbody>

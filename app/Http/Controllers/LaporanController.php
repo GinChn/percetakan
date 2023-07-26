@@ -37,7 +37,7 @@ class LaporanController extends Controller
 
         return view('laporan.pesanan_periode', [
             'tanggal' => $tanggal,
-            'pesanan' => $pesanan
+            'pesanan' => $pesanan,
         ]);
     }
     public function pengeluaranPeriode(Request $request)
@@ -53,6 +53,7 @@ class LaporanController extends Controller
         return view('laporan.pengeluaran_periode', [
             'pengeluaran' => $pengeluaran,
             'tanggal' => $tanggal,
+
         ]);
     }
 

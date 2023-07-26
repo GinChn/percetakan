@@ -23,9 +23,19 @@ class PekerjaanController extends Controller
         return view('pekerjaan.index', compact('progresPesanan'));
     }
 
-    public function pekerjaanDetail($id)
+    public function pekerjaanDetail(Request $request, $id)
     {
+        // Mendapatkan URL sebelumnya (referer)
+        $referer = $request->headers->get('referer');
+
+        // Cek apakah URL sebelumnya mengandung '/pekerjaan'
+        $tampilUbah = false;
+        if ($referer && strpos($referer, '/pekerjaan') !== false) {
+            $tampilUbah = true;
+        }
+
         return view('pekerjaan.detail_status', [
+            'tampilUbah' => $tampilUbah,
             'data' => Pesanan::where('id_pesanan', $id)->get(),
             'detail' => DB::table('pesanan_detail')
                 ->join('barang', 'pesanan_detail.id_barang', '=', 'barang.id_barang')
