@@ -19,8 +19,13 @@
     padding: 60px !important;
 }
 
-.banner h3 {
+.banner h3,
+.banner p {
     color: #fff;
+}
+
+.banner .contact {
+    margin-bottom: 0;
 }
 
 .content-below-banner {
@@ -48,6 +53,17 @@
     display: none !important;
 }
 
+.btn-whatsapp {
+    background-color: #25D366;
+    border: none;
+    margin-bottom: 20px;
+    display: none;
+}
+
+.btn-whatsapp:hover {
+    background-color: #1b8634;
+}
+
 
 /*  responsive */
 
@@ -64,5 +80,11 @@
     }
     .show-desktop {
         display: none !important;
+    }
+    .text-banner {
+        display: none;
+    }
+    .btn-whatsapp {
+        display: block;
     }
 }

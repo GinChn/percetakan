@@ -92,26 +92,6 @@
     <!-- AdminLTE App -->
     <script src="{{ asset('assets/dist/js/adminlte.min.js') }}"></script>
 
-    {{-- @if ($errors->any())
-        <script>
-            var Toast = Swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 3000
-            });
-
-            document.addEventListener("DOMContentLoaded", function() {
-                @foreach ($errors->all() as $error)
-                    Toast.fire({
-                        icon: 'error',
-                        title: '{{ $error }}',
-                        timer: 3000
-                    });
-                @endforeach
-            });
-        </script>
-    @endif --}}
     @if (session('status'))
         <script>
             var Toast = Swal.mixin({
