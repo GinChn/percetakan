@@ -34,7 +34,7 @@
                                     <th>Total</th>
                                     <th>Pesanan</th>
                                     <th>Pembayaran</th>
-                                    @if ($nama_level == 'Administrator' || $nama_level == 'Desainer')
+                                    @if ($nama_level == 'Administrator' || $nama_level == 'Desainer' || $nama_level == 'Kasir' || $nama_level == 'Operator')
                                         <th>Aksi</th>
                                     @endif
                                 </tr>
@@ -74,7 +74,7 @@
                                             @endif
                                         </td>
                                         <td>
-                                            @if ($nama_level == 'Administrator' || ($nama_level == 'Desainer' && $item->status_pembayaran != 'Lunas'))
+                                            @if (($nama_level == 'Administrator' || $nama_level == 'Desainer') && $item->status_pembayaran != 'Lunas')
                                                 <form id="hapus-pesanan{{ $item->id_pesanan }}"
                                                     action="{{ route('pesanan.destroy', $item->id_pesanan) }}"
                                                     method="post" class="d-inline-block">

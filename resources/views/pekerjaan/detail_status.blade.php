@@ -18,22 +18,35 @@
     <div class="container-fluid">
         <div class="row mb-4">
             <div class="col-12">
-                @foreach ($data as $item)
-                    @if ($item->status_pesanan == 'Selesai')
-                        @if ($nama_level == 'Administrator' || $nama_level == 'Kasir')
-                            <form method="POST" action="{{ route('pekerjaan.update_status_diambil_id', $item->id_pesanan) }}"
-                                style="display: inline;">
-                                @csrf
-                                <button type="submit" class="btn btn-sm btn-outline-info float-right">Tandai Sudah
-                                    Diambil</button>
-                            </form>
-                        @else
-                            <span class="badge badge-secondary float-right">Pesanan Belum Diambil</span>
-                        @endif
-                    @elseif($item->status_pesanan == 'Sudah Diambil')
-                        <span class="badge badge-info float-right">Sudah Diambil</span>
-                    @endif
-                @endforeach
+                <div class="container mt-4">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <!-- Letakkan tombol "Kembali" di sini -->
+                            <a href="javascript:window.history.back()" class="btn btn-sm btn-secondary">Kembali</a>
+                        </div>
+                        <div class="col-sm-6">
+                            <!-- Letakkan elemen lain di sini -->
+                            @foreach ($data as $item)
+                                @if ($item->status_pesanan == 'Selesai')
+                                    @if ($nama_level == 'Administrator' || $nama_level == 'Kasir')
+                                        <form method="POST"
+                                            action="{{ route('pekerjaan.update_status_diambil_id', $item->id_pesanan) }}"
+                                            style="display: inline;">
+                                            @csrf
+                                            <button type="submit" class="btn btn-sm btn-outline-info float-right">Tandai
+                                                Sudah
+                                                Diambil</button>
+                                        </form>
+                                    @else
+                                        <span class="badge badge-secondary float-right">Pesanan Belum Diambil</span>
+                                    @endif
+                                @elseif($item->status_pesanan == 'Sudah Diambil')
+                                    <span class="badge badge-info float-right">Sudah Diambil</span>
+                                @endif
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="invoice p-3 mb-3 card-outline card-secondary">

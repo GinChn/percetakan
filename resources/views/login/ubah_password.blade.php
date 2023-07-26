@@ -12,6 +12,10 @@
             width: 30%;
         }
 
+        .title h3 {
+            padding: 20px 0 10px 0;
+        }
+
         .reset-wrapper p {
             text-align: center
         }
@@ -43,6 +47,17 @@
         form input {
             margin-bottom: 10px;
         }
+
+        @media only screen and (max-width: 768px) {
+            .title h3 {
+                padding: 40px 0 10px 0;
+            }
+
+            /* For mobile phones: */
+            .reset-container {
+                width: 80%;
+            }
+        }
     </style>
 
 </head>
@@ -57,7 +72,7 @@
                 <div class="title">
                     <h3>Ganti Password</h3>
                 </div>
-                <p>Masukkan Password Baru</p>
+                <p>Buat Password Baru</p>
 
                 <div class="form-reset">
                     <form action="{{ route('reset.password.post') }}" method="post">

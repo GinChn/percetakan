@@ -102,7 +102,7 @@
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-gradient-info">
                     <div class="inner">
-                        <h3>{{ $pekerjaan_selesai }}</h3>
+                        <h3>{{ $pekerjaan_dikerjakan }}</h3>
                         <p>Pesanan Dikerjakan</p>
                     </div>
                     <div class="icon">
@@ -115,7 +115,7 @@
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-gradient-success">
                     <div class="inner">
-                        <h3>{{ $pekerjaan_dikerjakan }}</h3>
+                        <h3>{{ $pekerjaan_selesai }}</h3>
                         <p>Pesanan Selesai</p>
                     </div>
                     <div class="icon">
