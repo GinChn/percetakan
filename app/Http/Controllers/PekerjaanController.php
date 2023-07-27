@@ -70,7 +70,6 @@ class PekerjaanController extends Controller
 
             return back()->with('status', 'Berhasil update status item pesanan!');
         } catch (ModelNotFoundException $exception) {
-            // Handle the case when the record with the specified $id is not found
             return back()->withErrors('Record not found.');
         }
     }
@@ -91,7 +90,7 @@ class PekerjaanController extends Controller
         return back()->with('status', 'Berhasil update status pesanan!');
     }
 
-    public function updateStatusAll2(Request $request)
+    public function updateStatusAll2(Request $request) // update status_detail sekaligus ke Sudah Ada Desain
     {
         $ids = $request->input('ids');
         PesananDetail::whereIn('id_pesanan_detail', $ids)
@@ -99,7 +98,7 @@ class PekerjaanController extends Controller
 
         return response()->json(['message' => 'Data updated successfully']);
     }
-    public function updateStatusAll3(Request $request)
+    public function updateStatusAll3(Request $request) // update status_detail sekaligus ke Dikerjakan
     {
         $ids = $request->input('ids');
         $operator = auth()->user()->nama;
@@ -111,7 +110,8 @@ class PekerjaanController extends Controller
 
         return response()->json(['message' => 'Data updated successfully']);
     }
-    public function updateStatusAll4(Request $request)
+
+    public function updateStatusAll4(Request $request) // update status_detail sekaligus ke Selesai
     {
         $ids = $request->input('ids');
         PesananDetail::whereIn('id_pesanan_detail', $ids)
@@ -120,10 +120,8 @@ class PekerjaanController extends Controller
         return response()->json(['message' => 'Data updated successfully']);
     }
 
-    public function belumAdaDesain()
+    public function belumAdaDesain() // tampil semua item pesanan detail Belum Ada Desain
     {
-        // $data = Pesanan::with('pesanan_detail.finishing')->get();
-
         $data = PesananDetail::select('*')
             ->join('pesanan', 'pesanan_detail.id_pesanan', '=', 'pesanan.id_pesanan')
             ->join('finishing', 'pesanan_detail.id_finishing', '=', 'finishing.id_finishing')
@@ -133,7 +131,7 @@ class PekerjaanController extends Controller
         return view('pekerjaan.belum_ada_desain', ['data' => $data]);
     }
 
-    public function sudahAdaDesain()
+    public function sudahAdaDesain() // tampil semua item pesanan detail Sudah Ada Desain
     {
         $data = PesananDetail::select('*')
             ->join('pesanan', 'pesanan_detail.id_pesanan', '=', 'pesanan.id_pesanan')
@@ -143,7 +141,7 @@ class PekerjaanController extends Controller
             ->get();
         return view('pekerjaan.sudah_ada_desain', ['data' => $data]);
     }
-    public function dikerjakan()
+    public function dikerjakan() // tampil semua item pesanan detail status Dikerjakan
     {
         $data = PesananDetail::select('*')
             ->join('pesanan', 'pesanan_detail.id_pesanan', '=', 'pesanan.id_pesanan')
@@ -153,13 +151,26 @@ class PekerjaanController extends Controller
             ->get();
         return view('pekerjaan.dikerjakan', ['data' => $data]);
     }
-    public function selesai()
+
+    public function selesaiStatusDetail() // tampil semua 
+    {
+        $data = PesananDetail::select('*')
+            ->join('pesanan', 'pesanan_detail.id_pesanan', '=', 'pesanan.id_pesanan')
+            ->join('finishing', 'pesanan_detail.id_finishing', '=', 'finishing.id_finishing')
+            ->join('barang', 'pesanan_detail.id_barang', '=', 'barang.id_barang')
+            ->where('status_detail', 'Selesai')
+            ->get();
+        return view('pekerjaan.selesai_status_detail', ['data' => $data]);
+    }
+
+
+    public function selesaiPesanan() // tampil semua pesanan dengan status Selesai
     {
         $pesananSelesai = Pesanan::where('status_pesanan', 'Selesai')->get();
-        // dd($pesananSelesai);
         return view('pekerjaan.selesai', ['data' => $pesananSelesai]);
     }
-    public function sudahDiambil()
+
+    public function sudahDiambil() // tampil semua pesanan dengan status Selesai
     {
         $data = Pesanan::where('status_pesanan', 'Sudah Diambil')->get();
         return view('pekerjaan.sudah_diambil', ['data' => $data]);

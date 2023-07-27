@@ -1,6 +1,24 @@
 @extends('layout')
 
 @section('content')
+    @php
+        $data_laporan = session('data_laporan');
+        $data_input = session('data_input');
+        
+        // Cek apakah data_laporan kosong
+        if (empty($data_laporan)) {
+            // Atur nilai default atau kosongkan variabel jika sesuai dengan kebutuhan
+            $data_laporan = []; // Contoh: set data_laporan sebagai array kosong
+        }
+        
+        // Cek apakah data_input kosong
+        if (empty($data_input)) {
+            // Atur nilai default atau kosongkan variabel jika sesuai dengan kebutuhan
+            $data_input = []; // Contoh: set data_input sebagai array kosong
+        }
+    @endphp
+
+
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
@@ -21,7 +39,6 @@
                             <div class="col-md-4">
 
                                 <div class="form-group d-flex align-items-center" style="height:100%">
-                                    {{-- <label for="dropdownInput">Jenis Laporan</label> --}}
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <label class="input-group-text" for="pilihLaporan">Laporan</label>
@@ -29,26 +46,29 @@
                                         <select class="custom-select" id="pilihLaporan" name="jenis_laporan">
                                             <option value="">--Pilih Jenis Laporan--</option>
                                             <option value="harian"
-                                                {{ isset($data_input['jenis_laporan']) && $data_input['jenis_laporan'] == 'harian' ? 'selected' : '' }}>
+                                                {{ session()->has('data_input') && session('data_input')['jenis_laporan'] === 'harian' ? 'selected' : '' }}>
                                                 Harian
                                             </option>
                                             <option value="bulanan"
-                                                {{ isset($data_input['jenis_laporan']) && $data_input['jenis_laporan'] == 'bulanan' ? 'selected' : '' }}>
-                                                Periode</option>
+                                                {{ session()->has('data_input') && session('data_input')['jenis_laporan'] === 'bulanan' ? 'selected' : '' }}>
+                                                Periode
+                                            </option>
                                         </select>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-5 pick_harian" {!! isset($data_input['jenis_laporan']) && $data_input['jenis_laporan'] == 'harian'
+
+
+                            <div class="col-md-5 pick_harian" {!! session()->has('data_input') && session('data_input')['jenis_laporan'] === 'harian'
                                 ? ''
                                 : 'style="display: none;"' !!}>
                                 <div class="form-group d-flex align-items-center" style="height:100%">
                                     <input type="date" class="form-control" id="dateInput" placeholder="Select date"
                                         name="tanggal_laporan"
-                                        value="{{ isset($data_input['tanggal_laporan']) ? $data_input['tanggal_laporan'] : '' }}">
+                                        value="{{ session()->has('data_input') ? session('data_input')['tanggal_laporan'] : '' }}">
                                 </div>
                             </div>
-                            <div class="col-md-5 pick_bulanan" {!! isset($data_input['jenis_laporan']) && $data_input['jenis_laporan'] == 'bulanan'
+                            <div class="col-md-5 pick_bulanan" {!! session()->has('data_input') && session('data_input')['jenis_laporan'] === 'bulanan'
                                 ? ''
                                 : 'style="display: none;"' !!}>
                                 <div class="row">
@@ -56,14 +76,14 @@
                                         <div class="form-group d-flex align-items-center" style="height:100%">
                                             <input type="date" class="form-control" id="dateInput"
                                                 placeholder="Select date" name="tanggal_laporan_awal"
-                                                value="{{ isset($data_input['tanggal_laporan_awal']) ? $data_input['tanggal_laporan_awal'] : '' }}">
+                                                value="{{ session()->has('data_input') ? session('data_input')['tanggal_laporan_awal'] : '' }}">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group d-flex align-items-center" style="height:100%">
                                             <input type="date" class="form-control" id="dateInput"
                                                 placeholder="Select date" name="tanggal_laporan_akhir"
-                                                value="{{ isset($data_input['tanggal_laporan_akhir']) ? $data_input['tanggal_laporan_akhir'] : '' }}">
+                                                value="{{ session()->has('data_input') ? session('data_input')['tanggal_laporan_akhir'] : '' }}">
                                         </div>
                                     </div>
                                 </div>
@@ -71,34 +91,34 @@
                             <div class="col-md-1">
                                 <div class="button-tgl d-flex align-items-center justify-content-end" style="height:100%;">
                                     <button type="submit" class="btn btn-primary tombol_cek shadow-none btn-sm"
-                                        style="width:100%; text-align:center; {!! isset($data_input['jenis_laporan']) ? '' : 'display: none;"' !!}">Cek</button>
+                                        style="width:100%; text-align:center; {!! session()->has('data_input') ? '' : 'display: none;"' !!}">Cek</button>
                                 </div>
                             </div>
                             <div class="col-md-1">
                                 <div class="d-flex align-items-center justify-content-end" style="height:100%;">
-                                    @if (isset($data_input['jenis_laporan']))
-                                        <a href="{{ route('export.excel', ['jenis_laporan' => $data_input['jenis_laporan'], 'tanggal_laporan' => $data_input['tanggal_laporan'], 'tanggal_laporan_awal' => $data_input['tanggal_laporan_awal'], 'tanggal_laporan_akhir' => $data_input['tanggal_laporan_akhir']]) }}"
+                                    @if (session()->has('data_input') && session('data_input')['jenis_laporan'])
+                                        <a href="{{ route('export.excel', ['jenis_laporan' => session('data_input')['jenis_laporan'], 'tanggal_laporan' => session('data_input')['tanggal_laporan'], 'tanggal_laporan_awal' => session('data_input')['tanggal_laporan_awal'], 'tanggal_laporan_akhir' => session('data_input')['tanggal_laporan_akhir']]) }}"
                                             class="btn-sm btn-success export-excel"
-                                            style="width:100%; text-align:center; {!! isset($data_input['jenis_laporan']) ? '' : 'display: none;"' !!}"><i
+                                            style="width:100%; text-align:center; {!! session()->has('data_input') ? '' : 'display: none;"' !!}"><i
                                                 class="fa fa-download sm" aria-hidden="true"></i><span
                                                 class="ml-1">XLS</span></a>
                                     @endif
-
-
                                 </div>
                             </div>
                             <div class="col-md-1">
                                 <div class="d-flex align-items-center justify-content-end" style="height:100%;">
-                                    @if (isset($data_input['jenis_laporan']))
-                                        <a href="{{ route('export.pdf', ['jenis_laporan' => $data_input['jenis_laporan'], 'tanggal_laporan' => $data_input['tanggal_laporan'], 'tanggal_laporan_awal' => $data_input['tanggal_laporan_awal'], 'tanggal_laporan_akhir' => $data_input['tanggal_laporan_akhir']]) }}"
+                                    @if (session()->has('data_input') && session('data_input')['jenis_laporan'])
+                                        <a href="{{ route('export.pdf', ['jenis_laporan' => session('data_input')['jenis_laporan'], 'tanggal_laporan' => session('data_input')['tanggal_laporan'], 'tanggal_laporan_awal' => session('data_input')['tanggal_laporan_awal'], 'tanggal_laporan_akhir' => session('data_input')['tanggal_laporan_akhir']]) }}"
                                             class="btn-sm btn-secondary export-pdf"
-                                            style="width:100%; text-align:center; {!! isset($data_input['jenis_laporan']) ? '' : 'display: none;"' !!}"><i
+                                            style="width:100%; text-align:center; {!! session()->has('data_input') ? '' : 'display: none;"' !!}"><i
                                                 class="fa fa-download sm" aria-hidden="true"></i><span
                                                 class="ml-1">PDF</span></a>
                                     @endif
-
                                 </div>
                             </div>
+
+
+
                         </div>
                     </form>
                 </div>
@@ -107,7 +127,7 @@
     </div>
     {{-- </div> --}}
 
-    @if (isset($data_input))
+    @if ($data_input)
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
@@ -136,7 +156,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @if (isset($data_laporan['data_masuk']))
+                                    @if ($data_laporan['data_masuk'])
                                         @foreach ($data_laporan['data_masuk'] as $index => $masuk)
                                             <tr>
                                                 <td>{{ $index + 1 }}</td>
@@ -144,7 +164,7 @@
                                                 <td>{{ $masuk->nama_pelanggan }}</td>
                                                 <td class="total-masuk">{{ format_uang($masuk->total) }}</td>
                                                 <td>
-                                                    <a href="pekerjaan/{{ $masuk->id_pesanan }}/detail"
+                                                    <a href="laporan/{{ $masuk->id_pesanan }}"
                                                         class="btn-sm btn-primary">Detail</a>
                                                 </td>
                                             </tr>
@@ -163,7 +183,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @if (isset($data_laporan['data_masuk']))
+                                    @if ($data_laporan['data_masuk'])
                                         @foreach ($data_laporan['data_masuk'] as $index => $masuk)
                                             <tr>
                                                 <td>{{ $index + 1 }}</td>
@@ -221,7 +241,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @if (isset($data_laporan['data_keluar']))
+                                    @if ($data_laporan['data_keluar'])
                                         @foreach ($data_laporan['data_keluar'] as $index => $keluar)
                                             <tr>
                                                 <td>{{ $index + 1 }}</td>
@@ -246,7 +266,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @if (isset($data_laporan['data_keluar']))
+                                    @if ($data_laporan['data_keluar'])
                                         @foreach ($data_laporan['data_keluar'] as $index => $keluar)
                                             <tr>
                                                 <td>{{ $index + 1 }}</td>
@@ -337,7 +357,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @if (isset($data_laporan['total_bahan']))
+                                    @if ($data_laporan['total_bahan'])
                                         @foreach ($data_laporan['total_bahan'] as $index => $item)
                                             <tr>
                                                 <td>{{ $index + 1 }}</td>

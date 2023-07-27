@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Reset Password</title>
+    <link rel="icon" sizes="16x16" href="{{ asset('assets/dist/img/logo.png') }}" />
     <link rel="stylesheet" href="{{ asset('assets/dist/css/custom/reset-password.css') }}">
 </head>
 

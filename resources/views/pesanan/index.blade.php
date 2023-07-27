@@ -74,10 +74,13 @@
                                             @endif
                                         </td>
                                         <td>
+                                            <a href="/pesanan/{{ $item->id_pesanan }}"
+                                                class="btn btn-default btn-sm d-inline-block"><i
+                                                    class="fas fa-list"></i></a>
                                             @if (($nama_level == 'Administrator' || $nama_level == 'Desainer') && $item->status_pembayaran != 'Lunas')
                                                 <form id="hapus-pesanan{{ $item->id_pesanan }}"
                                                     action="{{ route('pesanan.destroy', $item->id_pesanan) }}"
-                                                    method="post" class="d-inline-block">
+                                                    method="post" class="d-inline-block ml-2">
                                                     @csrf
                                                     @method('delete')
                                                     <button type="submit" class="btn btn-sm btn-danger border-0 delete-btn"
@@ -86,8 +89,6 @@
                                                     </button>
                                                 </form>
                                             @endif
-                                            <a href="/pekerjaan/{{ $item->id_pesanan }}/detail"
-                                                class="btn btn-default btn-sm"><i class="fas fa-list"></i></a>
                                         </td>
 
                                     </tr>

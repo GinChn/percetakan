@@ -7,6 +7,7 @@ use App\Models\Pesanan;
 use Illuminate\Http\Request;
 use App\Models\PesananDetail;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\DB;
 
 class PesananController extends Controller
 {
@@ -81,9 +82,26 @@ class PesananController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        //
+        // Mendapatkan URL sebelumnya (referer)
+        $referer = $request->headers->get('referer');
+
+        // Cek apakah URL sebelumnya mengandung '/pekerjaan'
+        $tampilUbah = false;
+        if ($referer && strpos($referer, '/pekerjaan') !== false) {
+            $tampilUbah = true;
+        }
+
+        return view('pekerjaan.detail_status', [
+            'tampilUbah' => $tampilUbah,
+            'data' => Pesanan::where('id_pesanan', $id)->get(),
+            'detail' => DB::table('pesanan_detail')
+                ->join('barang', 'pesanan_detail.id_barang', '=', 'barang.id_barang')
+                ->join('finishing', 'pesanan_detail.id_finishing', '=', 'finishing.id_finishing')
+                ->where('id_pesanan', $id)
+                ->get()
+        ]);
     }
 
     /**

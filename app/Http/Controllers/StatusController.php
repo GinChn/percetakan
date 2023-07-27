@@ -16,10 +16,10 @@ class StatusController extends Controller
      */
     public function index()
     {
-        $startDate = Carbon::now()->subDays(6);
-
-        $pesanan = Pesanan::where('created_at', '>=', $startDate)
-            ->where('status_pesanan', '<>', 'Sudah Diambil')
+        // $startDate = Carbon::now()->subDays(6);
+        // where('created_at', '>=', $startDate)
+        $errorMessage = null;
+        $pesanan = Pesanan::where('status_pesanan', '<>', 'Sudah Diambil')
             ->orderBy('status_pesanan', 'desc')
             ->orderBy('created_at', 'asc')
             ->orderBy('updated_at', 'desc')
@@ -28,26 +28,38 @@ class StatusController extends Controller
         return view('cek_pesanan.index', ['pesanan' => $pesanan]);
     }
 
-    public function cekStatusDetail($id)
+    public function show($no_nota)
     {
+        try {
+            $data = Pesanan::where('no_nota', $no_nota)->firstOrFail();
 
-        return view('cek_pesanan.detail', [
-            'data' => Pesanan::where('id_pesanan', $id)->get(),
-            'detail' => DB::table('pesanan_detail')
+            $detail = DB::table('pesanan_detail')
                 ->join('barang', 'pesanan_detail.id_barang', '=', 'barang.id_barang')
                 ->join('finishing', 'pesanan_detail.id_finishing', '=', 'finishing.id_finishing')
-                ->where('id_pesanan', $id)
-                ->get()
-        ]);
-        // $data = Pesanan::where('id_pesanan', $id)->get();
-        // $detail = DB::table('pesanan_detail')
-        //     ->join('barang', 'pesanan_detail.id_barang', '=', 'barang.id_barang')
-        //     ->join('finishing', 'pesanan_detail.id_finishing', '=', 'finishing.id_finishing')
-        //     ->where('id_pesanan', $id)
-        //     ->get();
+                ->where('id_pesanan', $data->id_pesanan)
+                ->get();
 
-        // dd($data, $detail);
+            return view('cek_pesanan.detail', [
+                'data' => collect([$data]),
+                'detail' => $detail
+            ]);
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $exception) {
+            $errorMessage = 'Pesanan tidak ditemukan';
+            $pesanan = Pesanan::where('status_pesanan', '<>', 'Sudah Diambil')
+                ->orderBy('status_pesanan', 'desc')
+                ->orderBy('created_at', 'asc')
+                ->orderBy('updated_at', 'desc')
+                ->get();
+
+            return view('cek_pesanan.index', [
+                'errorMessage' => $errorMessage,
+                'pesanan' => $pesanan
+            ]);
+        }
     }
+
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -76,10 +88,7 @@ class StatusController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
-    }
+
 
     /**
      * Show the form for editing the specified resource.

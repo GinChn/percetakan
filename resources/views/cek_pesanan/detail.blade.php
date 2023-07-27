@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>AAL Printing | Detail Status</title>
+    <link rel="icon" sizes="16x16" href="{{ asset('assets/dist/img/logo.png') }}" />
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -21,9 +22,6 @@
     <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
     <!-- Sweet Alert -->
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.min.css">
-    <!-- Select2 -->
-    <link rel="stylesheet" href="{{ asset('assets/plugins/select2/css/select2.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('assets/dist/css/custom/cek-pesanan.css') }}">
     <style>
@@ -104,11 +102,6 @@
                                     <td>: <b>{{ tanggal_indonesia($item->created_at) }}</b></td>
                                 @endforeach
                             </tr>
-                        </table>
-                    </div>
-
-                    <div class="col-sm-4">
-                        <table>
                             <tr>
                                 <td>Pelanggan</td>
                                 @foreach ($data as $item)
@@ -116,14 +109,10 @@
                                 @endforeach
 
                             </tr>
-                            <tr>
-                                <td>No Telp</td>
-                                @foreach ($data as $item)
-                                    <td>: <b>{{ $item->no_telp }}</b></td>
-                                @endforeach
-                            </tr>
                         </table>
                     </div>
+
+
                 </div>
                 <div class="row">
                     <div class="col-12 table-responsive">
@@ -217,6 +206,7 @@
             });
         });
     </script>
+
 </body>
 
 </html>

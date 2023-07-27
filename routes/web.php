@@ -56,7 +56,6 @@ Route::group(['middleware' => 'guest'], function () {
 });
 
 Route::resource('/', StatusController::class);
-Route::get('/cek-pesanan/{id}/detail', [StatusController::class, 'cekStatusDetail']);
 Route::resource('/cek-pesanan', StatusController::class);
 Route::get('/login', [LoginController::class, 'index'])->name('login')->middleware('guest');
 Route::post('/login', [LoginController::class, 'login']);
@@ -81,8 +80,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/pekerjaan/belum-ada-desain', [PekerjaanController::class, 'belumAdaDesain']);
     Route::get('/pekerjaan/sudah-ada-desain', [PekerjaanController::class, 'sudahAdaDesain']);
     Route::get('/pekerjaan/dikerjakan', [PekerjaanController::class, 'dikerjakan']);
-    Route::get('/pekerjaan/selesai', [PekerjaanController::class, 'selesai']);
-    Route::get('/pekerjaan/sudah-diambil', [PekerjaanController::class, 'sudahDiambil']);
+    Route::get('/pekerjaan/selesai', [PekerjaanController::class, 'selesaiStatusDetail']);
+    Route::get('/pekerjaan/pesanan-selesai', [PekerjaanController::class, 'selesaiPesanan']);
+    Route::get('/pekerjaan/pesanan-sudah-diambil', [PekerjaanController::class, 'sudahDiambil']);
     Route::resource('/pekerjaan', PekerjaanController::class);
 
     Route::middleware('web')->group(function () {
@@ -102,7 +102,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/laporan/pengeluaran-periode', [LaporanController::class, 'pengeluaranPeriode'])->name('pengeluaran_periode');
         Route::get('/laporan/pesanan-periode', [LaporanController::class, 'pesananPeriode'])->name('pesanan_periode');
         Route::resource('/laporan', LaporanController::class);
-        Route::post('/laporan', [LaporanController::class, 'handleForm'])->name('submit_tanggal');
+        Route::post('/laporan', [LaporanController::class, 'cekLaporan'])->name('submit_tanggal');
         Route::get('/export-excel', [LaporanController::class, 'exportExcel'])->name('export.excel');
         Route::get('/export-pdf', [LaporanController::class, 'exportPdf'])->name('export.pdf');
     });

@@ -5,7 +5,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Status Pekerjaan Pesanan</h1>
+                    <h4 class="m-0">Status Pekerjaan Pesanan</h4>
                 </div>
             </div>
         </div>
@@ -24,7 +24,7 @@
                                     <th>Nota</th>
                                     <th>Tanggal</th>
                                     <th>Nama Pelanggan</th>
-                                    <th>Status Pekerjaan</th>
+                                    <th>Progres Pekerjaan</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>

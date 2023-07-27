@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>AAL Printing |</title>
-
+    <link rel="icon" sizes="16x16" href="{{ asset('assets/dist/img/logo.png') }}" />
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -117,6 +117,17 @@
                                 </a>
                             </li>
                         @endif
+                        @if ($nama_level == 'Administrator' || $nama_level == 'Kasir')
+                            <li class="nav-item">
+                                <a href="/pengeluaran"
+                                    class="nav-link {{ Request::is('pengeluaran*') ? 'active' : '' }}">
+                                    <i class="nav-icon fas fa-file-export"></i>
+                                    <p>
+                                        Pengeluaran
+                                    </p>
+                                </a>
+                            </li>
+                        @endif
                         @if (
                             $nama_level == 'Administrator' ||
                                 $nama_level == 'Kasir' ||
@@ -124,11 +135,12 @@
                                 $nama_level == 'Operator' ||
                                 $nama_level == 'Manajer')
                             <li class="nav-header">PEKERJAAN</li>
-                            <li class="nav-item {{ Request::is('pekerjaan*') ? 'menu-open' : '' }}">
+                            <li
+                                class="nav-item {{ Request::is('pekerjaan*') && !Request::is('pekerjaan/pesanan*') ? 'menu-open' : '' }}">
                                 <a href="#" class="nav-link">
                                     <i class="nav-icon fas fa-business-time"></i>
                                     <p>
-                                        Progres Pesanan
+                                        Status Pekerjaan
                                         <i class="right fas fa-angle-left"></i>
                                     </p>
                                 </a>
@@ -169,27 +181,37 @@
                                             <p>Selesai</p>
                                         </a>
                                     </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item {{ Request::is('pekerjaan/pesanan*') ? 'menu-open' : '' }}">
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon fas fa-business-time"></i>
+                                    <p>
+                                        Status Pesanan
+                                        <i class="right fas fa-angle-left"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
                                     <li class="nav-item">
-                                        <a href="/pekerjaan/sudah-diambil"
-                                            class="nav-link {{ Request::is('pekerjaan/sudah-diambil') ? 'active' : '' }}">
+                                        <a href="/pekerjaan/pesanan-selesai"
+                                            class="nav-link {{ Request::is('pekerjaan/pesanan-selesai') ? 'active' : '' }}">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Selesai</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="/pekerjaan/pesanan-sudah-diambil"
+                                            class="nav-link {{ Request::is('pekerjaan/pesanan-sudah-diambil') ? 'active' : '' }}">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Sudah Diambil</p>
                                         </a>
                                     </li>
                                 </ul>
                             </li>
+                            {{-- </ul>
+                    </li> --}}
                         @endif
-                        @if ($nama_level == 'Administrator' || $nama_level == 'Kasir')
-                            <li class="nav-item">
-                                <a href="/pengeluaran"
-                                    class="nav-link {{ Request::is('pengeluaran*') ? 'active' : '' }}">
-                                    <i class="nav-icon fas fa-file-export"></i>
-                                    <p>
-                                        Pengeluaran
-                                    </p>
-                                </a>
-                            </li>
-                        @endif
+
                         @if ($nama_level == 'Administrator' || $nama_level == 'Manajer' || $nama_level == 'Kasir')
                             <li class="nav-header">REPORT</li>
                             <li class="nav-item">

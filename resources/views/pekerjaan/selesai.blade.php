@@ -9,7 +9,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Pesanan Selesai</h1>
+                    <h4 class="m-0">Pesanan Selesai</h4>
                 </div>
             </div>
         </div>

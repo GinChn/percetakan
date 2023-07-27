@@ -9,7 +9,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h4 class="m-0">Detail Status Pesanan</h4>
+                    <h4 class="m-0">Detail Pesanan</h4>
                 </div>
             </div>
         </div>
@@ -20,11 +20,7 @@
             <div class="col-12">
                 <div class="container mt-4">
                     <div class="row">
-                        <div class="col-sm-6">
-                            <!-- Letakkan tombol "Kembali" di sini -->
-                            <a href="javascript:window.history.back()" class="btn btn-sm btn-secondary">Kembali</a>
-                        </div>
-                        <div class="col-sm-6">
+                        <div class="col">
                             <!-- Letakkan elemen lain di sini -->
                             @foreach ($data as $item)
                                 @if ($item->status_pesanan == 'Selesai')
@@ -272,17 +268,12 @@
                     </table>
                 </div>
             </div>
-
-            <div class="row">
-                <div class="col-6"></div>
-                <div class="col-6">
-                    <div class="table-responsive">
-                        <table class="table">
-
-                        </table>
-                    </div>
+            <div class="row my-2 float">
+                <div class="col-12 ">
+                    <a href="javascript:window.history.back()" class="btn btn-sm btn-danger float-right">Kembali</a>
                 </div>
             </div>
+
 
             {{-- <div class="row">
                 <div class="col-12">

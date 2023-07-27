@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>AAL Printing | Cek Pesanan</title>
+    <link rel="icon" sizes="16x16" href="{{ asset('assets/dist/img/logo.png') }}" />
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -96,7 +97,7 @@
                                                 </span>
                                             </td>
                                             <td>
-                                                <a href="/cek-pesanan/{{ $item->id_pesanan }}/detail"
+                                                <a href="/cek-pesanan/{{ $item->no_nota }}"
                                                     class="btn btn-sm btn-primary">Detail</a>
                                             </td>
                                         </tr>
@@ -124,10 +125,6 @@
     <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <!-- AdminLTE App -->
     <script src="{{ asset('assets/dist/js/adminlte.min.js') }}"></script>
-    <!-- Select2 -->
-    <script src="{{ asset('assets/plugins/select2/js/select2.full.min.js') }}"></script>
-    <!-- ChartJS -->
-    <script src="{{ asset('assets/plugins/chart.js/Chart.min.js') }}"></script>
     <!-- DataTables  & Plugins -->
     <script src="{{ asset('assets/plugins/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
@@ -162,6 +159,24 @@
 
         });
     </script>
+    <script>
+        @if (isset($errorMessage))
+            var Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+            });
+            document.addEventListener("DOMContentLoaded", function() {
+                Toast.fire({
+                    icon: 'error',
+                    title: '{{ $errorMessage }}',
+                    timer: 3000
+                });
+            });
+        @endif
+    </script>
+
 </body>
 
 </html>

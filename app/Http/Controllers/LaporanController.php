@@ -11,6 +11,8 @@ use App\Exports\LaporanExportView;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Session;
 
 class LaporanController extends Controller
 {
@@ -57,17 +59,69 @@ class LaporanController extends Controller
         ]);
     }
 
-    public function handleForm(Request $request)
+    // public function cekLaporan(Request $request)
+    // {
+    //     // Validasi inputan sebelum diproses dengan pesan error kustom
+    //     $validator = Validator::make($request->all(), [
+    //         'tanggal_laporan' => 'required_if:jenis_laporan,harian',
+    //         'tanggal_laporan_awal' => 'required_if:jenis_laporan,bulanan',
+    //         'tanggal_laporan_akhir' => 'required_if:jenis_laporan,bulanan',
+    //     ], [
+    //         'tanggal_laporan.required_if' => 'Tanggal laporan harus diisi untuk laporan harian.',
+    //         'tanggal_laporan_awal.required_if' => 'Tanggal laporan awal harus diisi untuk laporan bulanan.',
+    //         'tanggal_laporan_akhir.required_if' => 'Tanggal laporan akhir harus diisi untuk laporan bulanan.',
+    //     ]);
+
+    //     // Jika validasi gagal, kembalikan ke halaman sebelumnya dengan pesan error
+    //     if ($validator->fails()) {
+    //         Session::flash('gagal-export', $validator->errors()->first()); // Mengatur pesan error pada Session
+    //         return redirect()->back()->withInput();
+    //     }
+    //     // ambil semua inputan
+    //     $data_input_laporan = $request->all();
+    //     $jenis_laporan = $data_input_laporan['jenis_laporan'];
+
+    //     $data_laporan = $this->getQueryData($jenis_laporan, $data_input_laporan);
+    //     session()->flash('data_laporan', $data_laporan);
+    //     session()->flash('data_input', $data_input_laporan);
+
+    //     // kirim ke view data laporan yg sudah didapat beserta data inputan
+    //     // return view('laporan.index', ['data_laporan' => $data_laporan, 'data_input' => $data_input_laporan]);
+    //     return redirect()->route('laporan.index')->with('data_laporan', $data_laporan)->with('data_input', $data_input_laporan);
+    // }
+
+    public function cekLaporan(Request $request)
     {
-        // ambil semua inputan
+        // Validasi inputan sebelum diproses dengan pesan error kustom
+        $validator = Validator::make($request->all(), [
+            'tanggal_laporan' => 'required_if:jenis_laporan,harian',
+            'tanggal_laporan_awal' => 'required_if:jenis_laporan,bulanan',
+            'tanggal_laporan_akhir' => 'required_if:jenis_laporan,bulanan',
+        ], [
+            'tanggal_laporan.required_if' => 'Tanggal laporan harus diisi untuk laporan harian.',
+            'tanggal_laporan_awal.required_if' => 'Tanggal laporan awal harus diisi untuk laporan bulanan.',
+            'tanggal_laporan_akhir.required_if' => 'Tanggal laporan akhir harus diisi untuk laporan bulanan.',
+        ]);
+
+        // Jika validasi gagal, kembalikan ke halaman sebelumnya dengan pesan error
+        if ($validator->fails()) {
+            Session::flash('gagal-export', $validator->errors()->first()); // Mengatur pesan error pada Session
+            return redirect()->back()->withInput();
+        }
+
+        // Ambil semua inputan
         $data_input_laporan = $request->all();
         $jenis_laporan = $data_input_laporan['jenis_laporan'];
 
         $data_laporan = $this->getQueryData($jenis_laporan, $data_input_laporan);
 
-        // kirim ke view data laporan yg sudah didapat beserta data inputan
-        return view('laporan.index', ['data_laporan' => $data_laporan, 'data_input' => $data_input_laporan]);
+        // Simpan data dalam session dan redirect
+        return redirect()->route('laporan.index')->with([
+            'data_laporan' => $data_laporan,
+            'data_input' => $data_input_laporan
+        ]);
     }
+
 
     public function exportExcel(Request $request)
     {
@@ -247,6 +301,29 @@ class LaporanController extends Controller
         return $nama_file;
     }
 
+    public function show(Request $request, $id)
+    {
+        // Mendapatkan URL sebelumnya (referer)
+        $referer = $request->headers->get('referer');
+
+        // Cek apakah URL sebelumnya mengandung '/pekerjaan'
+        $tampilUbah = false;
+        if ($referer && strpos($referer, '/pekerjaan') !== false) {
+            $tampilUbah = true;
+        }
+
+        return view('pekerjaan.detail_status', [
+            'tampilUbah' => $tampilUbah,
+            'data' => Pesanan::where('id_pesanan', $id)->get(),
+            'detail' => DB::table('pesanan_detail')
+                ->join('barang', 'pesanan_detail.id_barang', '=', 'barang.id_barang')
+                ->join('finishing', 'pesanan_detail.id_finishing', '=', 'finishing.id_finishing')
+                ->where('id_pesanan', $id)
+                ->get()
+        ]);
+    }
+
+
     /**
      * Show the form for creating a new resource.
      *
@@ -274,10 +351,7 @@ class LaporanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
-    }
+
 
     /**
      * Show the form for editing the specified resource.
