@@ -40,6 +40,12 @@
                                 @endforeach
                             </tbody>
                         </table>
+                        <div class="row mt-3">
+                            <div class="col-12 ">
+                                <a href="javascript:window.history.back()"
+                                    class="btn btn-sm btn-danger float-right">Kembali</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
