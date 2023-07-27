@@ -16,7 +16,6 @@
         <div class="row">
             <div class="col-12">
                 <div class="card">
-
                     <div class="card-body">
                         <table id="table2" class="table table-bordered table-striped">
                             <thead>
@@ -53,17 +52,26 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <a href="../pekerjaan/{{ $item->id_pesanan }}/detail"
+                                            <a href="../pesanan/{{ $item->id_pesanan }}"
                                                 class="btn-sm btn-primary">Detail</a>
                                         </td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
+                        <div class="row mt-3">
+                            <div class="col-12 ">
+                                <a href="javascript:window.history.back()"
+                                    class="btn btn-sm btn-danger float-right">Kembali</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+
         </div>
+    </div>
+
     </div>
 @endsection
 

@@ -273,13 +273,6 @@
                     <a href="javascript:window.history.back()" class="btn btn-sm btn-danger float-right">Kembali</a>
                 </div>
             </div>
-
-
-            {{-- <div class="row">
-                <div class="col-12">
-                    <a href="/pembayaran" class="btn btn-danger btn-sm">Kembali</a>
-                </div>
-            </div> --}}
         </div>
     </div>
     <!-- Use SweetAlert2 version 11 -->

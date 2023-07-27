@@ -18,18 +18,19 @@
     <div class="container-fluid">
         @if ($nama_level == 'Administrator' || $nama_level == 'Kasir')
             <div class="row mb-4">
-                <div class="col-12">
-
-                    <div class="col-auto float-right" id="ubahButton">
-                        <button class="btn btn-sm btn-warning">Ubah</button>
+                @if (count($data) > 0)
+                    <div class="col-12">
+                        <div class="col-auto float-right" id="ubahButton">
+                            <button class="btn btn-sm btn-warning">Ubah</button>
+                        </div>
+                        <div class="col-auto float-right" id="okButton" style="display: none;">
+                            <button class="btn btn-sm btn-success">OK</button>
+                        </div>
+                        <div class="col-auto float-right" id="batalButton" style="display: none;">
+                            <button class="btn btn-sm btn-danger">Batal</button>
+                        </div>
                     </div>
-                    <div class="col-auto float-right" id="okButton">
-                        <button class="btn btn-sm btn-success">OK</button>
-                    </div>
-                    <div class="col-auto float-right" id="batalButton">
-                        <button class="btn btn-sm btn-danger">Batal</button>
-                    </div>
-                </div>
+                @endif
             </div>
         @endif
         <div class="row">
@@ -82,16 +83,6 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function() {
-            // Initially, hide the "Batal" and "OK" buttons, and the "Pilih" column
-            $("#batalButton, #okButton, .hide-on-start").hide();
-
-            // Check if the table is empty and hide the "Ubah" button accordingly
-            var dataCount = {{ $data->count() }};
-            if (dataCount === 0) {
-                $("#ubahButton").hide();
-            }
-
-            // When the "Ubah" button is clicked
             $("#ubahButton").click(function() {
                 // Show the "Batal" and "OK" buttons
                 $("#batalButton, #okButton").show();
@@ -99,6 +90,15 @@
                 $(this).hide();
                 // Show the "Pilih" column
                 $(".pilih-check").show();
+            });
+
+            $("#batalButton").click(function() {
+                // Hide the "Batal" and "OK" buttons
+                $("#batalButton, #okButton").hide();
+                // Show the "Ubah" button
+                $("#ubahButton").show();
+                // Hide the "Pilih" column
+                $(".pilih-check").hide();
             });
 
             // When the "Batal" button is clicked
