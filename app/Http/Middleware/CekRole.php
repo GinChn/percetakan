@@ -26,7 +26,12 @@ class CekRole
 
             // Check if the user's role is in the allowed roles
             if (in_array($userRole, $roles)) {
-                return $next($request);
+                // Add headers to disable caching
+                $response = $next($request);
+                $response->headers->set('Cache-Control', 'no-cache, no-store, must-revalidate');
+                $response->headers->set('Pragma', 'no-cache');
+                $response->headers->set('Expires', '0');
+                return $response;
             }
         }
 

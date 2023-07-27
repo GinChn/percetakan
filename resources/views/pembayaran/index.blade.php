@@ -66,9 +66,9 @@
                                                         <button class="dropdown-item"
                                                             onclick="nota('{{ route('pembayaran.nota', $item->id_pesanan) }}', 'Nota')"><i
                                                                 class="fas fa-barcode"></i> Struk</button>
-                                                        <a class="dropdown-item"
+                                                        {{-- <a class="dropdown-item"
                                                             href="/pembayaran/{{ $item->id_pesanan }}/edit"><i
-                                                                class="fas fa-edit"></i> Edit</a>
+                                                                class="fas fa-edit"></i> Edit</a> --}}
                                                     </div>
                                                 @else
                                                     <a href="{{ route('bayar.pesanan', $item->id_pesanan) }}"

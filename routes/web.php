@@ -69,7 +69,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/profile/ganti-password', [ProfileController::class, 'gantiPassword'])->name('ganti.password');
     Route::get('/profile/ganti-password', [ProfileController::class, 'formGantiPassword']);
     Route::resource('/profile', ProfileController::class);
-    Route::resource('/dashboard', DashboardController::class);
+    // Route::resource('/dashboard', DashboardController::class);
     Route::post('/pekerjaan/{id}/update-status', [PekerjaanController::class, 'updateStatus'])->name('pekerjaan.update_status');
     Route::get('/pekerjaan/{id}/detail', [PekerjaanController::class, 'pekerjaanDetail'])->name('pekerjaan.detail');
     Route::post('/pekerjaan/update-status-all-2', [PekerjaanController::class, 'updateStatusAll2'])->name('pekerjaan.update_status_2'); // ubah ke sudah ada desain
@@ -84,6 +84,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/pekerjaan/selesai', [PekerjaanController::class, 'selesai']);
     Route::get('/pekerjaan/sudah-diambil', [PekerjaanController::class, 'sudahDiambil']);
     Route::resource('/pekerjaan', PekerjaanController::class);
+
+    Route::middleware('web')->group(function () {
+        Route::resource('/dashboard', DashboardController::class);
+    });
 
     Route::group(['middleware' => ['cekrole:Administrator,Desainer,Operator,Kasir']], function () {
         Route::resource('/pesanan', PesananController::class);

@@ -192,6 +192,23 @@
         </div>
     </div>
 @endsection
+@push('scripts')
+    @if (auth()->check())
+        <!-- Check if the user is authenticated -->
+        <script>
+            // Add Cache-Control header to disable caching for authenticated users
+            document.addEventListener('DOMContentLoaded', function() {
+                // Set the Cache-Control header to prevent caching
+                // For most browsers, the following directives should work:
+                // no-cache: Forces caches to submit the request to the origin server for validation before releasing a cached copy.
+                // no-store: Instructs caches not to store a cached copy of the response.
+                // must-revalidate: Tells caches that they must obey any freshness information you give them about a representation.
+                // This combination should prevent the page from being cached.
+                document.querySelector('meta[name="viewport"]').content = 'no-cache, no-store, must-revalidate';
+            });
+        </script>
+    @endif
+@endpush
 
 @section('script')
     <script>
