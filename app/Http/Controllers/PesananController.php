@@ -65,6 +65,10 @@ class PesananController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'nama_pelanggan' => 'required|string|max:255',
+            'no_telp' => 'required|string|max:15',
+        ]);
         Pesanan::FindorFail($request->id_pesanan)->update([
             'nama_pelanggan' => $request->nama_pelanggan,
             'no_telp' => $request->no_telp,
@@ -135,8 +139,8 @@ class PesananController extends Controller
      */
     public function destroy($id)
     {
-        Pesanan::where('id_pesanan', $id)->delete();
         PesananDetail::where('id_pesanan', $id)->delete();
+        Pesanan::where('id_pesanan', $id)->delete();
 
         return back();
     }

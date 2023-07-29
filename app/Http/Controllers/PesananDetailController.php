@@ -24,11 +24,11 @@ class PesananDetailController extends Controller
             'data' => Pesanan::find(session('id_pesanan')),
             'barang' => Barang::all(),
             'finishing' => Finishing::all(),
-            'status' => Status::all()->pluck('status', 'id_status'),
+            // 'status' => Status::all()->pluck('status', 'id_status'),
             'detail' => DB::table('pesanan_detail')
-                        ->join('barang', 'pesanan_detail.id_barang', '=', 'barang.id_barang')
-                        ->where('id_pesanan', '=', session('id_pesanan'))
-                        ->get(),
+                ->join('barang', 'pesanan_detail.id_barang', '=', 'barang.id_barang')
+                ->where('id_pesanan', '=', session('id_pesanan'))
+                ->get(),
         ]);
     }
 
@@ -49,7 +49,17 @@ class PesananDetailController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
+
     {
+        // Define validation rules
+        $rules = [
+            'nama_pesanan' => 'required|string',
+            'id_barang' => 'required',
+            'jumlah' => 'required|numeric',
+        ];
+
+        // Run the validation
+        $request->validate($rules);
         PesananDetail::create([
             'id_pesanan' => $request->id_pesanan,
             'nama_pesanan' => $request->nama_pesanan,
@@ -138,8 +148,8 @@ class PesananDetailController extends Controller
 
     public function batalPesanan($id)
     {
-        Pesanan::where('id_pesanan', $id)->delete();
         PesananDetail::where('id_pesanan', $id)->delete();
+        Pesanan::where('id_pesanan', $id)->delete();
         return redirect('/pesanan');
     }
 
@@ -149,5 +159,4 @@ class PesananDetailController extends Controller
 
         return response()->json($data);
     }
-
 }
