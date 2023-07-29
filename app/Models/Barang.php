@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Models\Bahan;
 use App\Models\Mesin;
-use App\Models\Satuan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -25,11 +24,6 @@ class Barang extends Model
     public function mesin()
     {
         return $this->belongsTo(Mesin::class, 'id_mesin');
-    }
-
-    public function satuan()
-    {
-        return $this->belongsTo(Satuan::class, 'id_satuan');
     }
 
     public function penjualan()

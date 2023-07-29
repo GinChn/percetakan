@@ -22,7 +22,7 @@ class BarangController extends Controller
             'barang' => Barang::orderBy('nama_barang', 'asc')->get(),
             'bahan' => Bahan::all()->pluck('nama_bahan', 'id_bahan'),
             'mesin' => Mesin::all()->pluck('jenis_mesin', 'id_mesin'),
-            'satuan' => Satuan::all()->pluck('nama_satuan', 'id_satuan')
+            // 'satuan' => Satuan::all()->pluck('nama_satuan', 'id_satuan')
         ]);
     }
 
