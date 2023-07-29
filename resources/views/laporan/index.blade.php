@@ -273,7 +273,7 @@
                                                 <td>{{ tanggal_indonesia($keluar->tanggal) }}</td>
                                                 <td class="total-keluar">{{ format_uang($keluar->total_pengeluaran) }}
                                                 </td>
-                                                <td><a href="{{ route('pengeluaran_periode', ['tanggal' => $masuk->tanggal]) }}"
+                                                <td><a href="{{ route('pengeluaran_periode', ['tanggal' => $keluar->tanggal]) }}"
                                                         class="btn-sm btn-primary">Detail</a></td>
                                             </tr>
                                         @endforeach

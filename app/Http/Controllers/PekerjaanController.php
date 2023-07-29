@@ -123,9 +123,9 @@ class PekerjaanController extends Controller
     public function belumAdaDesain() // tampil semua item pesanan detail Belum Ada Desain
     {
         $data = PesananDetail::select('*')
-            ->join('pesanan', 'pesanan_detail.id_pesanan', '=', 'pesanan.id_pesanan')
             ->join('finishing', 'pesanan_detail.id_finishing', '=', 'finishing.id_finishing')
             ->join('barang', 'pesanan_detail.id_barang', '=', 'barang.id_barang')
+            ->join('pesanan', 'pesanan_detail.id_pesanan', '=', 'pesanan.id_pesanan')
             ->where('status_detail', 'Belum Ada Desain')
             ->get();
         return view('pekerjaan.belum_ada_desain', ['data' => $data]);
@@ -134,9 +134,9 @@ class PekerjaanController extends Controller
     public function sudahAdaDesain() // tampil semua item pesanan detail Sudah Ada Desain
     {
         $data = PesananDetail::select('*')
-            ->join('pesanan', 'pesanan_detail.id_pesanan', '=', 'pesanan.id_pesanan')
             ->join('finishing', 'pesanan_detail.id_finishing', '=', 'finishing.id_finishing')
             ->join('barang', 'pesanan_detail.id_barang', '=', 'barang.id_barang')
+            ->join('pesanan', 'pesanan_detail.id_pesanan', '=', 'pesanan.id_pesanan')
             ->where('status_detail', 'Sudah Ada Desain')
             ->get();
         return view('pekerjaan.sudah_ada_desain', ['data' => $data]);
@@ -144,9 +144,9 @@ class PekerjaanController extends Controller
     public function dikerjakan() // tampil semua item pesanan detail status Dikerjakan
     {
         $data = PesananDetail::select('*')
-            ->join('pesanan', 'pesanan_detail.id_pesanan', '=', 'pesanan.id_pesanan')
             ->join('finishing', 'pesanan_detail.id_finishing', '=', 'finishing.id_finishing')
             ->join('barang', 'pesanan_detail.id_barang', '=', 'barang.id_barang')
+            ->join('pesanan', 'pesanan_detail.id_pesanan', '=', 'pesanan.id_pesanan')
             ->where('status_detail', 'Dikerjakan')
             ->get();
         return view('pekerjaan.dikerjakan', ['data' => $data]);
@@ -155,9 +155,9 @@ class PekerjaanController extends Controller
     public function selesaiStatusDetail() // tampil semua 
     {
         $data = PesananDetail::select('*')
-            ->join('pesanan', 'pesanan_detail.id_pesanan', '=', 'pesanan.id_pesanan')
             ->join('finishing', 'pesanan_detail.id_finishing', '=', 'finishing.id_finishing')
             ->join('barang', 'pesanan_detail.id_barang', '=', 'barang.id_barang')
+            ->join('pesanan', 'pesanan_detail.id_pesanan', '=', 'pesanan.id_pesanan')
             ->where('status_detail', 'Selesai')
             ->get();
         return view('pekerjaan.selesai_status_detail', ['data' => $data]);

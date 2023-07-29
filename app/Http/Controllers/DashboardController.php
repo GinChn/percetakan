@@ -31,8 +31,16 @@ class DashboardController extends Controller
         $pesanan_harian = Pesanan::whereDate('created_at', $tgl_hariIni)->count();
         $pesanan_bulanan = Pesanan::whereBetween('created_at', [$tgl_awalBulan, $tgl_akhirBulan])->count();
 
-        $pemasukan_harian = Pesanan::whereDate('created_at', $tgl_hariIni)->sum('bayar');
-        $pemasukan_bulanan = Pesanan::whereBetween('created_at', [$tgl_awalBulan, $tgl_akhirBulan])->sum('bayar');
+        // $pemasukan_harian = Pesanan::whereDate('created_at', $tgl_hariIni)->sum('bayar');
+        // $pemasukan_bulanan = Pesanan::whereBetween('created_at', [$tgl_awalBulan, $tgl_akhirBulan])->sum('bayar');
+        $pemasukan_harian = Pesanan::whereDate('created_at', $tgl_hariIni)
+            ->where('status_pembayaran', 'lunas')
+            ->sum('total');
+
+        $pemasukan_bulanan = Pesanan::whereBetween('created_at', [$tgl_awalBulan, $tgl_akhirBulan])
+            ->where('status_pembayaran', 'lunas')
+            ->sum('total');
+
 
         $pengeluaran_harian = Pengeluaran::whereDate('created_at', $tgl_hariIni)->sum('total');
         $pengeluaran_bulanan = Pengeluaran::whereBetween('created_at', [$tgl_awalBulan, $tgl_akhirBulan])->sum('total');
@@ -43,14 +51,16 @@ class DashboardController extends Controller
         $pekerjaan_selesai = PesananDetail::whereBetween('created_at', [$tgl_awalBulan, $tgl_akhirBulan])->where('status_detail', '=', 'Selesai')->count();
 
         $totalbahan = PesananDetail::select(
-            'pesanan_detail.id_bahan', 'bahan.nama_bahan', 
-            'pesanan_detail.satuan', 
-            DB::raw('SUM(pesanan_detail.totalukuran) as total_keluar'), 
-            DB::raw('SUM(pesanan_detail.jumlah) as total_jumlah'))
-        ->join('bahan', 'pesanan_detail.id_bahan', '=', 'bahan.id_bahan')
-        ->whereBetween('pesanan_detail.created_at', [$tgl_awalBulan, $tgl_akhirBulan])
-        ->groupBy('pesanan_detail.id_bahan', 'bahan.nama_bahan', 'pesanan_detail.satuan')
-        ->get();
+            'pesanan_detail.id_bahan',
+            'bahan.nama_bahan',
+            'pesanan_detail.satuan',
+            DB::raw('SUM(pesanan_detail.totalukuran) as total_keluar'),
+            DB::raw('SUM(pesanan_detail.jumlah) as total_jumlah')
+        )
+            ->join('bahan', 'pesanan_detail.id_bahan', '=', 'bahan.id_bahan')
+            ->whereBetween('pesanan_detail.created_at', [$tgl_awalBulan, $tgl_akhirBulan])
+            ->groupBy('pesanan_detail.id_bahan', 'bahan.nama_bahan', 'pesanan_detail.satuan')
+            ->get();
 
         //grafik pendapatan
         $tanggal_awal = date('Y-m-01');
@@ -62,7 +72,10 @@ class DashboardController extends Controller
         while (strtotime($tanggal_awal) <= strtotime($tanggal_akhir)) {
             $data_tanggal[] = (int) substr($tanggal_awal, 8, 2);
 
-            $total_pemasukan = Pesanan::where('created_at', 'LIKE', "%$tanggal_awal%")->sum('bayar');
+            // $total_pemasukan = Pesanan::where('created_at', 'LIKE', "%$tanggal_awal%")->sum('bayar');
+            $total_pemasukan = Pesanan::where('created_at', 'LIKE', "%$tanggal_awal%")
+                ->where('status_pembayaran', 'lunas')
+                ->sum('total');
             $total_pengeluaran = Pengeluaran::where('created_at', 'LIKE', "%$tanggal_awal%")->sum('total');
 
             $pendapatan = $total_pemasukan - $total_pengeluaran;
@@ -73,14 +86,14 @@ class DashboardController extends Controller
 
         if (auth()->user()->id_level == 2) {
             return view('dashboard.manajer', compact(
-                'tgl_awalBulan', 
-                'tgl_akhirBulan', 
-                'pesanan_harian', 
-                'pesanan_bulanan', 
-                'pemasukan_harian', 
-                'pemasukan_bulanan', 
-                'pengeluaran_harian', 
-                'pengeluaran_bulanan', 
+                'tgl_awalBulan',
+                'tgl_akhirBulan',
+                'pesanan_harian',
+                'pesanan_bulanan',
+                'pemasukan_harian',
+                'pemasukan_bulanan',
+                'pengeluaran_harian',
+                'pengeluaran_bulanan',
                 'data_tanggal',
                 'data_pendapatan',
                 'desain_selesai',
@@ -89,52 +102,48 @@ class DashboardController extends Controller
                 'pekerjaan_selesai',
                 'totalbahan'
             ));
-        } 
-        elseif (auth()->user()->id_level == 3){
+        } elseif (auth()->user()->id_level == 3) {
             return view('dashboard.desainer', compact(
-                'tgl_awalBulan', 
-                'tgl_akhirBulan', 
+                'tgl_awalBulan',
+                'tgl_akhirBulan',
                 'desain_selesai',
                 'desain_belum',
                 'pekerjaan_dikerjakan',
                 'pekerjaan_selesai'
             ));
-        }
-        elseif (auth()->user()->id_level == 4){
+        } elseif (auth()->user()->id_level == 4) {
             return view('dashboard.kasir', compact(
-                'tgl_awalBulan', 
-                'tgl_akhirBulan', 
-                'pesanan_harian', 
-                'pesanan_bulanan', 
-                'pemasukan_harian', 
-                'pemasukan_bulanan', 
-                'pengeluaran_harian', 
-                'pengeluaran_bulanan', 
+                'tgl_awalBulan',
+                'tgl_akhirBulan',
+                'pesanan_harian',
+                'pesanan_bulanan',
+                'pemasukan_harian',
+                'pemasukan_bulanan',
+                'pengeluaran_harian',
+                'pengeluaran_bulanan',
                 'data_tanggal',
                 'data_pendapatan',
                 'totalbahan'
             ));
-        }
-        elseif (auth()->user()->id_level == 5){
+        } elseif (auth()->user()->id_level == 5) {
             return view('dashboard.operator', compact(
-                'tgl_awalBulan', 
-                'tgl_akhirBulan', 
+                'tgl_awalBulan',
+                'tgl_akhirBulan',
                 'desain_selesai',
                 'desain_belum',
                 'pekerjaan_dikerjakan',
                 'pekerjaan_selesai'
             ));
-        }
-        else {
+        } else {
             return view('dashboard.index', compact(
-                'tgl_awalBulan', 
-                'tgl_akhirBulan', 
-                'pesanan_harian', 
-                'pesanan_bulanan', 
-                'pemasukan_harian', 
-                'pemasukan_bulanan', 
-                'pengeluaran_harian', 
-                'pengeluaran_bulanan', 
+                'tgl_awalBulan',
+                'tgl_akhirBulan',
+                'pesanan_harian',
+                'pesanan_bulanan',
+                'pemasukan_harian',
+                'pemasukan_bulanan',
+                'pengeluaran_harian',
+                'pengeluaran_bulanan',
                 'data_tanggal',
                 'data_pendapatan',
                 'desain_selesai',
