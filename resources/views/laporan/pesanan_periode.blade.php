@@ -29,6 +29,9 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @php
+                                    $totalPemasukan = 0;
+                                @endphp
                                 @foreach ($pesanan as $item)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
@@ -52,14 +55,37 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <a href="../pesanan/{{ $item->id_pesanan }}"
-                                                class="btn-sm btn-primary">Detail</a>
+                                            <a href="{{ $item->id_pesanan }}" class="btn-sm btn-primary">Detail</a>
                                         </td>
                                     </tr>
+                                    @php
+                                        $totalPemasukan += $item->total;
+                                    @endphp
                                 @endforeach
                             </tbody>
                         </table>
-                        <div class="row mt-3">
+
+
+                    </div>
+                    <div class="card-body">
+                        <div class="total col-md-6 float-right bg-black ">
+                            <div class="row ">
+                                <div class="col d-flex justify-content-end">
+                                    <p class="text-bold d-flex align-items-center" style="height:100%;">
+                                        TOTAL PEMASUKAN =</p>
+                                </div>
+                                <div class="col d-flex justify-content-center">
+                                    <p id="total-pemasukan" class="text-bold d-flex align-items-center"
+                                        style="height:100%;">
+                                        {{ format_uang($totalPemasukan) }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+
+                        <div class="row">
                             <div class="col-12 ">
                                 <a href="javascript:window.history.back()"
                                     class="btn btn-sm btn-danger float-right">Kembali</a>
@@ -73,52 +99,4 @@
     </div>
 
     </div>
-@endsection
-
-@section('script')
-    <script>
-        function deletePesanan(id) {
-            event.preventDefault();
-            Swal.fire({
-                title: 'Yakin?',
-                text: "Hapus data pesanan ini?",
-                icon: 'warning',
-                showCancelButton: true,
-                showConfirmButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Ya'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    document.getElementById('hapus-pesanan' + id).submit();
-                    Swal.fire(
-                        'Terhapus!',
-                        'Data berhasil terhapus',
-                        'success'
-                    )
-                }
-            })
-        }
-
-        $(function() {
-            var Toast = Swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 3000
-            });
-            @if (Session::has('sukses-tambah-bahan'))
-                Toast.fire({
-                    icon: 'success',
-                    title: '{{ Session::get('sukses-tambah-bahan') }}'
-                })
-            @endif
-            @if (Session::has('sukses-ubah-bahan'))
-                Toast.fire({
-                    icon: 'success',
-                    title: '{{ Session::get('sukses-ubah-bahan') }}'
-                })
-            @endif
-        });
-    </script>
 @endsection

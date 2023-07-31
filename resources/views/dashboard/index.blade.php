@@ -10,7 +10,6 @@
             </div>
         </div>
     </section>
-
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
@@ -22,18 +21,7 @@
         </div>
 
         <div class="row">
-            <div class="col-md-3 col-sm-6 col-12">
-                <div class="info-box shadow">
-                    <span class="info-box-icon bg-gradient-warning"><i class="fa fa-shopping-cart"></i></span>
-                    <div class="info-box-content">
-                        <p style="margin-bottom: 0%; font-size: 12pt">PESANAN HARI INI</p>
-                        <p style="margin-bottom: 0%; font-size: 10pt"><b>{{ $pesanan_harian }}</b></p>
-                        <p style="margin-bottom: 0%; font-size: 10pt">BULAN INI</p>
-                        <p style="margin-bottom: 0%; font-size: 10pt"><b>{{ $pesanan_bulanan }}</b></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6 col-12">
+            <div class="col-md-4 col-4">
                 <div class="info-box shadow">
                     <span class="info-box-icon bg-gradient-info"><i class="fa fa-arrow-circle-down"></i></span>
                     <div class="info-box-content">
@@ -44,7 +32,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3 col-sm-6 col-12">
+            <div class="col-md-4 col-4">
                 <div class="info-box shadow">
                     <span class="info-box-icon bg-gradient-danger"><i class="fa fa-arrow-circle-up"></i></span>
                     <div class="info-box-content">
@@ -55,7 +43,20 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3 col-sm-6 col-12">
+            <div class="col-md-4 col-4" rowspan="2">
+                <div class="info-box shadow">
+                    <span class="info-box-icon bg-gradient-warning"><i class="fa fa-shopping-cart"></i></span>
+                    <div class="info-box-content">
+                        <p style="margin-bottom: 0%; font-size: 12pt">PESANAN HARI INI</p>
+                        <p style="margin-bottom: 0%; font-size: 10pt"><b>{{ $pesanan_harian }}</b></p>
+                        <p style="margin-bottom: 0%; font-size: 10pt">BULAN INI</p>
+                        <p style="margin-bottom: 0%; font-size: 10pt"><b>{{ $pesanan_bulanan }}</b></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-4">
                 <div class="info-box shadow">
                     <span class="info-box-icon bg-gradient-success"><i class="fa fa-check-circle"></i></span>
                     <div class="info-box-content">
@@ -70,8 +71,18 @@
                     </div>
                 </div>
             </div>
+            <div class="col-md-4 col-4">
+                <div class="info-box shadow">
+                    <span class="info-box-icon bg-gradient-warning"><i class="fa fa-wallet"></i></span>
+                    <div class="info-box-content">
+                        <p style="margin-bottom: 0%; font-size: 12pt">PEMASUKAN DESAIN</p>
+                        <p style="margin-bottom: 0%; font-size: 10pt"><b>{{ format_uang($pemasukan_desain_harian) }}</p>
+                        <p style="margin-bottom: 0%; font-size: 10pt">BULAN INI</p>
+                        <p style="margin-bottom: 0%; font-size: 10pt"><b>{{ format_uang($pemasukan_desain_bulanan) }}</p>
+                    </div>
+                </div>
+            </div>
         </div>
-
         <div class="row">
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-gradient-danger">
@@ -126,6 +137,7 @@
                 </div>
             </div>
         </div>
+
 
         <div class="row">
             <div class="col-md-12">

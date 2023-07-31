@@ -75,7 +75,8 @@ class PesananDetailController extends Controller
             'subtotal' => $request->subtotal,
             'id_finishing' => $request->id_finishing,
             'status_detail' => $request->status_detail,
-            'desainer' => $request->desainer
+            'desainer' => $request->desainer,
+            'biaya_desain' => $request->biaya_desain
         ]);
 
         return back()->with('sukses-input-pesanan', 'Pesanan Berhasil Ditambahkan');
@@ -127,7 +128,8 @@ class PesananDetailController extends Controller
             'jumlah' => $request->jumlah,
             'subtotal' => $request->subtotal,
             'id_finishing' => $request->id_finishing,
-            'status_detail' => $request->status_detail
+            'status_detail' => $request->status_detail,
+            'biaya_desain' => $request->biaya_desain
         ]);
 
         return back()->with('sukses-edit-pesanan', 'Pesanan Berhasil Diubah');

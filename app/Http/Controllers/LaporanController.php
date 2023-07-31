@@ -23,9 +23,24 @@ class LaporanController extends Controller
      */
     public function index()
     {
-        return view('laporan.index');
-    }
+        // Ambil data_laporan dan data_input dari sesi jika tersedia
+        $data_laporan = session('data_laporan');
+        $data_input = session('data_input');
 
+        // Cek apakah data_laporan kosong
+        if (empty($data_laporan)) {
+            // Atur nilai default atau kosongkan variabel jika sesuai dengan kebutuhan
+            $data_laporan = []; // Contoh: set data_laporan sebagai array kosong
+        }
+
+        // Cek apakah data_input kosong
+        if (empty($data_input)) {
+            // Atur nilai default atau kosongkan variabel jika sesuai dengan kebutuhan
+            $data_input = []; // Contoh: set data_input sebagai array kosong
+        }
+
+        return view('laporan.index', compact('data_laporan', 'data_input'));
+    }
     public function pesananPeriode(Request $request)
     {
         $tanggal = $request->input('tanggal');
@@ -116,10 +131,10 @@ class LaporanController extends Controller
         $data_laporan = $this->getQueryData($jenis_laporan, $data_input_laporan);
 
         // Simpan data dalam session dan redirect
-        return redirect()->route('laporan.index')->with([
-            'data_laporan' => $data_laporan,
-            'data_input' => $data_input_laporan
-        ]);
+        session()->put('data_laporan', $data_laporan);
+        session()->put('data_input', $data_input_laporan);
+
+        return redirect()->route('laporan.index');
     }
 
 
@@ -312,8 +327,7 @@ class LaporanController extends Controller
             $tampilUbah = true;
         }
 
-        return view('pekerjaan.detail_status', [
-            'tampilUbah' => $tampilUbah,
+        return view('laporan.detail_pesanan', [
             'data' => Pesanan::where('id_pesanan', $id)->get(),
             'detail' => DB::table('pesanan_detail')
                 ->join('barang', 'pesanan_detail.id_barang', '=', 'barang.id_barang')

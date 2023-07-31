@@ -9,47 +9,47 @@
 
     <?php
     $style = '
-                                            <style>
-                                                * {
-                                                    font-family: "consolas", sans-serif;
-                                                }
-                                                p {
-                                                    display: block;
-                                                    margin: 3px;
-                                                    font-size: 8pt;
-                                                }
-                                                table td {
-                                                    font-size: 8pt;
-                                                }
-                                                .text-center {
-                                                    text-align: center;
-                                                }
-                                                .text-right {
-                                                    text-align: right;
-                                                }
-                                        
-                                                @media print {
-                                                    @page {
-                                                margin: 0;
-                                                size: 58mm;
-                                                    
-                                            }
-                                            ';
+                                                    <style>
+                                                        * {
+                                                            font-family: "consolas", sans-serif;
+                                                        }
+                                                        p {
+                                                            display: block;
+                                                            margin: 3px;
+                                                            font-size: 8pt;
+                                                        }
+                                                        table td {
+                                                            font-size: 8pt;
+                                                        }
+                                                        .text-center {
+                                                            text-align: center;
+                                                        }
+                                                        .text-right {
+                                                            text-align: right;
+                                                        }
+                                                
+                                                        @media print {
+                                                            @page {
+                                                        margin: 0;
+                                                        size: 58mm 150mm;
+                                                            
+                                                    }
+                                                    ';
     ?>
     <?php
     $style .= !empty($_COOKIE['innerHeight']) ? $_COOKIE['innerHeight'] . 'mm; }' : '}';
     ?>
     <?php
     $style .= '
-                                                    html, body {
-                                                        width: 58mm;
-                                                    }
-                                                    .btn-print {
-                                                        display: none;
-                                                    }
-                                                }
-                                            </style>
-                                            ';
+                                                            html, body {
+                                                                width: 50mm;
+                                                            }
+                                                            .btn-print {
+                                                                display: none;
+                                                            }
+                                                        }
+                                                    </style>
+                                                    ';
     ?>
 
     {!! $style !!}
@@ -93,8 +93,16 @@
     @foreach ($data as $item)
         <table width="100%" style="border: 0;">
             <tr>
-                <td>Total:</td>
+                <td>Total Pesanan:</td>
                 <td class="text-right">{{ format_uang($item->total) }}</td>
+            </tr>
+            <tr>
+                <td>Total Biaya Desain:</td>
+                <td class="text-right">{{ format_uang($item->total_biaya_desain) }}</td>
+            </tr>
+            <tr>
+                <td>Grand Total:</td>
+                <td class="text-right">{{ format_uang($item->grand_total) }}</td>
             </tr>
             <tr>
                 <td>Diterima:</td>

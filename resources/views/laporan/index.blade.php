@@ -16,6 +16,7 @@
             // Atur nilai default atau kosongkan variabel jika sesuai dengan kebutuhan
             $data_input = []; // Contoh: set data_input sebagai array kosong
         }
+        
     @endphp
 
 
@@ -127,7 +128,7 @@
     </div>
     {{-- </div> --}}
 
-    @if ($data_input)
+    @if (!empty($data_laporan) && !empty($data_input))
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
@@ -387,10 +388,6 @@
 @section('script')
     {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
     <script>
-        let totalJumlahMasuk = 0;
-        let totalJumlahKeluar = 0;
-        let totalBersih = 0;
-
         // menampilkan inputan tanggal harian atau range bulanan
         $(document).ready(function() {
 

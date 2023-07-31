@@ -56,7 +56,7 @@ class PekerjaanController extends Controller
             // Jika status_detail yang diupdate adalah 'Dikerjakan'
             if ($statusText === 'Dikerjakan') {
                 // Mengambil nama user yang sedang login
-                $operator = auth()->user()->nama; // Disesuaikan dengan kolom nama pada model User atau sesuai dengan kebutuhan Anda
+                $operator = auth()->user()->nama;
 
                 // Memperbarui status_detail dan operator
                 $pesananDetail->update([
@@ -127,6 +127,7 @@ class PekerjaanController extends Controller
             ->join('barang', 'pesanan_detail.id_barang', '=', 'barang.id_barang')
             ->join('pesanan', 'pesanan_detail.id_pesanan', '=', 'pesanan.id_pesanan')
             ->where('status_detail', 'Belum Ada Desain')
+            ->orderby('pesanan.created_at')
             ->get();
         return view('pekerjaan.belum_ada_desain', ['data' => $data]);
     }
@@ -138,6 +139,7 @@ class PekerjaanController extends Controller
             ->join('barang', 'pesanan_detail.id_barang', '=', 'barang.id_barang')
             ->join('pesanan', 'pesanan_detail.id_pesanan', '=', 'pesanan.id_pesanan')
             ->where('status_detail', 'Sudah Ada Desain')
+            ->orderby('pesanan.created_at')
             ->get();
         return view('pekerjaan.sudah_ada_desain', ['data' => $data]);
     }
@@ -148,6 +150,7 @@ class PekerjaanController extends Controller
             ->join('barang', 'pesanan_detail.id_barang', '=', 'barang.id_barang')
             ->join('pesanan', 'pesanan_detail.id_pesanan', '=', 'pesanan.id_pesanan')
             ->where('status_detail', 'Dikerjakan')
+            ->orderby('pesanan.created_at')
             ->get();
         return view('pekerjaan.dikerjakan', ['data' => $data]);
     }
@@ -159,6 +162,7 @@ class PekerjaanController extends Controller
             ->join('barang', 'pesanan_detail.id_barang', '=', 'barang.id_barang')
             ->join('pesanan', 'pesanan_detail.id_pesanan', '=', 'pesanan.id_pesanan')
             ->where('status_detail', 'Selesai')
+            ->orderby('pesanan.created_at')
             ->get();
         return view('pekerjaan.selesai_status_detail', ['data' => $data]);
     }

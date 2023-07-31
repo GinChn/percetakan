@@ -41,6 +41,15 @@ class DashboardController extends Controller
             ->where('status_pembayaran', 'lunas')
             ->sum('total');
 
+        $pemasukan_desain_harian = PesananDetail::join('pesanan', 'pesanan_detail.id_pesanan', '=', 'pesanan.id_pesanan')
+            ->where('pesanan.status_pembayaran', 'lunas')
+            ->whereDate('pesanan_detail.created_at', $tgl_hariIni)
+            ->sum('pesanan_detail.biaya_desain');
+        $pemasukan_desain_bulanan = PesananDetail::join('pesanan', 'pesanan_detail.id_pesanan', '=', 'pesanan.id_pesanan')
+            ->where('pesanan.status_pembayaran', 'lunas')
+            ->whereBetween('pesanan_detail.created_at', [$tgl_awalBulan, $tgl_akhirBulan])
+            ->sum('pesanan_detail.biaya_desain');
+
 
         $pengeluaran_harian = Pengeluaran::whereDate('created_at', $tgl_hariIni)->sum('total');
         $pengeluaran_bulanan = Pengeluaran::whereBetween('created_at', [$tgl_awalBulan, $tgl_akhirBulan])->sum('total');
@@ -94,6 +103,8 @@ class DashboardController extends Controller
                 'pemasukan_bulanan',
                 'pengeluaran_harian',
                 'pengeluaran_bulanan',
+                'pemasukan_desain_harian',
+                'pemasukan_desain_bulanan',
                 'data_tanggal',
                 'data_pendapatan',
                 'desain_selesai',
@@ -121,6 +132,8 @@ class DashboardController extends Controller
                 'pemasukan_bulanan',
                 'pengeluaran_harian',
                 'pengeluaran_bulanan',
+                'pemasukan_desain_harian',
+                'pemasukan_desain_bulanan',
                 'data_tanggal',
                 'data_pendapatan',
                 'totalbahan'
@@ -144,6 +157,8 @@ class DashboardController extends Controller
                 'pemasukan_bulanan',
                 'pengeluaran_harian',
                 'pengeluaran_bulanan',
+                'pemasukan_desain_harian',
+                'pemasukan_desain_bulanan',
                 'data_tanggal',
                 'data_pendapatan',
                 'desain_selesai',

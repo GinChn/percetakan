@@ -37,7 +37,7 @@
                                         <td>{{ $item->no_nota }}</td>
                                         <td>{{ $item->nama_pelanggan }}</td>
                                         <td>{{ tanggal_indonesia($item->created_at) }}</td>
-                                        <td>{{ format_uang($item->total) }}</td>
+                                        <td>{{ format_uang($item->grand_total) }}</td>
                                         <td>{{ format_uang($item->bayar) }}</td>
                                         <td>{{ format_uang($item->kembali) }}</td>
                                         <td>

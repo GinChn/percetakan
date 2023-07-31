@@ -270,7 +270,7 @@
             </div>
             <div class="row my-2 float">
                 <div class="col-12 ">
-                    <a href="javascript:window.history.back()" class="btn btn-sm btn-danger float-right">Kembali</a>
+                    <a href="/pekerjaan" class="btn btn-sm btn-danger float-right">Kembali</a>
                 </div>
             </div>
         </div>

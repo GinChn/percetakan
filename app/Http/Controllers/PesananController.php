@@ -73,6 +73,8 @@ class PesananController extends Controller
             'nama_pelanggan' => $request->nama_pelanggan,
             'no_telp' => $request->no_telp,
             'total' => $request->total,
+            'total_biaya_desain' => $request->total_biaya_desain,
+            'grand_total' => $request->grand_total,
             'status_pembayaran' => 'Menunggu Pembayaran',
             'status_pesanan' => 'Dalam Proses'
         ]);
@@ -97,8 +99,7 @@ class PesananController extends Controller
             $tampilUbah = true;
         }
 
-        return view('pekerjaan.detail_status', [
-            'tampilUbah' => $tampilUbah,
+        return view('pesanan.detail', [
             'data' => Pesanan::where('id_pesanan', $id)->get(),
             'detail' => DB::table('pesanan_detail')
                 ->join('barang', 'pesanan_detail.id_barang', '=', 'barang.id_barang')

@@ -22,18 +22,7 @@
         </div>
 
         <div class="row">
-            <div class="col-md-3 col-sm-6 col-12">
-                <div class="info-box shadow">
-                    <span class="info-box-icon bg-gradient-warning"><i class="fa fa-shopping-cart"></i></span>
-                    <div class="info-box-content">
-                        <p style="margin-bottom: 0%; font-size: 12pt">PESANAN HARI INI</p>
-                        <p style="margin-bottom: 0%; font-size: 10pt"><b>{{ $pesanan_harian }}</b></p>
-                        <p style="margin-bottom: 0%; font-size: 10pt">BULAN INI</p>
-                        <p style="margin-bottom: 0%; font-size: 10pt"><b>{{ $pesanan_bulanan }}</b></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6 col-12">
+            <div class="col-md-4 col-4">
                 <div class="info-box shadow">
                     <span class="info-box-icon bg-gradient-info"><i class="fa fa-arrow-circle-down"></i></span>
                     <div class="info-box-content">
@@ -44,7 +33,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3 col-sm-6 col-12">
+            <div class="col-md-4 col-4">
                 <div class="info-box shadow">
                     <span class="info-box-icon bg-gradient-danger"><i class="fa fa-arrow-circle-up"></i></span>
                     <div class="info-box-content">
@@ -55,14 +44,42 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3 col-sm-6 col-12">
+            <div class="col-md-4 col-4" rowspan="2">
+                <div class="info-box shadow">
+                    <span class="info-box-icon bg-gradient-warning"><i class="fa fa-shopping-cart"></i></span>
+                    <div class="info-box-content">
+                        <p style="margin-bottom: 0%; font-size: 12pt">PESANAN HARI INI</p>
+                        <p style="margin-bottom: 0%; font-size: 10pt"><b>{{ $pesanan_harian }}</b></p>
+                        <p style="margin-bottom: 0%; font-size: 10pt">BULAN INI</p>
+                        <p style="margin-bottom: 0%; font-size: 10pt"><b>{{ $pesanan_bulanan }}</b></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-4">
                 <div class="info-box shadow">
                     <span class="info-box-icon bg-gradient-success"><i class="fa fa-check-circle"></i></span>
                     <div class="info-box-content">
                         <p style="margin-bottom: 0%; font-size: 12pt">PEMASUKAN BERSIH</p>
-                        <p style="margin-bottom: 0%; font-size: 10pt"><b>{{ format_uang($pemasukan_harian - $pengeluaran_harian) }}</b></p>
+                        <p style="margin-bottom: 0%; font-size: 10pt">
+                            <b>{{ format_uang($pemasukan_harian - $pengeluaran_harian) }}</b>
+                        </p>
                         <p style="margin-bottom: 0%; font-size: 10pt">BULAN INI</p>
-                        <p style="margin-bottom: 0%; font-size: 10pt"><b>{{ format_uang($pemasukan_bulanan - $pengeluaran_bulanan) }}</b></p>
+                        <p style="margin-bottom: 0%; font-size: 10pt">
+                            <b>{{ format_uang($pemasukan_bulanan - $pengeluaran_bulanan) }}</b>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-4">
+                <div class="info-box shadow">
+                    <span class="info-box-icon bg-gradient-warning"><i class="fa fa-wallet"></i></span>
+                    <div class="info-box-content">
+                        <p style="margin-bottom: 0%; font-size: 12pt">PEMASUKAN DESAIN</p>
+                        <p style="margin-bottom: 0%; font-size: 10pt"><b>{{ format_uang($pemasukan_desain_harian) }}</p>
+                        <p style="margin-bottom: 0%; font-size: 10pt">BULAN INI</p>
+                        <p style="margin-bottom: 0%; font-size: 10pt"><b>{{ format_uang($pemasukan_desain_bulanan) }}</p>
                     </div>
                 </div>
             </div>
@@ -72,7 +89,8 @@
             <div class="col-md-12">
                 <div class="card card-outline card-success">
                     <div class="card-header">
-                        <h3 class="card-title">Grafik Pendapatan {{ tanggal_indonesia($tgl_awalBulan, false) }} s/d {{ tanggal_indonesia($tgl_akhirBulan, false) }}</h3>
+                        <h3 class="card-title">Grafik Pendapatan {{ tanggal_indonesia($tgl_awalBulan, false) }} s/d
+                            {{ tanggal_indonesia($tgl_akhirBulan, false) }}</h3>
                         <div class="card-tools">
                             <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                 <i class="fas fa-minus"></i>
@@ -93,7 +111,8 @@
             <div class="col-md-12">
                 <div class="card card-outline card-success">
                     <div class="card-header">
-                        <h3 class="card-title">Pengeluaran Bahan {{ tanggal_indonesia($tgl_awalBulan, false) }} s/d {{ tanggal_indonesia($tgl_akhirBulan, false) }}</h3>
+                        <h3 class="card-title">Pengeluaran Bahan {{ tanggal_indonesia($tgl_awalBulan, false) }} s/d
+                            {{ tanggal_indonesia($tgl_akhirBulan, false) }}</h3>
                         <div class="card-tools">
                             <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                 <i class="fas fa-minus"></i>
@@ -111,18 +130,18 @@
                             </thead>
                             <tbody>
                                 @foreach ($totalbahan as $item)
-                                <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>{{ $item->nama_bahan }}</td>
-                                <td>
-                                    @if ($item->satuan == 'Meter')
-                                    {{ $item->total_keluar }} {{ $item->satuan }}
-                                    @else
-                                        {{ $item->total_jumlah }} {{ $item->satuan }}
-                                    @endif
-                                </td>
-                            </tr>
-                            @endforeach
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $item->nama_bahan }}</td>
+                                        <td>
+                                            @if ($item->satuan == 'Meter')
+                                                {{ $item->total_keluar }} {{ $item->satuan }}
+                                            @else
+                                                {{ $item->total_jumlah }} {{ $item->satuan }}
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -133,47 +152,47 @@
 @endsection
 
 @section('script')
-<script>
-    $(function() {
-        var PendapatanCanvas = $('#pendapatanChart').get(0).getContext('2d')
+    <script>
+        $(function() {
+            var PendapatanCanvas = $('#pendapatanChart').get(0).getContext('2d')
 
-        var PendapatanData = {
-            labels: {{ json_encode($data_tanggal) }},
-            datasets: [{
-                label: 'Pendapatan',
-                backgroundColor: '',
-                borderColor: '#00a65a',
-                // pointRadius: false,
-                pointColor: '#3b8bba',
-                pointStrokeColor: 'rgba(60,141,188,1)',
-                pointHighlightFill: false,
-                pointHighlightStroke: 'rgba(60,141,188,1)',
-                data: {{ json_encode($data_pendapatan) }}
-            }, ]
-        }
-
-        var PendapatanOptions = {
-            maintainAspectRatio: false,
-            responsive: true,
-            legend: {
-                display: false
-            },
-            scales: {
-                xAxes: [{
-                    gridLines: {
-                        display: false,
-                    }
-                }]
+            var PendapatanData = {
+                labels: {{ json_encode($data_tanggal) }},
+                datasets: [{
+                    label: 'Pendapatan',
+                    backgroundColor: '',
+                    borderColor: '#00a65a',
+                    // pointRadius: false,
+                    pointColor: '#3b8bba',
+                    pointStrokeColor: 'rgba(60,141,188,1)',
+                    pointHighlightFill: false,
+                    pointHighlightStroke: 'rgba(60,141,188,1)',
+                    data: {{ json_encode($data_pendapatan) }}
+                }, ]
             }
-        }
-        PendapatanData.datasets[0].fill = false;
-        PendapatanOptions.datasetFill = false
 
-        var PendapatanChart = new Chart(PendapatanCanvas, {
-            type: 'line',
-            data: PendapatanData,
-            options: PendapatanOptions
+            var PendapatanOptions = {
+                maintainAspectRatio: false,
+                responsive: true,
+                legend: {
+                    display: false
+                },
+                scales: {
+                    xAxes: [{
+                        gridLines: {
+                            display: false,
+                        }
+                    }]
+                }
+            }
+            PendapatanData.datasets[0].fill = false;
+            PendapatanOptions.datasetFill = false
+
+            var PendapatanChart = new Chart(PendapatanCanvas, {
+                type: 'line',
+                data: PendapatanData,
+                options: PendapatanOptions
+            })
         })
-    })
-</script>
+    </script>
 @endsection

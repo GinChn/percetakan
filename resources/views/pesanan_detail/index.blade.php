@@ -101,6 +101,7 @@
                                                 name="subtotal" placeholder="Subtotal" readonly required>
                                         </div>
                                     </div>
+
                                     <div class="form-group row">
                                         <label for="finishing" class="col-sm-3 col-form-label"
                                             style="font-size: 11pt">Finishing</label>
@@ -122,11 +123,19 @@
                                                 id="status_detail">
                                                 <option value="Belum Ada Desain">Belum Ada Desain</option>
                                                 <option value="Sudah Ada Desain">Sudah Ada Desain</option>
-                                                <option value="Dikerjakan">Dikerjakan</option>
-                                                <option value="Selesai">Selesai</option>
                                             </select>
                                         </div>
                                     </div>
+                                    <div class="form-group row biaya-desain-group">
+                                        <!-- Tambahkan kelas "biaya-desain-group" di sini -->
+                                        <label for="biaya_desain" class="col-sm-3 col-form-label"
+                                            style="font-size: 11pt">Biaya Desain</label>
+                                        <div class="col-sm-8">
+                                            <input type="number" class="form-control form-control-sm" id="biaya_desain"
+                                                name="biaya_desain">
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                     </form>
@@ -150,6 +159,8 @@
 
     @php
         $total = 0;
+        $total_biaya_desain = 0;
+        $grand_total = 0;
     @endphp
     <div class="row">
         <div class="col-12">
@@ -169,6 +180,7 @@
                                 <th>Qty</th>
                                 <th>Subtotal</th>
                                 <th>Status</th>
+                                <th>Biaya Desain</th>
                                 <th width="10%"><i class="fa fa-cog"></th>
                             </tr>
                         </thead>
@@ -205,6 +217,7 @@
                                             </span>
                                         @endif
                                     </td>
+                                    <td>{{ format_uang($item->biaya_desain) }}</td>
                                     <td>
                                         <button
                                             onclick="editDetailPesanan('{{ route('pesanan_detail.update', $item->id_pesanan_detail) }}')"
@@ -225,6 +238,7 @@
                                 </tr>
                                 @php
                                     $total += $item->subtotal;
+                                    $total_biaya_desain += $item->biaya_desain;
                                 @endphp
                             @endforeach
                         </tbody>
@@ -239,10 +253,28 @@
                             <div class="col-6" style="margin-left: 50%">
                                 <table class="table">
                                     <tr>
-                                        <th style="width:30%">Total</th>
+                                        <th style="width:30%">Total Pesanan</th>
                                         <td>
                                             <input type="text" class="form-control form-control-sm" name="total"
                                                 id="total" value="{{ $total }}" required readonly>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th style="width:30%">Total Biaya Desain</th>
+                                        <td>
+                                            <input type="number" class="form-control form-control-sm"
+                                                name="total_biaya_desain" value="{{ $total_biaya_desain }}"
+                                                id="total_biaya_desain" required readonly>
+                                        </td>
+                                    </tr>
+                                    @php
+                                        $grand_total = $total + $total_biaya_desain;
+                                    @endphp
+                                    <tr>
+                                        <th style="width:30%">Grand Total</th>
+                                        <td>
+                                            <input type="text" class="form-control form-control-sm" name="grand_total"
+                                                id="grand_total" value="{{ $grand_total }}" required readonly>
                                         </td>
                                     </tr>
                                     <tr>
@@ -449,6 +481,7 @@
                     $('#modal-pesanan [name=id_finishing]').val(response.id_finishing);
                     $('#modal-pesanan [name=status_detail]').val(response.status_detail);
                     $('#modal-pesanan [name=satuan]').val(response.satuan);
+                    $('#modal-pesanan [name=biaya_desain]').val(response.biaya_desain);
                 })
         }
 
@@ -492,6 +525,29 @@
             $('.btn-simpanPesanan').on('click', function() {
                 $('.form-simpanPesanan').submit();
             });
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const statusDropdown = document.getElementById("status_detail");
+            const biayaDesainInputGroup = document.querySelector(".form-group.biaya-desain-group");
+
+            // Fungsi untuk menampilkan/menghilangkan input biaya desain berdasarkan pilihan "Status"
+            function toggleBiayaDesainInput() {
+                if (statusDropdown.value === "Belum Ada Desain") {
+                    biayaDesainInputGroup.classList.remove("d-none");
+                } else {
+                    biayaDesainInputGroup.classList.add("d-none");
+                    document.getElementById("biaya_desain").value =
+                        "0"; // Set nilai input menjadi 0 jika sudah ada desain
+                }
+            }
+
+            // Panggil fungsi pertama kali untuk inisialisasi tampilan awal
+            toggleBiayaDesainInput();
+
+            // Tambahkan event listener untuk mengubah tampilan ketika pilihan "Status" berubah
+            statusDropdown.addEventListener("change", toggleBiayaDesainInput);
         });
     </script>
 @endsection

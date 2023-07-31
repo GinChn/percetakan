@@ -31,7 +31,7 @@
                                     <th>No Nota</th>
                                     <th>Nama Pelanggan</th>
                                     <th>Tanggal</th>
-                                    <th>Total</th>
+                                    <th>Grand Total</th>
                                     <th>Pesanan</th>
                                     <th>Pembayaran</th>
                                     @if ($nama_level == 'Administrator' || $nama_level == 'Desainer' || $nama_level == 'Kasir' || $nama_level == 'Operator')
@@ -46,7 +46,7 @@
                                         <td>{{ $item->no_nota }}</td>
                                         <td>{{ $item->nama_pelanggan }}</td>
                                         <td>{{ tanggal_indonesia($item->created_at) }}</td>
-                                        <td>{{ format_uang($item->total) }}</td>
+                                        <td>{{ format_uang($item->grand_total) }}</td>
                                         <td>
                                             @if ($item->status_pesanan == 'Selesai')
                                                 <span class="badge badge-success">

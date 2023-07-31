@@ -86,6 +86,7 @@
                                 <th>Harga</th>
                                 <th>Qty</th>
                                 <th>Subtotal</th>
+                                <th>Biaya Desain</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -97,6 +98,7 @@
                                     <td>{{ format_uang($item->harga) }}</td>
                                     <td>{{ $item->jumlah }}</td>
                                     <td>{{ format_uang($item->subtotal) }}</td>
+                                    <td>{{ format_uang($item->biaya_desain) }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -111,9 +113,21 @@
                         <table class="table">
                             @foreach ($data as $item)
                                 <tr>
-                                    <th style="width:30%">Total</th>
+                                    <td style="width:30%">Total Pesanan</td>
                                     <td>
                                         {{ format_uang($item->total) }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width:30%">Total Biaya Desain</td>
+                                    <td>
+                                        {{ format_uang($item->total_biaya_desain) }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th style="width:30%">Grand Total</th>
+                                    <td>
+                                        {{ format_uang($item->grand_total) }}
                                     </td>
                                 </tr>
                                 <tr>
