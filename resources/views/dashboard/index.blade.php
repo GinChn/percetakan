@@ -21,7 +21,7 @@
         </div>
 
         <div class="row">
-            <div class="col-md-4 col-4">
+            <div class="col-md-4 col-sm-12">
                 <div class="info-box shadow">
                     <span class="info-box-icon bg-gradient-info"><i class="fa fa-arrow-circle-down"></i></span>
                     <div class="info-box-content">
@@ -32,7 +32,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 col-4">
+            <div class="col-md-4 col-sm-12">
                 <div class="info-box shadow">
                     <span class="info-box-icon bg-gradient-danger"><i class="fa fa-arrow-circle-up"></i></span>
                     <div class="info-box-content">
@@ -43,7 +43,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 col-4" rowspan="2">
+            <div class="col-md-4 col-sm-12" rowspan="2">
                 <div class="info-box shadow">
                     <span class="info-box-icon bg-gradient-warning"><i class="fa fa-shopping-cart"></i></span>
                     <div class="info-box-content">
@@ -56,7 +56,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-4 col-4">
+            <div class="col-md-4 col-sm-12">
                 <div class="info-box shadow">
                     <span class="info-box-icon bg-gradient-success"><i class="fa fa-check-circle"></i></span>
                     <div class="info-box-content">
@@ -71,7 +71,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 col-4">
+            <div class="col-md-4 col-sm-12">
                 <div class="info-box shadow">
                     <span class="info-box-icon bg-gradient-warning"><i class="fa fa-wallet"></i></span>
                     <div class="info-box-content">
@@ -83,6 +83,7 @@
                 </div>
             </div>
         </div>
+
         <div class="row">
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-gradient-danger">
