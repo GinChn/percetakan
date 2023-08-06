@@ -49,7 +49,7 @@ class LoginController extends Controller
         if ($request->expectsJson()) {
             return response()->json(['message' => 'Username or Password is incorrect.'], 401);
         }
-        return back()->with('gagal-login', 'Username atau Password salah');
+        return back()->withInput()->with('gagal-login', 'Username atau Password salah');
     }
 
     public function logout(Request $request)
