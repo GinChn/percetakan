@@ -64,6 +64,7 @@ class LaporanController extends Controller
         $tanggal = Carbon::parse($tanggal);
 
         $pengeluaran = Pengeluaran::whereDate('created_at', $tanggal)
+            ->where('status_pengeluaran', 'Disetujui')
             ->orderBy('created_at', 'desc')
             ->get();
 
@@ -187,6 +188,7 @@ class LaporanController extends Controller
                 DB::raw('SUM(total) as total_pengeluaran')
             )
                 ->whereDate('created_at', $tanggal_laporan)
+                ->where('status_pengeluaran', 'Disetujui')
                 ->groupBy(DB::raw('DATE(created_at)'))
                 ->first();
             if ($total_pengeluaran) {
@@ -228,6 +230,7 @@ class LaporanController extends Controller
                 DB::raw('SUM(total) as total_pengeluaran')
             )
                 ->whereRaw('DATE(created_at) BETWEEN ? AND ?', [$tanggal_laporan_awal, $tanggal_laporan_akhir])
+                ->where('status_pengeluaran', 'Disetujui')
                 ->groupBy(DB::raw('DATE(created_at)'))
                 ->get();
 
@@ -290,11 +293,7 @@ class LaporanController extends Controller
         // Mendapatkan URL sebelumnya (referer)
         $referer = $request->headers->get('referer');
 
-        // Cek apakah URL sebelumnya mengandung '/pekerjaan'
-        $tampilUbah = false;
-        if ($referer && strpos($referer, '/pekerjaan') !== false) {
-            $tampilUbah = true;
-        }
+
 
         return view('laporan.detail_pesanan', [
             'data' => Pesanan::where('id_pesanan', $id)->get(),

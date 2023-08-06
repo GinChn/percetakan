@@ -127,11 +127,13 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     Route::group(['middleware' => ['cekrole:Administrator,Kasir,Manajer']], function () {
-        Route::get('/pengeluaran/export/{id}', [PengeluaranController::class, 'exportPengeluaran'])->name('pengeluaran.export');
         Route::resource('/pengeluaran', PengeluaranController::class);
     });
     Route::group(['middleware' => ['cekrole:Manajer']], function () {
         Route::post('/pengeluaran/setuju_pengeluaran/{id}', [PengeluaranController::class, 'disetujui'])->name('pengeluaran.disetujui');
         Route::post('/pengeluaran/tolak_pengeluaran/{id}', [PengeluaranController::class, 'ditolak'])->name('pengeluaran.ditolak');
+    });
+    Route::group(['middleware' => ['cekrole:Kasir']], function () {
+        Route::get('/pengeluaran/export/{id}', [PengeluaranController::class, 'exportPengeluaran'])->name('pengeluaran.export');
     });
 });

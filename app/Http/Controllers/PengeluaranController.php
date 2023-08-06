@@ -52,11 +52,21 @@ class PengeluaranController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'nominal' => 'numeric',
+            'jumlah' => 'numeric',
+        ]);
+
+        // Ubah nilai nominal dan jumlah menjadi positif jika negatif
+        $nominal = abs($request->nominal);
+        $jumlah = abs($request->jumlah);
+        $total = abs($request->total);
+
         Pengeluaran::create([
             'keterangan' => $request->keterangan,
-            'nominal' => $request->nominal,
-            'jumlah' => $request->jumlah,
-            'total' => $request->total
+            'nominal' => $nominal,
+            'jumlah' => $jumlah,
+            'total' => $total
         ]);
 
         return redirect('/pengeluaran')->with('sukses-tambah-pengeluaran', 'Pengeluaran Berhasil Ditambahkan');
@@ -150,11 +160,15 @@ class PengeluaranController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $nominal = abs($request->nominal);
+        $jumlah = abs($request->jumlah);
+        $total = abs($request->total);
+
         Pengeluaran::find($id)->update([
             'keterangan' => $request->keterangan,
-            'nominal' => $request->nominal,
-            'jumlah' => $request->jumlah,
-            'total' => $request->total
+            'nominal' => $nominal,
+            'jumlah' => $jumlah,
+            'total' => $total
         ]);
 
         return redirect('/pengeluaran')->with('sukses-ubah-pengeluaran', 'Pengeluaran Berhasil Diubah');
