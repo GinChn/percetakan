@@ -51,8 +51,8 @@ class DashboardController extends Controller
             ->sum('pesanan_detail.biaya_desain');
 
 
-        $pengeluaran_harian = Pengeluaran::whereDate('created_at', $tgl_hariIni)->sum('total');
-        $pengeluaran_bulanan = Pengeluaran::whereBetween('created_at', [$tgl_awalBulan, $tgl_akhirBulan])->sum('total');
+        $pengeluaran_harian = Pengeluaran::whereDate('created_at', $tgl_hariIni)->where('status_pengeluaran', 'Disetujui')->sum('total');
+        $pengeluaran_bulanan = Pengeluaran::whereBetween('created_at', [$tgl_awalBulan, $tgl_akhirBulan])->where('status_pengeluaran', 'Disetujui')->sum('total');
 
         $desain_selesai = PesananDetail::whereBetween('created_at', [$tgl_awalBulan, $tgl_akhirBulan])->where('status_detail', '=', 'Sudah Ada Desain')->count();
         $desain_belum = PesananDetail::whereBetween('created_at', [$tgl_awalBulan, $tgl_akhirBulan])->where('status_detail', '=', 'Belum Ada Desain')->count();
@@ -85,7 +85,7 @@ class DashboardController extends Controller
             $total_pemasukan = Pesanan::where('created_at', 'LIKE', "%$tanggal_awal%")
                 ->where('status_pembayaran', 'lunas')
                 ->sum('total');
-            $total_pengeluaran = Pengeluaran::where('created_at', 'LIKE', "%$tanggal_awal%")->sum('total');
+            $total_pengeluaran = Pengeluaran::where('created_at', 'LIKE', "%$tanggal_awal%")->where('status_pengeluaran', 'Disetujui')->sum('total');
 
             $pendapatan = $total_pemasukan - $total_pengeluaran;
             $data_pendapatan[] += $pendapatan;

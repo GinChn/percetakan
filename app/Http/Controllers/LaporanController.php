@@ -169,7 +169,9 @@ class LaporanController extends Controller
             $data_pemasukan = Pesanan::whereDate('created_at', $tanggal_laporan)
                 ->where('status_pembayaran', 'Lunas')
                 ->get();
-            $data_pengeluaran = Pengeluaran::whereDate('created_at', $tanggal_laporan)->get();
+            $data_pengeluaran = Pengeluaran::whereDate('created_at', $tanggal_laporan)
+                ->where('status_pengeluaran', 'Disetujui')
+                ->get();
 
             $total_pemasukan = Pesanan::select(
                 DB::raw('SUM(total) as total_pemasukan')
@@ -244,7 +246,7 @@ class LaporanController extends Controller
             $total_pengeluaran = Pengeluaran::whereBetween(
                 DB::raw('DATE(created_at)'),
                 [$tanggal_laporan_awal, $tanggal_laporan_akhir]
-            )
+            )->where('status_pengeluaran', 'Disetujui')
                 ->sum('total');
             $total_bersih = $total_pemasukan - $total_pengeluaran;
 

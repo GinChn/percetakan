@@ -68,21 +68,6 @@ class LoginController extends Controller
         return view('login.reset_password');
     }
 
-    // function resetPassword(Request $request)
-    // {
-    //     $request->validate(['username' => 'required|email']);
-
-    //     $status = Password::sendResetLink(
-    //         $request->only('username') // Ubah 'email' menjadi 'username'
-    //     );
-
-    //     Log::info('Reset Password Status: ' . $status);
-
-    //     return $status === Password::RESET_LINK_SENT
-    //         ? back()->with(['status' => __($status)])
-    //         : back()->withErrors(['status' => __($status)]);
-    // }
-
     function submitForgetPasswordForm(Request $request)
     {
         $request->validate([
@@ -121,32 +106,6 @@ class LoginController extends Controller
         return view('login.ubah_password', ['token' => $token]);
     }
 
-    // public function submitResetPasswordForm(Request $request)
-    // {
-    //     $request->validate([
-    //         'username' => 'required|email|exists:users',
-    //         'password' => 'required|string|min:6|confirmed',
-    //         'password_confirmation' => 'required'
-    //     ]);
-
-    //     $updatePassword = DB::table('password_resets')
-    //         ->where([
-    //             'email' => $request->username,
-    //             'token' => $request->token
-    //         ])
-    //         ->first();
-
-    //     if (!$updatePassword) {
-    //         return back()->withInput()->with('error', 'Invalid token!');
-    //     }
-
-    //     $user = User::where('username', $request->username)
-    //         ->update(['password' => Hash::make($request->password)]);
-
-    //     DB::table('password_resets')->where(['email' => $request->username])->delete();
-
-    //     return redirect('/login')->with('message', 'Your password has been changed!');
-    // }
 
     public function submitResetPasswordForm(Request $request)
     {
