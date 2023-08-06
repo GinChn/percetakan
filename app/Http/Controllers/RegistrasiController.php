@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 // use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class RegistrasiController extends Controller
 {
@@ -44,6 +45,20 @@ class RegistrasiController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'username' => 'required|string|unique:users',
+            'password' => 'required|string|min:5',
+            'nama' => 'required|string|regex:/^[\pL\s]+$/u', // Only letters and spaces allowed
+            'tanggal_lahir' => 'required|date|before:2008-01-01', // Date should be before 2008-01-01
+            'no_telp' => 'required|numeric', // Only numeric values allowed
+        ]);
+
+        if ($validator->fails()) {
+            return back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
         $token = md5($request->input('username') . microtime());
         User::create([
             'username' => $request->username,

@@ -37,7 +37,9 @@
                                     <th>Nominal</th>
                                     <th>Jumlah</th>
                                     <th>Total</th>
-                                    <th>Aksi</th>
+                                    @if ($nama_level == 'Kasir' || $nama_level == 'Manajer')
+                                        <th>Aksi</th>
+                                    @endif
                                 </tr>
                             </thead>
                             <tbody>
