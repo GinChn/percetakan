@@ -98,7 +98,7 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
 
-    Route::group(['middleware' => ['cekrole:Administrator,Kasir,Manajer']], function () {
+    Route::group(['middleware' => ['cekrole:Kasir,Manajer']], function () {
         Route::get('/laporan/pengeluaran-periode', [LaporanController::class, 'pengeluaranPeriode'])->name('pengeluaran_periode');
         Route::get('/laporan/pesanan-periode', [LaporanController::class, 'pesananPeriode'])->name('pesanan_periode');
         Route::resource('/laporan', LaporanController::class);
@@ -124,6 +124,14 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('/pembayaran', PembayaranController::class);
         Route::get('/pembayaran/{id}/bayar', [PembayaranController::class, 'pembayaran'])->name('bayar.pesanan');
         Route::get('/pembayaran/{id}/nota', [PembayaranController::class, 'nota'])->name('pembayaran.nota');
+    });
+
+    Route::group(['middleware' => ['cekrole:Administrator,Kasir,Manajer']], function () {
+        Route::get('/pengeluaran/export/{id}', [PengeluaranController::class, 'exportPengeluaran'])->name('pengeluaran.export');
         Route::resource('/pengeluaran', PengeluaranController::class);
+    });
+    Route::group(['middleware' => ['cekrole:Manajer']], function () {
+        Route::post('/pengeluaran/setuju_pengeluaran/{id}', [PengeluaranController::class, 'disetujui'])->name('pengeluaran.disetujui');
+        Route::post('/pengeluaran/tolak_pengeluaran/{id}', [PengeluaranController::class, 'ditolak'])->name('pengeluaran.ditolak');
     });
 });

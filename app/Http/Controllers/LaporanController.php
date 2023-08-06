@@ -74,37 +74,6 @@ class LaporanController extends Controller
         ]);
     }
 
-    // public function cekLaporan(Request $request)
-    // {
-    //     // Validasi inputan sebelum diproses dengan pesan error kustom
-    //     $validator = Validator::make($request->all(), [
-    //         'tanggal_laporan' => 'required_if:jenis_laporan,harian',
-    //         'tanggal_laporan_awal' => 'required_if:jenis_laporan,bulanan',
-    //         'tanggal_laporan_akhir' => 'required_if:jenis_laporan,bulanan',
-    //     ], [
-    //         'tanggal_laporan.required_if' => 'Tanggal laporan harus diisi untuk laporan harian.',
-    //         'tanggal_laporan_awal.required_if' => 'Tanggal laporan awal harus diisi untuk laporan bulanan.',
-    //         'tanggal_laporan_akhir.required_if' => 'Tanggal laporan akhir harus diisi untuk laporan bulanan.',
-    //     ]);
-
-    //     // Jika validasi gagal, kembalikan ke halaman sebelumnya dengan pesan error
-    //     if ($validator->fails()) {
-    //         Session::flash('gagal-export', $validator->errors()->first()); // Mengatur pesan error pada Session
-    //         return redirect()->back()->withInput();
-    //     }
-    //     // ambil semua inputan
-    //     $data_input_laporan = $request->all();
-    //     $jenis_laporan = $data_input_laporan['jenis_laporan'];
-
-    //     $data_laporan = $this->getQueryData($jenis_laporan, $data_input_laporan);
-    //     session()->flash('data_laporan', $data_laporan);
-    //     session()->flash('data_input', $data_input_laporan);
-
-    //     // kirim ke view data laporan yg sudah didapat beserta data inputan
-    //     // return view('laporan.index', ['data_laporan' => $data_laporan, 'data_input' => $data_input_laporan]);
-    //     return redirect()->route('laporan.index')->with('data_laporan', $data_laporan)->with('data_input', $data_input_laporan);
-    // }
-
     public function cekLaporan(Request $request)
     {
         // Validasi inputan sebelum diproses dengan pesan error kustom

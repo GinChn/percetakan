@@ -20,69 +20,7 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-4 col-sm-12">
-                <div class="info-box shadow">
-                    <span class="info-box-icon bg-gradient-info"><i class="fa fa-arrow-circle-down"></i></span>
-                    <div class="info-box-content">
-                        <p style="margin-bottom: 0%; font-size: 12pt">PEMASUKAN HARI INI</p>
-                        <p style="margin-bottom: 0%; font-size: 10pt"><b>{{ format_uang($pemasukan_harian) }}</b></p>
-                        <p style="margin-bottom: 0%; font-size: 10pt">BULAN INI</p>
-                        <p style="margin-bottom: 0%; font-size: 10pt"><b>{{ format_uang($pemasukan_bulanan) }}</b></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 col-sm-12">
-                <div class="info-box shadow">
-                    <span class="info-box-icon bg-gradient-danger"><i class="fa fa-arrow-circle-up"></i></span>
-                    <div class="info-box-content">
-                        <p style="margin-bottom: 0%; font-size: 12pt">PENGELUARAN HARI INI</p>
-                        <p style="margin-bottom: 0%; font-size: 10pt"><b>{{ format_uang($pengeluaran_harian) }}</b></p>
-                        <p style="margin-bottom: 0%; font-size: 10pt">BULAN INI</p>
-                        <p style="margin-bottom: 0%; font-size: 10pt"><b>{{ format_uang($pengeluaran_bulanan) }}</b></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 col-sm-12" rowspan="2">
-                <div class="info-box shadow">
-                    <span class="info-box-icon bg-gradient-warning"><i class="fa fa-shopping-cart"></i></span>
-                    <div class="info-box-content">
-                        <p style="margin-bottom: 0%; font-size: 12pt">PESANAN HARI INI</p>
-                        <p style="margin-bottom: 0%; font-size: 10pt"><b>{{ $pesanan_harian }}</b></p>
-                        <p style="margin-bottom: 0%; font-size: 10pt">BULAN INI</p>
-                        <p style="margin-bottom: 0%; font-size: 10pt"><b>{{ $pesanan_bulanan }}</b></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4 col-sm-12">
-                <div class="info-box shadow">
-                    <span class="info-box-icon bg-gradient-success"><i class="fa fa-check-circle"></i></span>
-                    <div class="info-box-content">
-                        <p style="margin-bottom: 0%; font-size: 12pt">PEMASUKAN BERSIH</p>
-                        <p style="margin-bottom: 0%; font-size: 10pt">
-                            <b>{{ format_uang($pemasukan_harian - $pengeluaran_harian) }}</b>
-                        </p>
-                        <p style="margin-bottom: 0%; font-size: 10pt">BULAN INI</p>
-                        <p style="margin-bottom: 0%; font-size: 10pt">
-                            <b>{{ format_uang($pemasukan_bulanan - $pengeluaran_bulanan) }}</b>
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 col-sm-12">
-                <div class="info-box shadow">
-                    <span class="info-box-icon bg-gradient-warning"><i class="fa fa-wallet"></i></span>
-                    <div class="info-box-content">
-                        <p style="margin-bottom: 0%; font-size: 12pt">PEMASUKAN DESAIN</p>
-                        <p style="margin-bottom: 0%; font-size: 10pt"><b>{{ format_uang($pemasukan_desain_harian) }}</p>
-                        <p style="margin-bottom: 0%; font-size: 10pt">BULAN INI</p>
-                        <p style="margin-bottom: 0%; font-size: 10pt"><b>{{ format_uang($pemasukan_desain_bulanan) }}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+
 
         <div class="row">
             <div class="col-lg-3 col-6">
@@ -140,27 +78,7 @@
         </div>
 
 
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card card-outline card-success">
-                    <div class="card-header">
-                        <h3 class="card-title">Grafik Pendapatan {{ tanggal_indonesia($tgl_awalBulan, false) }} s/d
-                            {{ tanggal_indonesia($tgl_akhirBulan, false) }}</h3>
-                        <div class="card-tools">
-                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                <i class="fas fa-minus"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="chart">
-                            <canvas id="pendapatanChart"
-                                style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
 
         <div class="row">
             <div class="col-md-12">

@@ -93,7 +93,7 @@
                                 </p>
                             </a>
                         </li>
-                        @if ($nama_level == 'Administrator' || $nama_level == 'Desainer' || $nama_level == 'Kasir')
+                        @if ($nama_level == 'Administrator' || $nama_level == 'Desainer' || $nama_level == 'Kasir' || $nama_level == 'Manajer')
                             <li class="nav-header">TRANSAKSI</li>
                         @endif
                         @if ($nama_level == 'Administrator' || $nama_level == 'Desainer' || $nama_level == 'Kasir' || $nama_level == 'Operator')
@@ -117,7 +117,7 @@
                                 </a>
                             </li>
                         @endif
-                        @if ($nama_level == 'Administrator' || $nama_level == 'Kasir')
+                        @if ($nama_level == 'Administrator' || $nama_level == 'Kasir' || $nama_level == 'Manajer')
                             <li class="nav-item">
                                 <a href="/pengeluaran"
                                     class="nav-link {{ Request::is('pengeluaran*') ? 'active' : '' }}">
@@ -212,7 +212,7 @@
                     </li> --}}
                         @endif
 
-                        @if ($nama_level == 'Administrator' || $nama_level == 'Manajer' || $nama_level == 'Kasir')
+                        @if ($nama_level == 'Manajer' || $nama_level == 'Kasir')
                             <li class="nav-header">REPORT</li>
                             <li class="nav-item">
                                 <a href="/laporan" class="nav-link {{ Request::is('laporan*') ? 'active' : '' }}">
